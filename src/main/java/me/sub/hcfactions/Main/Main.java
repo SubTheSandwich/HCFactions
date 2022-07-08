@@ -33,6 +33,8 @@ import me.sub.hcfactions.Events.Player.Combat.PlayerEnterCombat;
 import me.sub.hcfactions.Events.Player.CombatMoveEvent;
 import me.sub.hcfactions.Events.Player.Consume.AppleConsumeEvent;
 import me.sub.hcfactions.Events.Player.Faction.ClaimSelectEvent;
+import me.sub.hcfactions.Events.Player.Faction.ElevatorCreateEvent;
+import me.sub.hcfactions.Events.Player.Faction.ElevatorInteractEvent;
 import me.sub.hcfactions.Events.Player.Faction.HomeEvents;
 import me.sub.hcfactions.Events.Player.FactionMoveEvent;
 import me.sub.hcfactions.Events.Player.FactionNetherMoveEvent;
@@ -265,6 +267,8 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new LeaveEndEvent(), this);
         pm.registerEvents(new ItemSignCreate(), this);
         pm.registerEvents(new SignInteractEvent(), this);
+        pm.registerEvents(new ElevatorCreateEvent(), this);
+        pm.registerEvents(new ElevatorInteractEvent(), this);
     }
 
     private void files() {
