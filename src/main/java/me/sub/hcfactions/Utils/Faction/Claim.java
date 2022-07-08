@@ -108,7 +108,30 @@ public class Claim {
                 p.sendMessage(C.chat(Locale.get().getString("command.faction.claimfor.purchased").replace("%faction%", faction.get().getString("name"))));
                 p.getInventory().remove(p.getItemInHand());
             } else {
-
+                int number = 0;
+                for (String ignored : faction.get().getConfigurationSection("claims").getKeys(false)) {
+                    number = number + 1;
+                }
+                String ofNumber = String.valueOf(number);
+                Location locationOne = Main.getInstance().posClaimOne.get(p.getUniqueId());
+                Location locationTwo = Main.getInstance().posClaimTwo.get(p.getUniqueId());
+                locationOne.setY(0);
+                locationTwo.setY(0);
+                Location newLocationOne = Main.getInstance().posClaimOne.get(p.getUniqueId());
+                Location newLocationTwo = Main.getInstance().posClaimTwo.get(p.getUniqueId());
+                faction.get().set("claims." + ofNumber + ".world", p.getWorld().getName());
+                faction.get().set("claims." + ofNumber + ".sideOne.x", newLocationOne.getX());
+                faction.get().set("claims." + ofNumber + ".sideOne.y", newLocationOne.getY());
+                faction.get().set("claims." + ofNumber + ".sideOne.z", newLocationOne.getZ());
+                faction.get().set("claims." + ofNumber + ".sideTwo.x", newLocationTwo.getX());
+                faction.get().set("claims." + ofNumber + ".sideTwo.y", newLocationTwo.getY());
+                faction.get().set("claims." + ofNumber + ".sideTwo.z", newLocationTwo.getZ());
+                faction.save();
+                Main.getInstance().posClaimOne.remove(p.getUniqueId());
+                Main.getInstance().posClaimTwo.remove(p.getUniqueId());
+                Main.getInstance().claimFor.remove(p.getUniqueId());
+                p.sendMessage(C.chat(Locale.get().getString("command.faction.claimfor.purchased").replace("%faction%", faction.get().getString("name"))));
+                p.getInventory().remove(p.getItemInHand());
             }
         } else {
             p.sendMessage(C.chat(Locale.get().getString("command.faction.claim.cannot-claim")));

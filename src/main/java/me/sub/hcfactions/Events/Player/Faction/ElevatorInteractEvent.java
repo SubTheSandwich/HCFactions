@@ -27,7 +27,7 @@ public class ElevatorInteractEvent implements Listener {
                         boolean tped = false;
                         for (int i = 0; i < 255; i++) {
                             if (e.getClickedBlock().getY() < i && isSafeBlock(new Location(e.getClickedBlock().getWorld(), e.getClickedBlock().getLocation().getBlockX(), i, e.getClickedBlock().getLocation().getBlockZ())) && isSafeBlock(new Location(e.getClickedBlock().getWorld(), e.getClickedBlock().getLocation().getBlockX(), (i + 1), e.getClickedBlock().getLocation().getBlockZ()))) {
-                                p.teleport(new Location(e.getPlayer().getWorld(), e.getClickedBlock().getLocation().getBlockX() + 0.5, i, e.getClickedBlock().getLocation().getBlockZ() + 0.5));
+                                p.teleport(new Location(e.getPlayer().getWorld(), e.getClickedBlock().getLocation().getBlockX() + 0.5, i, e.getClickedBlock().getLocation().getBlockZ() + 0.5, p.getLocation().getYaw(), p.getLocation().getPitch()));
                                 tped = true;
                                 break;
                             }
@@ -39,7 +39,7 @@ public class ElevatorInteractEvent implements Listener {
                         boolean tped = false;
                         for (int i = 256; i >= 0; i--) {
                             if (i < e.getClickedBlock().getY() && isSafeBlock(new Location(e.getClickedBlock().getWorld(), e.getClickedBlock().getLocation().getBlockX(), i, e.getClickedBlock().getLocation().getBlockZ())) && isSafeBlock(new Location(e.getClickedBlock().getWorld(), e.getClickedBlock().getLocation().getBlockX(), (i - 1), e.getClickedBlock().getLocation().getBlockZ()))) {
-                                p.teleport(new Location(e.getPlayer().getWorld(), e.getClickedBlock().getLocation().getBlockX() + 0.5, (i - 1), e.getClickedBlock().getLocation().getBlockZ() + 0.5));
+                                p.teleport(new Location(e.getPlayer().getWorld(), e.getClickedBlock().getLocation().getBlockX() + 0.5, (i - 1), e.getClickedBlock().getLocation().getBlockZ() + 0.5, p.getLocation().getYaw(), p.getLocation().getPitch()));
                                 tped = true;
                                 break;
                             }

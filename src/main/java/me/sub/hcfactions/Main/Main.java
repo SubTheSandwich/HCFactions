@@ -21,6 +21,7 @@ import me.sub.hcfactions.Events.Logger.CombatLoggerCreate;
 import me.sub.hcfactions.Events.Logger.LoggerRemove;
 import me.sub.hcfactions.Events.Logout.LogoutEvents;
 import me.sub.hcfactions.Events.Mapkit.MapkitClickEvent;
+import me.sub.hcfactions.Events.Player.*;
 import me.sub.hcfactions.Events.Player.Chat.PlayerGlobalChatEvent;
 import me.sub.hcfactions.Events.Player.Classes.Archer.ArcherJumpEffect;
 import me.sub.hcfactions.Events.Player.Classes.Archer.ArcherSpeedEffect;
@@ -30,20 +31,16 @@ import me.sub.hcfactions.Events.Player.Classes.Rogue.BackstabEvent;
 import me.sub.hcfactions.Events.Player.Classes.Rogue.RogueJumpEffect;
 import me.sub.hcfactions.Events.Player.Classes.Rogue.RogueSpeedEffect;
 import me.sub.hcfactions.Events.Player.Combat.PlayerEnterCombat;
-import me.sub.hcfactions.Events.Player.CombatMoveEvent;
 import me.sub.hcfactions.Events.Player.Consume.AppleConsumeEvent;
 import me.sub.hcfactions.Events.Player.Faction.ClaimSelectEvent;
 import me.sub.hcfactions.Events.Player.Faction.ElevatorCreateEvent;
 import me.sub.hcfactions.Events.Player.Faction.ElevatorInteractEvent;
 import me.sub.hcfactions.Events.Player.Faction.HomeEvents;
-import me.sub.hcfactions.Events.Player.FactionMoveEvent;
-import me.sub.hcfactions.Events.Player.FactionNetherMoveEvent;
 import me.sub.hcfactions.Events.Player.Frozen.FrozenEvents;
 import me.sub.hcfactions.Events.Player.Items.EnderpearlEvent;
 import me.sub.hcfactions.Events.Player.Koths.KothMovementEvent;
 import me.sub.hcfactions.Events.Player.Lunar.LoadPlayerName;
 import me.sub.hcfactions.Events.Player.Lunar.SetupSpawnWaypoint;
-import me.sub.hcfactions.Events.Player.MineDiamondsEvent;
 import me.sub.hcfactions.Events.Scoreboard.LoadScoreboard;
 import me.sub.hcfactions.Events.Scoreboard.RemoveScoreboard;
 import me.sub.hcfactions.Events.SignInteractEvent;
@@ -256,12 +253,10 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new EffectUseEvent(), this);
         pm.registerEvents(new CombatLoggerCreate(), this);
         pm.registerEvents(new LoggerRemove(), this);
-        pm.registerEvents(new FactionMoveEvent(), this);
         pm.registerEvents(new ClaimSelectEvent(), this);
         pm.registerEvents(new FactionInteractEvent(), this);
         pm.registerEvents(new HomeEvents(), this);
         pm.registerEvents(new CombatMoveEvent(), this);
-        pm.registerEvents(new FactionNetherMoveEvent(), this);
         pm.registerEvents(new KothMovementEvent(), this);
         pm.registerEvents(new EnterEndEvent(), this);
         pm.registerEvents(new LeaveEndEvent(), this);
@@ -269,6 +264,8 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new SignInteractEvent(), this);
         pm.registerEvents(new ElevatorCreateEvent(), this);
         pm.registerEvents(new ElevatorInteractEvent(), this);
+        pm.registerEvents(new FactionMultimoveEvent(), this);
+        pm.registerEvents(new FactionNetherMultimoveEvent(), this);
     }
 
     private void files() {

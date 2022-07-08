@@ -52,6 +52,9 @@ chat:
       no-faction: '&6[%color%*&6] %prefix%%display%%suffix%&7: &f%message%'
 events:
   sign:
+    elevator:
+      invalid-type: "&cThe specified type is invalid. Valid types are: UP, DOWN"
+      no-valid-location: "&cYou have not been teleported as no valid location has been found."
     bought-item: "&eYou have &apurchased &b%item%&e. Your balance is now &d%balance%&e."
     sold-item: "&eYou have &asold &b%amount% %item%&e for &b%money-sold-for%&e. Your balance is now &d%balance%&e."
     cant-buy: "&cYour balance is too low to buy this item."
