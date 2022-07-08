@@ -48,9 +48,11 @@ public class LoadScoreboard implements Listener {
                 p.sendMessage(C.chat(Locale.get().getString("welcome.starting-balance-message")));
             }
         }
-        if (players.get().getInt("savedTimers.pvpTimer") != 0) {
-            Timer.setPvPTimer(p.getUniqueId(), players.get().getInt("savedTimers.pvpTimer"));
-            Timer.tickPvPTimer(p.getUniqueId());
+        if (!Main.getInstance().sotwStarted) {
+            if (players.get().getInt("savedTimers.pvpTimer") != 0) {
+                Timer.setPvPTimer(p.getUniqueId(), players.get().getInt("savedTimers.pvpTimer"));
+                Timer.tickPvPTimer(p.getUniqueId());
+            }
         }
 
        // Economy economy = Main.getEconomy();

@@ -51,6 +51,7 @@ chat:
       faction: '&6[%color%%name%&6] %prefix%%display%%suffix%&7: &f%message%'
       no-faction: '&6[%color%*&6] %prefix%%display%%suffix%&7: &f%message%'
 events:
+  enter-end-combat: "&cYou cannot enter the end whilst in combat."
   koth:
     started: '&7[Koth] &eKoth &6%name% &ehas started.'
     stop:
@@ -138,6 +139,10 @@ deathmessage:
   void: '&c%dead%&4[%dead_kills%] &efell into the void'
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
+  end:
+    usage: "&cUsage: /end <setenter;setexit>"
+    setenter: "&eYou have set the end entrance to your current location."
+    setexit: "&eYou have set the end exit to your current location."
   koth:
     usage: '&cUsage: /koth <name> <create;delete;start;stop;setpos1;setpos2;settime;addreward;delreward> <varible>' #Koth time is in seconds
     create: "&eYou have &acreated &ea new koth called &d%name%&e."

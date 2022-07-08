@@ -6,6 +6,8 @@ description: A Hardcore Factions Plugin
 depend:
   - Vault
 commands:
+  end:
+    description: End command
   koth:
     description: Koth command
   ci:

@@ -12,6 +12,8 @@ import me.sub.hcfactions.Events.Deaths.DeathMessageSendEvent;
 import me.sub.hcfactions.Events.Economy.ParseEconomyDisconnect;
 import me.sub.hcfactions.Events.Enchant.AnvilEnchantEvent;
 import me.sub.hcfactions.Events.Enchant.EnchantmentLimiter;
+import me.sub.hcfactions.Events.End.EnterEndEvent;
+import me.sub.hcfactions.Events.End.LeaveEndEvent;
 import me.sub.hcfactions.Events.Faction.FactionInteractEvent;
 import me.sub.hcfactions.Events.Furnace.FurnaceSmelt;
 import me.sub.hcfactions.Events.Logger.CombatLoggerCreate;
@@ -212,6 +214,7 @@ public class Main extends JavaPlugin {
         getCommand("pvp").setExecutor(new PvPCommand());
         getCommand("ci").setExecutor(new CICommand());
         getCommand("koth").setExecutor(new KOTHCommand());
+        getCommand("end").setExecutor(new EndCommand());
     }
 
     private void events() {
@@ -254,6 +257,8 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new CombatMoveEvent(), this);
         pm.registerEvents(new FactionNetherMoveEvent(), this);
         pm.registerEvents(new KothMovementEvent(), this);
+        pm.registerEvents(new EnterEndEvent(), this);
+        pm.registerEvents(new LeaveEndEvent(), this);
     }
 
     private void files() {
@@ -263,5 +268,6 @@ public class Main extends JavaPlugin {
         saveResource("lunar.yml", false);
         saveResource("reclaims.yml", false);
         saveResource("staff.yml", false);
+        saveResource("locations.yml", false);
     }
 }
