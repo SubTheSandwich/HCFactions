@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="HCFactions:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/HCFactions_jar</output-path>
+    <root id="archive" name="HCFactions.jar">
+      <element id="module-output" name="HCFactions" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,262 @@
+
+#Server Settings
+
+server:
+  name: HCFactions
+  website: https://hcfactions.com
+  teamspeak: ts.hcfactions.com
+  store: https://store.hcfactions.com
+  discord: https://discord.gg/hcfactions
+  color:
+    primary: "&6"
+    secondary: "&e"
+
+# Basic Settings
+
+settings:
+  combat-logger-time: 30 # Time is in seconds
+  default-deathban: 7200 # Time is in seconds
+  rally-expire-time: 10 # This time is in minutes
+  lunar-client:
+    use-api: true
+  spawn:
+    x: 0
+    y: 100
+    z: 0
+  name:
+    min: 3
+    max: 15
+  mapkit:
+    inventory-name: "&bMap Kit"
+  online-staff:
+    inventory-name: "&eOnline Staff Members"
+  player:
+    inventory-name: "&6%player%'s Inventory"
+  limits:
+    enchantments:
+      PROTECTION_ENVIRONMENTAL: 2
+      DAMAGE_ALL: 2
+      KNOCKBACK: 0
+      FIRE_ASPECT: 0
+      ARROW_DAMAGE: 4
+  timers:
+    combat: 45 #Time is in seconds
+    pvp: 1800
+    enderpearl: 15
+    home: 10
+    nether-home: 20
+    end-home: 30
+    claim-home: 20
+    stuck: 60
+    archer-tag: 15
+    gapple: 15
+    gopple: 21600
+    logout: 30
+    lff: 60
+dtr:
+  max: 5.5
+  multiple: 1.1
+  death: 1.0
+  regen:
+    start-delay: 60
+    delay: 3
+    increment: 0.03
+worlds:
+  default:
+    warzone-build-limit: 300
+    warzone: 750
+  nether:
+    warzone-build-limit: 80
+    warzone: 200
+welcome:
+  starting-balance: 250
+  starting-balance-message: true
+potions:
+  blocked-types:
+    - "INSTANT_DAMAGE"
+    - "STRENGTH"
+    - "WATER_BREATHING"
+    - "REGEN"
+  restricted-types:
+    POISON:
+      max-level: 1
+kits:
+  bard:
+    effect-cooldown: 5 # Time is in seconds
+    effect-range: 20
+    max-energy: 100
+    combat-timer-on-click: true
+    effects-in-safezone: true
+    click-effects-in-safezone: false
+    items:
+      strength_hold:
+        displayName: Strength 1
+        item: BLAZE_POWDER
+        energy: 0
+        hold: true
+        potionEffect: INCREASE_DAMAGE
+        potionDuration: 100
+        potionAmplifier: 0
+        applyOnBard: false
+        otherFaction: false
+      resistance_hold:
+        displayName: Resistance 1
+        item: IRON_INGOT
+        energy: 0
+        hold: true
+        potionEffect: DAMAGE_RESISTANCE
+        potionDuration: 100
+        potionAmplifier: 0
+        applyOnBard: true
+        otherFaction: false
+      jumpboost_hold:
+        displayName: Jump Boost 2
+        item: FEATHER
+        energy: 0
+        hold: true
+        potionEffect: JUMP
+        potionDuration: 100
+        potionAmplifier: 1
+        applyOnBard: true
+        otherFaction: false
+      speed_hold:
+        displayName: Speed 2
+        item: SUGAR
+        energy: 0
+        hold: true
+        potionEffect: SPEED
+        potionDuration: 100
+        potionAmplifier: 1
+        applyOnBard: true
+        otherFaction: false
+      fireres_hold:
+        displayName: Fire Res 1
+        item: MAGMA_CREAM
+        energy: 0
+        hold: true
+        potionEffect: FIRE_RESISTANCE
+        potionDuration: 100
+        potionAmplifier: 0
+        applyOnBard: true
+        otherFaction: false
+      regen_hold:
+        displayName: Regen 1
+        item: GHAST_TEAR
+        energy: 0
+        hold: true
+        potionEffect: REGENERATION
+        potionDuration: 160
+        potionAmplifier: 0
+        applyOnBard: true
+        otherFaction: false
+      strength_click:
+        displayName: Strength 2
+        item: BLAZE_POWDER
+        energy: 45
+        hold: false
+        potionEffect: INCREASE_DAMAGE
+        potionDuration: 110
+        potionAmplifier: 1
+        applyOnBard: true
+        otherFaction: false
+      resistance_click:
+        displayName: Resistance 3
+        item: IRON_INGOT
+        energy: 40
+        hold: false
+        potionEffect: DAMAGE_RESISTANCE
+        potionDuration: 110
+        potionAmplifier: 2
+        applyOnBard: true
+        otherFaction: false
+      jumpboost_click:
+        displayName: Jump Boost 7
+        item: FEATHER
+        energy: 20
+        hold: false
+        potionEffect: JUMP
+        potionDuration: 110
+        potionAmplifier: 6
+        applyOnBard: true
+        otherFaction: false
+      speed_click:
+        displayName: Speed 3
+        item: SUGAR
+        energy: 30
+        hold: false
+        potionEffect: SPEED
+        potionDuration: 110
+        potionAmplifier: 2
+        applyOnBard: true
+        otherFaction: false
+      wither_click:
+        displayName: Wither 1
+        item: SPIDER_EYE
+        energy: 40
+        hold: false
+        potionEffect: WITHER
+        potionDuration: 110
+        potionAmplifier: 0
+        applyOnBard: false
+        otherFaction: true
+      regen_click:
+        displayName: Regen 2
+        item: GHAST_TEAR
+        energy: 35
+        hold: false
+        potionEffect: REGENERATION
+        potionDuration: 110
+        potionAmplifier: 1
+        applyOnBard: true
+        otherFaction: false
+  miner:
+    invis-level: 20
+listeners:
+  furnace-speed-multiplier: 1
+  brewing-speed-multiplier: 2
+  place-in-combat: true
+  disable-enderchest: true
+claim:
+  buffer: 1
+  deathban: "&cDeathban"
+  not-deathban: "&aNon-Deathban"
+  wilderness:
+    name: "&7The Wilderness"
+    deathban: true
+  warzone:
+    name: "&cWarzone"
+    deathban: true
+  least-x: 5
+  least-z: 5
+  max-x: 50
+  max-z: 50
+  price:
+    multiplier: 250
+    selling-multiplier: 0.5
+    per-block: 0.25
+
+# Scoreboard
+scoreboard:
+  title: "&6&lSpigotMC &r&c(Map 1)"
+  lines:
+    - "&7&m--------------------"
+    - '&6&lStaff Mode<display=%in_staff_mode%>'
+    - '  &eVanished: %vanished%<display=%in_staff_mode%>'
+    - '  &eGamemode: %gamemode%<display=%in_staff_mode%>'
+    - '  &eOnline: &f%online%<display=%in_staff_mode%>'
+    - '  &eBypass: %bypass%<display=%in_staff_mode%>'
+    - "&9&l%koth-name%&7: &c%time%<display=%has_active_koth%>"
+    - "&6&l%active_class%<display=%has_active_class%>"
+    - " * &eEnergy: &r%bard_energy%<display=%is_bard%>"
+    - " * &eEffect: &r%player_bard-effect_timer%<display=%player_has_bard-effect_timer%>"
+    - " * &eSpeed: &r%player_speed-effect_timer%<display=%player_has_speed-effect_timer%>"
+    - " * &eJump: &r%player_jump-effect_timer%<display=%player_has_jump-effect_timer%>"
+    - " * &eBackstab: &r%player_backstab_timer%<display=%player_has_backstab_timer%>"
+    - '&e&lEnderpearl&7: &c%player_pearl_timer%<display=%player_has_pearl_timer%>'
+    - "&a&lPvP Timer&7: &c%player_pvptimer_timer%<display=%player_has_pvptimer_timer%>"
+    - '&c&lSpawn Tag&7: &c%player_combat_timer%<display=%player_has_combat_timer%>'
+    - '&a&lSOTW&7: &c%server_sotw_timer%<display=%server_has_sotw_timer%>'
+    - '&4&lLogout&7: &c%player_logout_timer%<display=%player_has_logout_timer%>'
+    - '&6&lApple&7: &c%player_apple_timer%<display=%player_has_apple_timer%>'
+    - '&9&lHome&7: &c%player_home_timer%<display=%player_has_home_timer%>'
+    - "&7&m--------------------"

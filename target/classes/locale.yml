@@ -1,0 +1,425 @@
+firstRun: true
+primary:
+  not-player: "&cYou must be a player to execute this command."
+  no-permission: "&cNo permission."
+  lunar-only: "&cThis command can only be executed if Lunar Client API support is enabled."
+combat:
+  cooldown: "&cYou cannot do this as you are currently in combat for &l%time% seconds&r&c."
+  cooldown-expired: "&eYour combat timer has &aexpired&e."
+enderpearl:
+  cooldown: "&cYou cannot use an enderpearl for &l%time% seconds&r&c."
+  cooldown-expired: "&eYour enderpearl cooldown has &aexpired&e."
+welcome:
+  starting-balance-message: '&aSince this is your first time logging on you have been
+    given $250 to start with.'
+kit:
+  enabled:
+    - "&bClass: &b&l%name% &7--> &aEnabled!"
+    - "&bClass Info: &a%website%/%name%"
+  disabled: "&bClass: &b&l%name% &7--> &cDisabled!"
+archer:
+  speed-cooldown: "&cYou cannot use your speed for &l%time% seconds&r&c."
+  speed-cooldown-expired: "&eYour speed cooldown has &aexpired&e."
+  jump-cooldown: "&cYou cannot use your jump boost for &l%time% seconds&r&c."
+  jump-cooldown-expired: "&eYour jump boost cooldown has &aexpired&e."
+rogue:
+  backstab-failed: "&cBackstab failed!"
+  backstab-succeed: "&eYou have &abaskstabbed &b%player-hit%&e."
+  backstab-cooldown: "&cYou cannot use your backstab for &l%time% seconds&r&c."
+  backstab-cooldown-expired: "&eYour backstab cooldown has &aexpired&e."
+  speed-cooldown: "&cYou cannot use your speed for &l%time% seconds&r&c."
+  speed-cooldown-expired: "&eYour speed cooldown has &aexpired&e."
+  jump-cooldown: "&cYou cannot use your jump boost for &l%time% seconds&r&c."
+  jump-cooldown-expired: "&eYour jump boost cooldown has &aexpired&e."
+move:
+  new-claim:
+    - "&eNow Leaving: &c%leave-name% &7(%isdeathban-leave%&7)"
+    - "&eNow Entering: &c%enter-name% &7(%isdeathban-enter%&7)"
+bard:
+  safezone: '&cYou cannot use Bard effects in safezones.'
+  not-enough: '&cYou do not have enough energy to use this effect.'
+  used-effect: '&eYou used &b%effect% &efor &b%energy% energy&e. You now have &b%remaining-energy% energy&e.'
+  cannot-use: "&cYou cannot use effects for &l%time% seconds&r&c."
+  can-use: "&eYour effect cooldown has &aexpired&e."
+chat:
+  format:
+    public:
+      colors:
+        teammate: "&a"
+        enemy: "&c"
+        ally: "&9"
+      faction: '&6[%color%%name%&6] %prefix%%display%%suffix%&7: &f%message%'
+      no-faction: '&6[%color%*&6] %prefix%%display%%suffix%&7: &f%message%'
+events:
+  koth:
+    started: '&7[Koth] &eKoth &6%name% &ehas started.'
+    stop:
+      cancelled: '&7[Koth] &eKoth &6%name% &ehas been stopped.'
+      captured: '&7[Koth] &eKoth &6%name% &ewas captured.'
+    control: '&7[Koth] &6%faction% &ehas started to control %name%&e.'
+    control-team: '&7[Koth] &6Your team is now controlling &6%name%&e.'
+    control-player: '&7[Koth] &6You are now now controlling &6%name%&e.'
+    knock: '&7[Koth] &6%faction% &ehas lost control of %name%&e.'
+    controlling: '&7[Koth] &6%name% &eis now at &6%time%.'
+  pvptimer-claim: "&cYou cannot enter a player's claim with a PvP Timer."
+  combat-safezone: "&cYou cannot enter a safezone whilst in combat."
+  attack-safezone: "&cYou cannot attack other players whilst in a safezone."
+  teleport-home: "&3Teleported home successfully"
+  faction:
+    deny: "&eYou cannot do this in &c%faction%&e's territory."
+  chat-disabled: "&cThe chat is currently disabled."
+  cant-chat: "&cYou cannot chat for &l%time% seconds&r&c."
+  slow-mode: "&eThe chat has been slowed to &d%time% &eby &b%player%"
+  slow-mode-off: "&eThe chat has been unslowed by &b%player%"
+  chat-now: "&eYou may now chat again."
+  chest: "&6Opening container silently..."
+  damage: '&eYou cannot damage &2%name%&e.'
+  apple:
+    expired: "&eYour apple timer has &aexpired&e."
+    cooldown: "&cYou are currently on apple cooldown for &l%time% seconds&r&c."
+  diamond-mine:
+    one: "&f[FD] &b%player% found 1 diamond."
+    multiple: "&f[FD] &b%player% found %amount% diamonds."
+  anvil:
+    cancelled: "&cThe combination of items has been cancelled due to the enchantment level of the resulting item being higher than the map limits."
+  deathban:
+    expired: "&eYour deathban has &aexpired &eand you have been allowed back onto the server."
+    message:
+      - "&cYou are currently deathbanned until %time%"
+    life-use:
+      faction: "&eYou have used a faction life to disregard your current deathban. Your faction now has &c%lives% &elives."
+      player: "&eYou have used a life to disregard your current deathban. You now have &c%lives% &elives."
+  online-staff:
+    skull-name: "%primary%%player%"
+    skull-lore:
+      - "%primary%Gamemode: %gamemode%"
+      - "%primary%Vanished: %vanished%"
+      - "%primary%Staff Mode: %staff-mode%"
+  member:
+    online: '&aMember Online: &f%name%'
+    offline: '&cMember Offline: &f%name%'
+    death:
+      - "&cMember Death: &f%name%"
+      - "&cDTR: &f%dtr%"
+    damage: '&eYou cannot damage &2%name%&e.'
+deathmessage:
+  money-earn: "&6You earned &l$%money% &r&6for killing %player%!"
+  contact: '&c%dead%&4[%dead_kills%] &elost a battle with a Cactus'
+  custom: '&c%dead%&4[%dead_kills%] &ehas died'
+  drowning: '&c%dead%&4[%dead_kills%] &ethought he could swim'
+  logger:
+    player: '&7(Combat-Logger) &c%dead%&4[%dead_kills%] &ewas killed by &c%killer%&4[%killer_kills%]'
+    unknown: '&7(Combat-Logger) &c%dead%&4[%dead_kills%] &ehas died'
+  entity-attack:
+    entity: '&c%dead%&4[%dead_kills%] &ewas slain by a &c%killer%'
+    player: '&c%dead%&4[%dead_kills%] &ewas slain by &c%killer%&4[%killer_kills%]
+      &eusing &c%item%'
+    player-noitem: '&c%dead%&4[%dead_kills%] &ewas fisted by &c%killer%&4[%killer_kills%]'
+  projectile:
+    entity: '&c%dead%&4[%dead_kills%] &edied to a &cprojectile'
+    player: '&c%dead%&4[%dead_kills%] &ewas shot by &c%killer%&4[%killer_kills%] &eusing
+      &c%item% &efrom &9&l%distance% blocks'
+    player-noitem: '&c%dead%&4[%dead_kills%] &ewas shot by &c%killer%&4[%killer_kills%]'
+  block-explosion: '&c%dead%&4[%dead_kills%] &eblew up'
+  entity-explosion: '&c%dead%&4[%dead_kills%] &eblew up'
+  fall: '&c%dead%&4[%dead_kills%] &ehit the ground too hard'
+  falling_block: '&c%dead%&4[%dead_kills%] &edied to a falling block'
+  fire: '&c%dead%-4[%dead_kills%] &ethought he was a firefighter'
+  fire-tick: '&c%dead%&4[%dead_kills%] &ethought he was a firefighter'
+  lava: '&c%dead%&4[%dead_kills%] &etried to swim in lava'
+  lightning: '&c%dead%&4[%dead_kills%] &ehas been electrocuted'
+  magic: '&c%dead%&4[%dead_kills%] &ethought he was a wizaard'
+  melting: '&c%dead%&4[%dead_kills%] &etried to make some smores''s'
+  poison: '&c%dead%&4[%dead_kills%] &ehas died from poison'
+  starvation: '&c%dead%&4[%dead_kills%] &edied of starvation'
+  suffocation: '&c%dead%&4[%dead_kills%] &ehas suffocated in a wall'
+  suicide: '&c%dead%&4[%dead_kills%] &ehas committed suicide'
+  thorns: '&c%dead%&4[%dead_kills%] &edied to a prickly little thang'
+  void: '&c%dead%&4[%dead_kills%] &efell into the void'
+  wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
+command:
+  koth:
+    usage: '&cUsage: /koth <name> <create;delete;start;stop;setpos1;setpos2;settime;addreward;delreward> <varible>' #Koth time is in seconds
+    create: "&eYou have &acreated &ea new koth called &d%name%&e."
+    delete: "&eYou have &cdelated &ekoth &d%koth%&e."
+    setpos: "&eYou have set position %position% of koth &d%koth% &eto your location."
+    settime: "&eYou have set the time of koth &d%koth% &eto &b%time% seconds&e."
+    addreward: "&eYou have &aadded &ea reward to koth &d%koth%&e."
+    delreward: "&eYou have &cremoved &ea reward from koth &d%koth%&e."
+  ci:
+    not-player: "&cThe specified player does not exist."
+  pvp:
+    usage: "&cUsage: /pvp enable"
+    enabled: "&eYou have &aenabled &eyour PvP status."
+    none: "&cYou do not have a PvP timer."
+  world:
+    usage: "&cUsage: /world <OVERWORLD;NETHER;END;CUSTOMWORLDNAME> <player>"
+    invalid-player: "&cThe specified player does not exist or is not online."
+    not-world: "&cThe specified world does not exist."
+    world-change: "&6You have changed your world to &f%world%&6."
+  chat:
+    usage: "&cUsage: /chat <slow;mute;clear> <time>"
+    invalid-time: "&cThe specified time is invalid."
+    slowed: "&eYou have slowed the chat to &b&l%time% seconds&r&e."
+    unslowed: "&eYou have unslowed the chat."
+    muted: "&eYou have &cmuted &ethe chat."
+    muted-all: "&eThe chat has been muted by &b%player%"
+    unmuted: "&eYou have &aunmuted &ethe chat."
+    unmuted-all: "&eThe chat has been unmuted by &b%player%"
+    cleared: "&eThe chat has been cleared by &b%player%"
+    clear-bypass: "&eThe chat has been cleared, but you bypased it."
+  invsee:
+    usage: "&cUsage: /%alias% <player>"
+    not-player: "&cThe specified player does not exist."
+    opening: "&6Opening inventory of &f%player%"
+  timers:
+    usage: '&cUsage: /%alias% <set;remove> <player> <timername> [time]'
+    list: "&cList of valid Timers: enderpearl, gapple, apple, pvptimer, bardeffect, bardenergy,
+      logout, starting, stuck, archermark, backstab, combat, home, archerjump, archerspeed, roguejump, roguespeed"
+    wrong: '&cThat timer is not valid, use: enderpearl, gapple, apple, pvptimer, bardeffect, bardenergy,
+      logout, starting, stuck, archermark, backstab, combat, home, archerjump, archerspeed, roguejump, roguespeed'
+    started: '&aTimer %timer% set for %name% for %time%'
+    not-running: '&c%name% does not have that timer.'
+    stopped: '&aRemoved %timer% timer for %name% by %time%.'
+  staffchat:
+    message: '&b%name%: %message%'
+    toggled: '&eStaff Chat: %status%'
+  lff:
+    expired: "&eYour LFF cooldown has &aexpired&e."
+    not-expired: "&cYou are still on LFF cooldown for &l%time% seconds&r&c."
+    color: "&e"
+    not-good-class: "&c%class% is not a valid class and your message has not been sent. You have not received a cooldown."
+    format:
+      - "&7&m------------------------"
+      - "&e%player% is &lLOOKING FOR A FACTION"
+      - "&eSpecified Classes: &f%classes%"
+      - "&7&m------------------------"
+  lives:
+    usage: "&cUsage: /lives <send> <player> <amount>"
+    amount: "&eLives: &c%lives%"
+    player-amount: "&e%player%'s Lives: &c%lives%"
+    not-player: "&cThe specified player does not exist."
+    not-number: "&cThe specified amount of lives is invalid."
+    added-lives: "&eYou have added &c%lives% &elives to &b%player%&e."
+    sent-lives: "&eYou have sent &c%lives% &elives to &b%player%&e."
+    player-added: "&eYou have received &c%lives% &elives from &b%live-sender%&e."
+    removed-lives: "&eYou have removed &c%lives% &elives to &b%player%&e."
+    player-removed: "&eYou have lost &c%lives% &elives from &b%live-sender%&e."
+    cant-remove-more: "&cYou cannot remove any more lives from %player% as they have none."
+  revive:
+    usage: "&cUsage: /revive <player>"
+    invalid-player: "&cThe specified player is invalid."
+    not-deathbanned: "&c%player% is not deathbanned."
+    already-revived: "&c%player% has already been revived."
+    revived: "&eYou have revived &b%player%&e. They will receive their inventory on rejoin."
+    player-revive: "&eYou have been revived by a staff member. Your inventory has been restored."
+    error: "&cAn error has occured and your inventory has not been rolled back."
+  i:
+    usage: "&cUsage: /i <item> <amount>"
+    invalid-item: "&cThe specified material is invalid."
+    invalid-amount: "&cThe specified amount is invalid."
+    success: "&6Received &f%amount% &6of &f%material%"
+  logout:
+    message: '&e&lLogging out... &ePlease wait &c%time% &eseconds.'
+    cancelled: '&e&lLOGOUT &c&lCANCELLED!'
+    running: '&cYou are already logging out.'
+    success: '&cYou have been successfully logged out.'
+  economy:
+    usage: "&cUsage: /%alias% <add;remove;set> <player> <amount>"
+    invalid-player: "&cThe specified player is invalid."
+    invalid-amount: "&cThe specified amount is invalid."
+    set-balance: "&6You have set &f%player%&6's balance to &f%amount%"
+    add-balance: "&6You have added &f%amount%&6 to &f%player%&6's balance"
+    remove-balance: "&6You have removed &f%amount%&6 from &f%player%&6's balance"
+  sotw:
+    usage: "&cUsage: /sotw <start;stop;pause;extend;enable> <time>" # Time is in seconds
+    running: '&cSOTW is already runnning.'
+    not-running: '&cSOTW is not runnning.'
+    started: '&aThe SOTW period has started.'
+    stopped: '&aSOTW has been stopped.'
+    invalid-time: "&cThe specified time is invalid."
+    extended: '&aSOTW has been extended.'
+    paused: '&aThe SOTW period has been paused.'
+    unpaused: '&aThe SOTW period has been unpaused.'
+    player-pvp-enabled: '&aYour own PvP status has now been enabled during the SOTW.'
+    player-pvp-already-enabled: "&cYour PvP status has already been enabled."
+    ended: '&cThe SOTW period has ended!'
+  gamemode:
+    success: "&6Your gamemode has been updated to &f%gamemode%"
+    not-player: "&cThe specified player does not exist."
+    usage: "&cUsage: /%alias% <gamemode> | /%alias% <gamemode> <player>"
+    no-permission: "&cYou do not have permission to change your gamemode to %gamemode%"
+    invalid-gamemode: "&cThe specified gamemode does not exist."
+    updated-player-gamemode: "&6You have set &f%player%&6's gamemode to &f%gamemode%"
+  teleport:
+    safe-check: true
+    not-safe: "&cThe attempted location that %target% was teleported to was not safe, therefore the event has been cancelled."
+    usage: "&cUsage: /%alias% <player> | /%alias% <target> <player> | /%alias% <x> <y> <z>"
+    not-player: "&cThe player you attempted to teleport does not exist."
+    teleport-player: "&6Teleported to %player%"
+    teleport-player-to-player: "&6Teleported %target% &6to %player%"
+    teleport-location: "&6Teleported to &f%x%&6, &f%y%&6, &f%z%"
+  staff:
+    enabled: "&6Staff Mode: &aEnabled"
+    disabled: "&6Staff Mode: &cDisabled"
+    no-players: "&cThere are no players that can be teleported to."
+    staff-other-enabled: "&6Staff Mode for &f%player%&6: &aEnabled"
+    staff-other-disabled: "&6Staff Mode for &f%player%&6: &cDisabled"
+    invalid-player: "&cThe specified player does not exist."
+  vanish:
+    enabled: "&6Vanish: &aEnabled"
+    disabled: "&6Vanish: &cDisabled"
+    vanish-other-enabled: "&Vanish for &f%player%&6: &aEnabled"
+    vanish-other-disabled: "&6Vanish for &f%player%&6: &cDisabled"
+    invalid-player: "&cThe specified player does not exist."
+  freeze:
+    usage: "&cUsage: /%alias% <player>"
+    not-player: "&cThe player you are trying to freeze does not exist."
+    not-you: "&cYou cannot freeze yourself."
+    froze-player: '&eYou have frozen %player%.'
+    unfrozen: '&eYou have been unfrozen.'
+    unfroze-player: '&eYou have unfrozen %player%.'
+    cannot: '&cYou cannot do that while you''re frozen.'
+    cannot-attack: '&cThat player is currently frozen.'
+    server-frozen: '&eThe server is now frozen.'
+    server-unfrozen: '&eThe server is now unfrozen.'
+    logged-out: "&7%player% &elogged out while frozen!"
+  balance:
+    self: '&eBalance: &d$%balance%'
+    other: '&b%player%''s &eBalance: &d$%balance%'
+    invalid-player: "&cThe player you are trying to find does not exist."
+  pay:
+    usage: "&cUsage: /pay <player> <amount;all>"
+    invalid-player: "&cThe specified player does not exist."
+    invalid-amount: "&cThe specified amount is invalid."
+    not-enough: "&cYou do not have enough money to pay the specified amount."
+    failed-execute: "&cAn error occured and your transaction was unable to occur."
+    sent: '&aSent %amount% to %recipient%'
+    received: '&aReceived %amount% from %sender%'
+  faction:
+    settype:
+      invalid-faction: "&cThe specified faction is invalid."
+      set: "&eYou have set &b%faction%&e's type to &d%type%&e."
+      invalid-type: "&cThe specified type is invalid. Correct types are: PLAYER, SYSTEM, SAFEZONE, ROAD, KOTH, CONQUEST"
+    home:
+      no-faction: "&cYou cannot do this as you have no faction."
+      not-set: '&cFaction home point is not set.'
+      unable: '&cYou can not teleport to your hq currently.'
+      waiting: '&eTeleporting to your faction''s HQ in &d%time% seconds&e... Stay still and do not take damage.'
+      cancelled: "&eTeleport &c&lCANCELLED"
+    sethome:
+      no-faction: "&cYou cannot do this as you have no faction."
+      not-home: "&cYou cannot do this as you are not in your claim."
+      not-right-role: "&cYou cannot do this as your faction role is not high enough."
+      updated: '&3%name% has updated your faction''s HQ point!'
+    bypass:
+      enabled: "&eYou have &aenabled &eyour ability to bypass claim restrictions."
+      disabled: "&eYou have &cdisabled &eyour ability to bypass claim restrictions."
+    setdeathban:
+      invalid: "&cThe specified faction does not exist."
+      invalid-type: "&cYou cannot change the color of player factions."
+      set: "&eYou have set faction &b%faction% to be a %deathban% &ezone."
+    setcolor:
+      invalid: "&cThe specified faction does not exist."
+      invalid-color: "&cThe specified color is invalid."
+      invalid-type: "&cYou cannot change the color of player factions."
+      set: "&eYou have set the color of faction &b%faction% &eto %set-color%this&e."
+    system-create:
+      already-exists: "&cA faction by this name already exists."
+      created: "&e%player% &fhas created a system faction named &b%name%"
+    claimfor:
+      purchased: "&ePurchased claim for faction &b%faction%"
+      invalid: "&cThe specified faction does not exist."
+    claim:
+      cancelled: "&eYou have &ccancelled &eyour claiming."
+      purchased: "&cClaim has been purchased for &l%cost%"
+      not-enough: "&cYour faction does not have enough money to execute this claim."
+      claimed: "&eYou have &aclaimed &eyour specified location."
+      too-large: "&cYour attempted claimed location is too large."
+      too-small: "&cYour attempted claimed location is too small."
+      cannot-claim: "&cYou do not have both of your points selected. Please select them and then try again."
+      invalid-position: "&cThe specified claim location is invalid."
+      selected-position-one: "&eSet the location of the claim selecton 1 to: &c%x%, %z%"
+      selected-position-two: "&eSet the location of the claim selecton 2 to: &c%x%, %z%"
+      claim-create-before:
+        - "&eClaim Cost: &c%cost%"
+        - "&eCurrent Size: &a%x-size%, %z-size% &7(%size% blocks)"
+      no-faction: "&cYou do not have a faction so you cannot claim."
+      invalid-rank: "&cYou are not a high enough rank in the faction to execute this command."
+      cant-claim: "&cYou cannot claim here. Please move forward to another valid location."
+      already: "&cYou are already claiming."
+      wand:
+        item: "DIAMOND_HOE"
+        name: "&bClaim Wand"
+        lore:
+          - "&eLeft Click to Select Position One"
+          - "&eRight Click to Select Position Two"
+          - "&eCrouch and Left Click to Claim"
+          - "&eCrouch and Right Click to Cancel"
+    attempt-create: '&cYou must leave you current faction before you create one.'
+    create:
+      already-exists: "&cA faction by this name already exists."
+      message: '&3Faction Created!'
+      help: '&7To learn more about factions, do /f'
+      broadcast: '&eFaction &9%faction% &ehas been &acreated &eby &f%player%'
+    who:
+      not-in-faction: "&cYou must be in a faction to execute this command with no arguments."
+      no-existing: "&cThe specified player or faction does not exist."
+    invite:
+      not-in-faction: "&cYou must be in a faction to execute this command."
+      invalid-rank: "&cYou must be a captain and above to execute this command."
+      invalid-player: "&cThe player specified does not exist or is not online."
+      existing-invite: "&cThis player has already been invited to join."
+      already-in-team: "&c%player% is already in the faction."
+      broadcast: '&e%name% has been invited to the team.'
+      message-to-player: '&e%name% has invited you to join %faction%.'
+      invite-expired: "&eThe invite to %name% has expired."
+      not-yourself: "&cYou cannot invite yourself to your faction."
+    join:
+      invalid-faction: "&cThe faction you tried to join does not exist."
+      no-invite: "&cYou do not have an invite from this faction."
+      already-in-faction: "&cYou must leave your current faction before you join another one."
+      join-successful: '&e%name% has joined the faction.'
+    focus:
+      no-faction: "&cYou can only execute this command if you are in a faction."
+      not-focusing: "&cYour faction is not focusing any player or faction currently."
+      cancel-focus: "&eYou are no longer focusing &b%player%&e."
+      same-player: "&cYou cannot focus yourself."
+      in-faction: "&cThe player you are trying to focus is in your faction."
+      focused: "&eYou are now focusing &b%player%&e."
+    promote:
+      same-player: "&cYou cannot promote yourself."
+      invalid-player: "&cThe specified player does not exist."
+      not-in-faction: "&cThe player you are trying to promote is already in your faction."
+      cant-promote-further: "&cYou cannot promote that player further. If you wish to give them leader, do /%alias% leader %player%"
+      captain:
+        success: '&ePromoted &a%player% &eto &6Captain&e.'
+        promoted: '&eYou have been promoted to &6Captain&e.'
+      coleader:
+        success: '&ePromoted &a%player% &eto &6Co-Leader.'
+        promoted: '&eYou have been promoted to &6Co-Leader&e.'
+    setdtr:
+      usage: "&cUsage: /%alias% setdtr <faction> <dtr>"
+      not-faction: "&cThe specified faction does not exist."
+      invalid-amount: "&cThe specified dtr amount is invalid."
+      success: "&eYou have &aset &ethe dtr of faction &b%faction% &eto &d%dtr%&e."
+    deposit:
+      usage: "&cUsage: /%alias% %argument% <amount;all>"
+      invalid-amount: "&cThe specified number is invalid."
+      no-faction: "&cYou cannot deposit as you have no faction."
+      deposited: '&e%name% deposited &d$%amount% &einto the team balance.'
+      success: '&eYou have added &d$%amount% &eto the faction balance.'
+    demote:
+      same-player: "&cYou cannot promote yourself."
+      invalid-player: "&cThe specified player does not exist."
+      not-in-faction: "&cThe player you are trying to promote is already in your faction."
+      cant-demote-further: "&cYou cannot demote that player further. If you wish to kick them, do /%alias% kick %player%"
+      member:
+        success: '&eDemoted &a%player% &eto &6Member&e.'
+        demoted: '&eYou have been demoted to &6Member&e.'
+      captain:
+        success: '&eDemoted &a%player% &eto &6Captain&e.'
+        demoted: '&eYou have been demoted to &6Captain&e.'
+    rally:
+      set: '&3%creator% has created a rally point at %location%. It will expire in %time% minutes.'
+      expired: '&3The set rally point has expired.'

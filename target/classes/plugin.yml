@@ -1,0 +1,69 @@
+name: HCFactions
+main: me.sub.hcfactions.Main.Main
+author: Sub
+version: 1.0.0
+description: A Hardcore Factions Plugin
+depend:
+  - Vault
+commands:
+  koth:
+    description: Koth command
+  ci:
+    aliases: [clearinventory]
+  pvp:
+    description: PvP commands
+  world:
+    description: Allows for changing of worlds.
+  chat:
+    description: Allows for chat events
+  invsee:
+    description: Allows for opening inventories
+  timers:
+    aliases: [timer]
+    description: Allows for the modification of player timers
+  craft:
+    description: Craft
+  staffchat:
+    description: Allows for staff chat
+    aliases: [sc]
+  lff:
+    description: Allows for the looking of a faction
+    aliases: [lookingforfaction]
+  lives:
+    description: Allows for lives
+  revive:
+    description: Allows for the revival of players
+  i:
+    description: Grants players items
+  logout:
+    description: Allows for logging out
+  sotw:
+    description: Allows for sotw
+  faction:
+    aliases: [f, t, team]
+    description: The basic faction command. Allows for the creation and deletion of factions with much more.
+  mapkit:
+    description: Allows for the viewing of the maximum enchantments.
+  freeze:
+    aliases: [ss]
+    description: Allows for the freezing of players
+  staff:
+    aliases: [mod, h]
+    description: Allows for the enabling and disabling of mod mode.
+  vanish:
+    aliases: [v]
+    description: Allows for the enabling and disabling of vanish.
+  teleport:
+    aliases: [tp]
+    description: Send yourself to a player to another player to another player
+  gamemode:
+    aliases: [gmc, gms, gma, gm]
+    description: Update your gamemode or that of others
+  balance:
+    aliases: [money, bal]
+    description: Allows users to check their balance.
+  pay:
+    description: Allows users to send their balance to others.
+  economy:
+    aliases: [eco]
+    description: Modify the economy of users

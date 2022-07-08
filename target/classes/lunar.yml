@@ -1,0 +1,30 @@
+lunar:
+  waypoints:
+    enabled: true
+    spawn:
+      enabled: true
+      forced: true
+      visible: true
+      name: Spawn
+      color:
+        red: 3
+        green: 252
+        blue: 244
+    rally:
+      name: Rally
+      color:
+        red: 255
+        green: 0
+        blue: 0
+  colors:
+    teammate:
+      color: "&2"
+      team-color: "&a"
+    enemy:
+      color: "&c"
+      team-color: "&c"
+    focused:
+      color: "&d"
+      team-color: "&d"
+  team-arrows:
+    enabled: true
