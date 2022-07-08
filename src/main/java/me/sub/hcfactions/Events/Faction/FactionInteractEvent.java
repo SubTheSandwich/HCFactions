@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -97,24 +98,26 @@ public class FactionInteractEvent implements Listener {
         Action a = e.getAction();
         if (!Main.getInstance().bypass.contains(p.getUniqueId())) {
             if (a.equals(Action.RIGHT_CLICK_BLOCK)) {
-                if (isInClaim(p, e.getClickedBlock().getLocation())) {
-                    Players players = new Players(p.getUniqueId().toString());
-                    Faction faction = new Faction(getFactionInClaim(p, e.getClickedBlock().getLocation()));
-                    if (players.hasFaction()) {
-                        if (!players.getFaction().get().getString("uuid").equals(faction.get().getString("uuid"))) {
+                if (!(e.getClickedBlock().getState() instanceof Sign)) {
+                    if (isInClaim(p, e.getClickedBlock().getLocation())) {
+                        Players players = new Players(p.getUniqueId().toString());
+                        Faction faction = new Faction(getFactionInClaim(p, e.getClickedBlock().getLocation()));
+                        if (players.hasFaction()) {
+                            if (!players.getFaction().get().getString("uuid").equals(faction.get().getString("uuid"))) {
+                                e.setCancelled(true);
+                                if (faction.get().getString("color") != null) {
+                                    p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
+                                } else {
+                                    p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
+                                }
+                            }
+                        } else {
                             e.setCancelled(true);
                             if (faction.get().getString("color") != null) {
                                 p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
                             } else {
                                 p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
                             }
-                        }
-                    } else {
-                        e.setCancelled(true);
-                        if (faction.get().getString("color") != null) {
-                            p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
-                        } else {
-                            p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
                         }
                     }
                 }

@@ -80,6 +80,17 @@ potions:
   restricted-types:
     POISON:
       max-level: 1
+signs:
+  buy:
+    - "[Buy]"
+    - "%item%"
+    - "%amount%"
+    - "%cost%"
+  sell:
+    - "[Sell]"
+    - "%item%"
+    - "%amount%"
+    - "%cost%"
 kits:
   bard:
     effect-cooldown: 5 # Time is in seconds

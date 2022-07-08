@@ -51,6 +51,18 @@ chat:
       faction: '&6[%color%%name%&6] %prefix%%display%%suffix%&7: &f%message%'
       no-faction: '&6[%color%*&6] %prefix%%display%%suffix%&7: &f%message%'
 events:
+  sign:
+    bought-item: "&eYou have &apurchased &b%item%&e. Your balance is now &d%balance%&e."
+    sold-item: "&eYou have &asold &b%amount% %item%&e for &b%money-sold-for%&e. Your balance is now &d%balance%&e."
+    cant-buy: "&cYour balance is too low to buy this item."
+    cant-sell: "&cYou do not have any of the specified item in your inventory."
+    inventory-full: "&cYou cannot buy anymore as your inventory is full."
+    created: "&eCreated a new sign item."
+    not-valid: "&cThe line of %line% is invalid."
+    not-material: "&cThe specified material is invalid."
+    not-amount: "&cThe specified amount is invalid."
+    not-price: "&cThe specified price is invalid."
+  enter-end-combat: "&cYou cannot enter the end whilst in combat."
   koth:
     started: '&7[Koth] &eKoth &6%name% &ehas started.'
     stop:
@@ -138,6 +150,10 @@ deathmessage:
   void: '&c%dead%&4[%dead_kills%] &efell into the void'
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
+  end:
+    usage: "&cUsage: /end <setenter;setexit>"
+    setenter: "&eYou have set the end entrance to your current location."
+    setexit: "&eYou have set the end exit to your current location."
   koth:
     usage: '&cUsage: /koth <name> <create;delete;start;stop;setpos1;setpos2;settime;addreward;delreward> <varible>' #Koth time is in seconds
     create: "&eYou have &acreated &ea new koth called &d%name%&e."

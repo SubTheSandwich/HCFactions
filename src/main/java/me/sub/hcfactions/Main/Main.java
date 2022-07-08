@@ -5,6 +5,7 @@ import com.lunarclient.bukkitapi.object.LCWaypoint;
 import me.sub.hcfactions.Commands.Admin.*;
 import me.sub.hcfactions.Commands.Member.*;
 import me.sub.hcfactions.Commands.Staff.*;
+import me.sub.hcfactions.Events.Admin.ItemSignCreate;
 import me.sub.hcfactions.Events.Brew.BrewItemEvent;
 import me.sub.hcfactions.Events.Brew.BrewSpeedEvent;
 import me.sub.hcfactions.Events.Deathban.DeathbanJoinEvent;
@@ -43,6 +44,7 @@ import me.sub.hcfactions.Events.Player.Lunar.SetupSpawnWaypoint;
 import me.sub.hcfactions.Events.Player.MineDiamondsEvent;
 import me.sub.hcfactions.Events.Scoreboard.LoadScoreboard;
 import me.sub.hcfactions.Events.Scoreboard.RemoveScoreboard;
+import me.sub.hcfactions.Events.SignInteractEvent;
 import me.sub.hcfactions.Events.Staff.StaffEvents;
 import me.sub.hcfactions.Files.Locale.Locale;
 import me.sub.hcfactions.Utils.Timer.Timer;
@@ -148,6 +150,8 @@ public class Main extends JavaPlugin {
     // Add money for kills
     // Lunar Client Nametags are buggy fix them soon
     // Do some work on faction command
+
+    //End command doesn't work
 
 
     private static Main instance;
@@ -259,6 +263,8 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new KothMovementEvent(), this);
         pm.registerEvents(new EnterEndEvent(), this);
         pm.registerEvents(new LeaveEndEvent(), this);
+        pm.registerEvents(new ItemSignCreate(), this);
+        pm.registerEvents(new SignInteractEvent(), this);
     }
 
     private void files() {

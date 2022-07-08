@@ -14,8 +14,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.util.Vector;
 
 import java.io.File;
+import java.util.Set;
 
 public class CombatMoveEvent implements Listener {
 
@@ -43,7 +45,6 @@ public class CombatMoveEvent implements Listener {
                     if (Bukkit.getWorld(new Faction(getFactionInClaim(e.getTo())).get().getString("claims.0.world")).getEnvironment().equals(p.getWorld().getEnvironment())) {
                         p.sendMessage(C.chat(Locale.get().getString("events.combat-safezone")));
                         e.setCancelled(true);
-                        p.teleport(e.getFrom());
                     }
                 }
             }

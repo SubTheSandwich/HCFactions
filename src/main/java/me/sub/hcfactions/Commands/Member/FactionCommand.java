@@ -473,32 +473,34 @@ public class FactionCommand implements CommandExecutor {
                             ArrayList<String> coleaders = new ArrayList<>(players.getFaction().get().getStringList("coleaders"));
                             String leader = players.getFaction().get().getString("leader");
                             if (p.getUniqueId().toString().equalsIgnoreCase(leader) || coleaders.contains(p.getUniqueId().toString())) {
-                                if (!players.getFaction().get().isConfigurationSection("claims.0")) {
-                                    if (p.getLocation().getX() > 0 || p.getLocation().getZ() > 0) {
-                                        if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                                            if (!Main.getInstance().claiming.contains(p.getUniqueId())) {
-                                                Main.getInstance().claiming.add(p.getUniqueId());
-                                                Claim.giveItem(p);
+                                if (!Main.getInstance().pvpTimer.containsKey(p.getUniqueId())) {
+                                    if (!players.getFaction().get().isConfigurationSection("claims.0")) {
+                                        if (p.getLocation().getX() > 0 || p.getLocation().getZ() > 0) {
+                                            if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                if (!Main.getInstance().claiming.contains(p.getUniqueId())) {
+                                                    Main.getInstance().claiming.add(p.getUniqueId());
+                                                    Claim.giveItem(p);
+                                                } else {
+                                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.claim.already")));
+                                                }
                                             } else {
-                                                p.sendMessage(C.chat(Locale.get().getString("command.faction.claim.already")));
+                                                p.sendMessage(C.chat(Locale.get().getString("command.faction.claim.cant-claim")));
                                             }
                                         } else {
-                                            p.sendMessage(C.chat(Locale.get().getString("command.faction.claim.cant-claim")));
+                                            if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                if (!Main.getInstance().claiming.contains(p.getUniqueId())) {
+                                                    Main.getInstance().claiming.add(p.getUniqueId());
+                                                    Claim.giveItem(p);
+                                                } else {
+                                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.claim.already")));
+                                                }
+                                            } else {
+                                                p.sendMessage(C.chat(Locale.get().getString("command.faction.claim.cant-claim")));
+                                            }
                                         }
                                     } else {
-                                        if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                                            if (!Main.getInstance().claiming.contains(p.getUniqueId())) {
-                                                Main.getInstance().claiming.add(p.getUniqueId());
-                                                Claim.giveItem(p);
-                                            } else {
-                                                p.sendMessage(C.chat(Locale.get().getString("command.faction.claim.already")));
-                                            }
-                                        } else {
-                                            p.sendMessage(C.chat(Locale.get().getString("command.faction.claim.cant-claim")));
-                                        }
-                                    }
-                                } else {
 
+                                    }
                                 }
                             } else {
                                 p.sendMessage(C.chat(Locale.get().getString("command.faction.claim.invalid-rank")));
