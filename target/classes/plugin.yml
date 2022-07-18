@@ -6,6 +6,9 @@ description: A Hardcore Factions Plugin
 depend:
   - Vault
 commands:
+  customtimer:
+    description: Custom timer command
+    aliases: [ct]
   end:
     description: End command
   koth:

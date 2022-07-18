@@ -23,6 +23,28 @@ import java.util.UUID;
 
 public class Timer {
 
+    public static void tickCustomTimer(String timer) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (Main.getInstance().customTimers.containsKey(timer)) {
+                    int time = Main.getInstance().customTimers.get(timer);
+                    if (!Main.getInstance().customTimersPaused.get(timer)) {
+                        time = time - 1;
+                        if (time <= 0) {
+                            Main.getInstance().customTimers.remove(timer);
+                            cancel();
+                        } else {
+                            Main.getInstance().customTimers.put(timer, time);
+                        }
+                    }
+                } else {
+                    cancel();
+                }
+            }
+        }.runTaskTimer(Main.getInstance(), 0, 20);
+    }
+
     public static void setChatSlow(UUID p, BigDecimal time) {
         Main.getInstance().chatSlowPlayer.put(p, time);
     }

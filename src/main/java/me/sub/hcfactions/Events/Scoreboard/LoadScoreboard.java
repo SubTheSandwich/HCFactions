@@ -72,6 +72,30 @@ public class LoadScoreboard implements Listener {
             public void run() {
                 ArrayList<String> lines = new ArrayList<>();
                 for (String s : Main.getInstance().getConfig().getStringList("scoreboard.lines")) {
+                    if (s.contains("%custom-timers%")) {
+                        s = s.replace("%custom-timers%", "");
+                        if (Main.getInstance().customTimers.size() > 0) {
+                            ArrayList<String> customTimers = new ArrayList<>();
+                            for (String timer : Main.getInstance().customTimers.keySet()) {
+                                String textFormat = Main.getInstance().getConfig().getString("scoreboard.custom-timer-format");
+                                int time = Main.getInstance().customTimers.get(timer);
+                                Calendar calender = Calendar.getInstance();
+                                calender.clear();
+                                calender.add(Calendar.SECOND, time);
+                                String format = "HH:mm:ss";
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+                                String timee = simpleDateFormat.format(calender.getTimeInMillis());
+                                textFormat = textFormat.replace("%name%", timer);
+                                textFormat = textFormat.replace("%color%", C.convertColorCode(me.sub.hcfactions.Files.Timers.Timers.get().getString("timers." + timer + ".color")));
+                                textFormat = textFormat.replace("%time%", timee);
+                                customTimers.add(textFormat);
+                            }
+                            lines.addAll(customTimers);
+                        } else {
+                            continue;
+                        }
+                    }
+
                     if (s.contains("<display=%has_active_koth%>")) {
                         if (Main.getInstance().kothTimer.keySet().size() != 0) {
                             s = s.replace("<display=%has_active_koth%>", "");
@@ -313,7 +337,9 @@ public class LoadScoreboard implements Listener {
                     }
 
                     if (players.get().getBoolean("settings.showScoreboard")) {
-                        lines.add(s);
+                        if (!s.equals("")) {
+                            lines.add(s);
+                        }
                     }
                 }
 

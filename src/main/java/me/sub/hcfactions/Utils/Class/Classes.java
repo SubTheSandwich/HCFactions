@@ -12,9 +12,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 
 public class Classes {
-
-    //Rework this class entirely. It is completely bugged and other classes' effects are being wrongly given.
-
     public static Boolean hasActiveClass(Player p) {
         if (isInArcher(p)) {
             return true;

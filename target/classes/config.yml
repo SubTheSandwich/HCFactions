@@ -248,6 +248,7 @@ claim:
 
 # Scoreboard
 scoreboard:
+  custom-timer-format: "%color%&l%name%&7: &c%time%"
   title: "&6&lSpigotMC &r&c(Map 1)"
   lines:
     - "&7&m--------------------"
@@ -256,6 +257,7 @@ scoreboard:
     - '  &eGamemode: %gamemode%<display=%in_staff_mode%>'
     - '  &eOnline: &f%online%<display=%in_staff_mode%>'
     - '  &eBypass: %bypass%<display=%in_staff_mode%>'
+    - "%custom-timers%"
     - "&9&l%koth-name%&7: &c%time%<display=%has_active_koth%>"
     - "&6&l%active_class%<display=%has_active_class%>"
     - " * &eEnergy: &r%bard_energy%<display=%is_bard%>"

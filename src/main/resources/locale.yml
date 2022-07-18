@@ -51,6 +51,8 @@ chat:
       faction: '&6[%color%%name%&6] %prefix%%display%%suffix%&7: &f%message%'
       no-faction: '&6[%color%*&6] %prefix%%display%%suffix%&7: &f%message%'
 events:
+  cant-claim: "&cYou cannot claim this location as it contains blocks from another claim."
+  cant-claim-expand: "&cYou cannot expand your claim."
   sign:
     elevator:
       invalid-type: "&cThe specified type is invalid. Valid types are: UP, DOWN"
@@ -153,6 +155,14 @@ deathmessage:
   void: '&c%dead%&4[%dead_kills%] &efell into the void'
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
+  customtimer:
+    usage: "&cUsage: /%alias% <create;remove;start;stop;pause;setcolor> <name> <time>"
+    create: "&eYou have &acreated &ea new timer called &r%name%"
+    remove: "&eYou have &cremoved &eatimer &r%name%"
+    setcolor: "&eYou have &aset &ethe color of timer &b%name% &eto %color%this&e."
+    started: "&7[Timer] &eTimer &6%name% &ehas been started."
+    pause: "&7[Timer] &eTimer &6%name% &ehas been %pause-type%."
+    stopped: "&7[Timer] &eTimer &6%name% &ehas been stopped."
   end:
     usage: "&cUsage: /end <setenter;setexit>"
     setenter: "&eYou have set the end entrance to your current location."

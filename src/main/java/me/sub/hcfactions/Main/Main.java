@@ -76,6 +76,9 @@ public class Main extends JavaPlugin {
 
     public ArrayList<UUID> claimingAgainst = new ArrayList<>();
 
+    public HashMap<String, Integer> customTimers = new HashMap<>();
+    public HashMap<String, Boolean> customTimersPaused = new HashMap<>();
+
     public HashMap<UUID, Location> posClaimOne = new HashMap<>();
     public HashMap<UUID, Location> posClaimTwo = new HashMap<>();
 
@@ -218,6 +221,7 @@ public class Main extends JavaPlugin {
         getCommand("ci").setExecutor(new CICommand());
         getCommand("koth").setExecutor(new KOTHCommand());
         getCommand("end").setExecutor(new EndCommand());
+        getCommand("customtimer").setExecutor(new CustomTimerCommand());
     }
 
     private void events() {
@@ -269,6 +273,8 @@ public class Main extends JavaPlugin {
     }
 
     private void files() {
+        me.sub.hcfactions.Files.Timers.Timers.setup();
+        me.sub.hcfactions.Files.Timers.Timers.save();
         saveResource("config.yml", false);
         saveResource("messages.yml", false);
         saveResource("locale.yml", false);
