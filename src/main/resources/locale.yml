@@ -51,6 +51,8 @@ chat:
       faction: '&6[%color%%name%&6] %prefix%%display%%suffix%&7: &f%message%'
       no-faction: '&6[%color%*&6] %prefix%%display%%suffix%&7: &f%message%'
 events:
+  crowbar:
+    used: "&eYou have used your crowbar to pick up a &d%spawner% &espawner. You have &a%charges% &eremaining."
   cant-claim: "&cYou cannot claim this location as it contains blocks from another claim."
   cant-claim-expand: "&cYou cannot expand your claim."
   sign:
@@ -155,6 +157,13 @@ deathmessage:
   void: '&c%dead%&4[%dead_kills%] &efell into the void'
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
+  spawner:
+    usage: "&cUsage: /spawner <type>"
+    set: "&eYou have &aset &ethe mob spawner to be a &d%type% &espawner."
+  crowbar:
+    usage: "&cUsage: /crowbar <player> <uses>"
+    given: "&eYou have given a crowbar with &a%uses% &euses to &d%player%&e."
+    received: "&eYou have received a crowbar with &a%uses% &euses from &d%sender%&e."
   customtimer:
     usage: "&cUsage: /%alias% <create;remove;start;stop;pause;setcolor> <name> <time>"
     create: "&eYou have &acreated &ea new timer called &r%name%"

@@ -6,6 +6,10 @@ description: A Hardcore Factions Plugin
 depend:
   - Vault
 commands:
+  spawner:
+    description: Spawner command
+  crowbar:
+    description: Uses to give crowbars
   customtimer:
     description: Custom timer command
     aliases: [ct]

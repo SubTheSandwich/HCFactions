@@ -32,6 +32,8 @@ import me.sub.hcfactions.Events.Player.Classes.Rogue.RogueJumpEffect;
 import me.sub.hcfactions.Events.Player.Classes.Rogue.RogueSpeedEffect;
 import me.sub.hcfactions.Events.Player.Combat.PlayerEnterCombat;
 import me.sub.hcfactions.Events.Player.Consume.AppleConsumeEvent;
+import me.sub.hcfactions.Events.Player.Crowbar.CrowbarUseEvent;
+import me.sub.hcfactions.Events.Player.Crowbar.SpawnerPlaceEvent;
 import me.sub.hcfactions.Events.Player.Faction.ClaimSelectEvent;
 import me.sub.hcfactions.Events.Player.Faction.ElevatorCreateEvent;
 import me.sub.hcfactions.Events.Player.Faction.ElevatorInteractEvent;
@@ -222,6 +224,8 @@ public class Main extends JavaPlugin {
         getCommand("koth").setExecutor(new KOTHCommand());
         getCommand("end").setExecutor(new EndCommand());
         getCommand("customtimer").setExecutor(new CustomTimerCommand());
+        getCommand("crowbar").setExecutor(new CrowbarCommand());
+        getCommand("spawner").setExecutor(new SpawnerCommand());
     }
 
     private void events() {
@@ -270,6 +274,8 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new ElevatorInteractEvent(), this);
         pm.registerEvents(new FactionMultimoveEvent(), this);
         pm.registerEvents(new FactionNetherMultimoveEvent(), this);
+        pm.registerEvents(new CrowbarUseEvent(), this);
+        pm.registerEvents(new SpawnerPlaceEvent(), this);
     }
 
     private void files() {
