@@ -43,6 +43,8 @@ import me.sub.hcfactions.Events.Player.Items.EnderpearlEvent;
 import me.sub.hcfactions.Events.Player.Koths.KothMovementEvent;
 import me.sub.hcfactions.Events.Player.Lunar.LoadPlayerName;
 import me.sub.hcfactions.Events.Player.Lunar.SetupSpawnWaypoint;
+import me.sub.hcfactions.Events.Player.Ore.OreMineRegisterEvent;
+import me.sub.hcfactions.Events.Player.Profile.ProfileClickEvent;
 import me.sub.hcfactions.Events.Scoreboard.LoadScoreboard;
 import me.sub.hcfactions.Events.Scoreboard.RemoveScoreboard;
 import me.sub.hcfactions.Events.SignInteractEvent;
@@ -226,6 +228,7 @@ public class Main extends JavaPlugin {
         getCommand("customtimer").setExecutor(new CustomTimerCommand());
         getCommand("crowbar").setExecutor(new CrowbarCommand());
         getCommand("spawner").setExecutor(new SpawnerCommand());
+        getCommand("profile").setExecutor(new ProfileCommand());
     }
 
     private void events() {
@@ -276,6 +279,8 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new FactionNetherMultimoveEvent(), this);
         pm.registerEvents(new CrowbarUseEvent(), this);
         pm.registerEvents(new SpawnerPlaceEvent(), this);
+        pm.registerEvents(new ProfileClickEvent(), this);
+        pm.registerEvents(new OreMineRegisterEvent(), this);
     }
 
     private void files() {

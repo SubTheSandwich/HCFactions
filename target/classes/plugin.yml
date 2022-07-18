@@ -6,6 +6,8 @@ description: A Hardcore Factions Plugin
 depend:
   - Vault
 commands:
+  profile:
+    description: Profile command
   spawner:
     description: Spawner command
   crowbar:

@@ -157,6 +157,9 @@ deathmessage:
   void: '&c%dead%&4[%dead_kills%] &efell into the void'
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
+  profile:
+    usage: "&cUsage: /profile <setcolor;view> <varible>"
+    colored: "&eYou have &aset &ethe color of your profile to %color%%color-name%&e."
   spawner:
     usage: "&cUsage: /spawner <type>"
     set: "&eYou have &aset &ethe mob spawner to be a &d%type% &espawner."

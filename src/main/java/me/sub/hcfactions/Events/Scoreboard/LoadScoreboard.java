@@ -39,6 +39,7 @@ public class LoadScoreboard implements Listener {
             players.get().set("faction", "");
             players.get().set("deathBanned", false);
             players.get().set("bannedTill", 0);
+            players.get().set("color", "WHITE");
             players.get().set("balance", Main.getInstance().getConfig().getInt("welcome.starting-balance"));
             players.get().set("settings.deathMessages", true);
             players.get().set("settings.foundDiamonds", true);

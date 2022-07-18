@@ -13,6 +13,38 @@ public class C {
         return ChatColor.stripColor(s);
     }
 
+    public static int convertIntegerCode(String s) {
+        s = s.toLowerCase(Locale.ROOT);
+        switch (s) {
+            case "black":
+                return 15;
+            case "yellow":
+            case "gold":
+                return 4;
+            case "light_purple":
+                return 2;
+            case "red":
+            case "dark_red":
+                return 14;
+            case "aqua":
+            case "blue":
+                return 3;
+            case "green":
+            case "dark_green":
+                return 13;
+            case "gray":
+                return 8;
+            case "dark_aqua":
+                return 9;
+            case "dark_blue":
+                return 11;
+            case "dark_gray":
+                return 7;
+            default:
+                return 0;
+        }
+    }
+
     public static String convertColorCode(String s) {
         s = s.toLowerCase(Locale.ROOT);
         switch (s) {
