@@ -6,6 +6,8 @@ description: A Hardcore Factions Plugin
 depend:
   - Vault
 commands:
+  mountain:
+    description: Mountain command
   profile:
     description: Profile command
   spawner:

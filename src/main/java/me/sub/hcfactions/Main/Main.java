@@ -229,6 +229,7 @@ public class Main extends JavaPlugin {
         getCommand("crowbar").setExecutor(new CrowbarCommand());
         getCommand("spawner").setExecutor(new SpawnerCommand());
         getCommand("profile").setExecutor(new ProfileCommand());
+        getCommand("mountain").setExecutor(new MountainCommand());
     }
 
     private void events() {
