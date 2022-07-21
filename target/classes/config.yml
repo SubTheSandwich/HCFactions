@@ -82,12 +82,12 @@ potions:
       max-level: 1
 signs:
   buy:
-    - "[Buy]"
+    - "[Buy]" # Dont modify this line
     - "%item%"
     - "%amount%"
     - "%cost%"
   sell:
-    - "[Sell]"
+    - "[Sell]" # Dont modify this line
     - "%item%"
     - "%amount%"
     - "%cost%"
