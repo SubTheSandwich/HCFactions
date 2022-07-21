@@ -375,30 +375,7 @@ public class FactionInteractEvent implements Listener {
 
     @EventHandler
     public void bed(PlayerBedEnterEvent e) {
-        Player p = e.getPlayer();
-        if (!Main.getInstance().bypass.contains(p.getUniqueId())) {
-            if (isInClaim(p, e.getBed().getLocation())) {
-                Players players = new Players(p.getUniqueId().toString());
-                Faction faction = new Faction(getFactionInClaim(p, e.getBed().getLocation()));
-                if (players.hasFaction()) {
-                    if (!players.getFaction().get().getString("uuid").equals(faction.get().getString("uuid"))) {
-                        e.setCancelled(true);
-                        if (faction.get().getString("color") != null) {
-                            p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
-                        } else {
-                            p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
-                        }
-                    }
-                } else {
-                    e.setCancelled(true);
-                    if (faction.get().getString("color") != null) {
-                        p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
-                    } else {
-                        p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
-                    }
-                }
-            }
-        }
+        e.setCancelled(true);
     }
 
     @EventHandler
