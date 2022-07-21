@@ -158,9 +158,18 @@ deathmessage:
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
   mountain:
-    usage: "&cUsage: /mountain <create;delete;setblock;setresetdelay;setfaction> <name> <varible>"
+    usage: "&cUsage: /mountain <create;delete;setblock;setresetdelay;setfaction,select> <name> <varible>"
     created: "&eYou have &acreated &ea new mountain called &d%name%&e."
+    removed: "&eYou have &cremoved &emountain &d%name%&e."
     setblock: "&eYou have set the generated block of mountain &d%name% &eto &b%block%&e."
+    setresetdelay: "&eYou have set the reset delay of mountain &d%name% &eto &b%delay%&e seconds."
+    setfaction: "&eYou have set the faction of mountain &d%mountain% &eto &b%faction% &7(UUID of %uuid%)"
+    regenerated: "&7[Mountain] &eMountain &6%name% &ehas regenerated"
+    select:
+      set: "&ePositions for &d%name% &ehave been set."
+      started: "&eLeft Click to Select Position One | Right Click to Select Position Two"
+      cancel: "&cCancelled mountain position selection"
+      selected: "&eSelected position %position% at %x%, %y%, %z%"
   profile:
     usage: "&cUsage: /profile <setcolor;view> <varible>"
     colored: "&eYou have &aset &ethe color of your profile to %color%%color-name%&e."
@@ -345,7 +354,7 @@ command:
     settype:
       invalid-faction: "&cThe specified faction is invalid."
       set: "&eYou have set &b%faction%&e's type to &d%type%&e."
-      invalid-type: "&cThe specified type is invalid. Correct types are: PLAYER, SYSTEM, SAFEZONE, ROAD, KOTH, CONQUEST"
+      invalid-type: "&cThe specified type is invalid. Correct types are: PLAYER, SYSTEM, SAFEZONE, ROAD, KOTH, CONQUEST, MOUNTAIN"
     home:
       no-faction: "&cYou cannot do this as you have no faction."
       not-set: '&cFaction home point is not set.'

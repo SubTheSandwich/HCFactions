@@ -43,6 +43,7 @@ import me.sub.hcfactions.Events.Player.Items.EnderpearlEvent;
 import me.sub.hcfactions.Events.Player.Koths.KothMovementEvent;
 import me.sub.hcfactions.Events.Player.Lunar.LoadPlayerName;
 import me.sub.hcfactions.Events.Player.Lunar.SetupSpawnWaypoint;
+import me.sub.hcfactions.Events.Player.Mountain.MountainSelectEvent;
 import me.sub.hcfactions.Events.Player.Ore.OreMineRegisterEvent;
 import me.sub.hcfactions.Events.Player.Profile.ProfileClickEvent;
 import me.sub.hcfactions.Events.Scoreboard.LoadScoreboard;
@@ -50,18 +51,23 @@ import me.sub.hcfactions.Events.Scoreboard.RemoveScoreboard;
 import me.sub.hcfactions.Events.SignInteractEvent;
 import me.sub.hcfactions.Events.Staff.StaffEvents;
 import me.sub.hcfactions.Files.Locale.Locale;
+import me.sub.hcfactions.Files.Mountain.Mountain;
+import me.sub.hcfactions.Files.Players.Players;
+import me.sub.hcfactions.Utils.Color.C;
 import me.sub.hcfactions.Utils.Timer.Timer;
 import me.sub.hcfactions.Utils.Timer.Timers;
 import net.milkbowl.vault.chat.Chat;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,6 +78,11 @@ public class Main extends JavaPlugin {
     public HashMap<UUID, String> claimFor = new HashMap<>();
 
     public ArrayList<UUID> bypass = new ArrayList<>();
+
+    public HashMap<UUID, String> selectingMountain = new HashMap<>();
+    public HashMap<UUID, Location> mountainPositionOne = new HashMap<>();
+    public HashMap<UUID, Location> mountainPositionTwo = new HashMap<>();
+    public HashMap<String, Integer> resetTimerMountain = new HashMap<>();
 
     public HashMap<String, Integer> kothTimer = new HashMap<>();
     public HashMap<String, UUID> capturingKothFaction = new HashMap<>();
@@ -187,6 +198,7 @@ public class Main extends JavaPlugin {
         files();
         events();
         commands();
+        generateMountains();
         Timer.trackTimers();
         if (Locale.get().getBoolean("firstRun")) {
             Locale.get().set("firstRun", false);
@@ -196,6 +208,43 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
 
+    }
+
+    private void generateMountains() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                File[] mountains = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder().getPath() + "/data/mountains").listFiles();
+                if (mountains != null) {
+                    for (File f : mountains) {
+                        YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
+                        Mountain mountain = new Mountain(file.getString("uuid"));
+                        if (mountain.isSetup() && mountain.getCuboid() != null) {
+                            if (!resetTimerMountain.containsKey(file.getString("uuid"))) {
+                                resetTimerMountain.put(file.getString("uuid"), file.getInt("reset-delay"));
+                            } else {
+                                int time = resetTimerMountain.get(file.getString("uuid"));
+                                time = time - 1;
+                                if (time <= 0) {
+                                    resetTimerMountain.put(file.getString("uuid"), file.getInt("reset-delay"));
+                                    for (Player p : Bukkit.getOnlinePlayers()) {
+                                        Players players = new Players(p.getUniqueId().toString());
+                                        if (players.get().getBoolean("settings.publicChat")) {
+                                            p.sendMessage(C.chat(Locale.get().getString("command.mountain.regenerated").replace("%name%", file.getString("name"))));
+                                            for (Block b : mountain.getCuboid()) {
+                                                b.setType(Material.matchMaterial(file.getString("block")));
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    resetTimerMountain.put(file.getString("uuid"), time);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }.runTaskTimer(this, 0, 20);
     }
 
     private void commands() {
@@ -282,6 +331,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new SpawnerPlaceEvent(), this);
         pm.registerEvents(new ProfileClickEvent(), this);
         pm.registerEvents(new OreMineRegisterEvent(), this);
+        pm.registerEvents(new MountainSelectEvent(), this);
     }
 
     private void files() {

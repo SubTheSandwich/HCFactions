@@ -29,8 +29,8 @@ public class FactionNetherMultimoveEvent implements Listener {
         if (p.getWorld().getEnvironment().equals(World.Environment.NETHER)) {
             if (e.getFrom().getX() != e.getTo().getX() || e.getFrom().getZ() != e.getTo().getZ() || e.getFrom().getY() != e.getTo().getY()) {
                 if (e.getTo().getX() > 0 && e.getTo().getZ() > 0) {
-                    if (e.getTo().getX() >= Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getX() < Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getZ() < Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    if (e.getTo().getX() >= Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getX() < Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getZ() < Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%leave-name%")) {
                                     s = s.replace("%leave-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -61,8 +61,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                             }
                         }
 
-                    } else if (e.getTo().getZ() >= Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getZ() < Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getX() < Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    } else if (e.getTo().getZ() >= Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getZ() < Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getX() < Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%leave-name%")) {
                                     s = s.replace("%leave-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -92,8 +92,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                 p.sendMessage(s);
                             }
                         }
-                    } else if (e.getTo().getX() <= Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getZ() < Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    } else if (e.getTo().getX() <= Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getZ() < Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%enter-name%")) {
                                     s = s.replace("%enter-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -123,8 +123,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                 p.sendMessage(s);
                             }
                         }
-                    } else if (e.getTo().getZ() <= Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getX() < Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    } else if (e.getTo().getZ() <= Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getX() < Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%enter-name%")) {
                                     s = s.replace("%enter-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -170,7 +170,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                 if (block.getX() == b.getX() && block.getZ() == b.getZ()) {
                                                     if (!Main.getInstance().currentFactionLocation.containsKey(p.getUniqueId())) {
                                                         Main.getInstance().currentFactionLocation.put(p.getUniqueId(), file.getString("uuid"));
-                                                        if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                        if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                             ArrayList<String> sector = new ArrayList<>();
                                                             Players players = new Players(p.getUniqueId().toString());
                                                             for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -191,6 +191,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -223,7 +225,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             for (String s : sector) {
                                                                 p.sendMessage(s);
                                                             }
-                                                        } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                        } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                             ArrayList<String> sector = new ArrayList<>();
                                                             Players players = new Players(p.getUniqueId().toString());
                                                             for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -244,6 +246,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -297,6 +301,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -334,7 +340,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                         if (!file.getString("uuid").equals(Main.getInstance().currentFactionLocation.get(p.getUniqueId()))) {
                                                             Faction faction = new Faction(Main.getInstance().currentFactionLocation.get(p.getUniqueId()));
                                                             Main.getInstance().currentFactionLocation.put(p.getUniqueId(), file.getString("uuid"));
-                                                            if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                            if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                                 ArrayList<String> sector = new ArrayList<>();
                                                                 Players players = new Players(p.getUniqueId().toString());
                                                                 for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -345,6 +351,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -377,6 +385,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -409,7 +419,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                 for (String s : sector) {
                                                                     p.sendMessage(s);
                                                                 }
-                                                            } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                            } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                                 ArrayList<String> sector = new ArrayList<>();
                                                                 Players players = new Players(p.getUniqueId().toString());
                                                                 for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -420,6 +430,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -452,6 +464,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -495,6 +509,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -527,6 +543,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -575,7 +593,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                     String factionID = Main.getInstance().currentFactionLocation.get(p.getUniqueId());
                                     Main.getInstance().currentFactionLocation.remove(p.getUniqueId());
                                     Faction faction = new Faction(factionID);
-                                    if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                    if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                         ArrayList<String> sector = new ArrayList<>();
                                         Players players = new Players(p.getUniqueId().toString());
                                         for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -596,6 +614,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -628,7 +648,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                         for (String s : sector) {
                                             p.sendMessage(s);
                                         }
-                                    } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                    } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                         ArrayList<String> sector = new ArrayList<>();
                                         Players players = new Players(p.getUniqueId().toString());
                                         for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -649,6 +669,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -702,6 +724,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -740,8 +764,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                         }
                     }
                 } else if (e.getTo().getX() < 0 && e.getTo().getZ() < 0) {
-                    if (e.getTo().getX() <= -Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getX() > -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getZ() > -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    if (e.getTo().getX() <= -Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getX() > -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getZ() > -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%leave-name%")) {
                                     s = s.replace("%leave-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -771,8 +795,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                 p.sendMessage(s);
                             }
                         }
-                    } else if (e.getTo().getZ() >= -Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getX() > -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    } else if (e.getTo().getZ() >= -Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getX() > -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%enter-name%")) {
                                     s = s.replace("%enter-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -802,8 +826,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                 p.sendMessage(s);
                             }
                         }
-                    } else if (e.getTo().getZ() <= -Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getZ() > -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getX() > -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    } else if (e.getTo().getZ() <= -Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getZ() > -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getX() > -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%leave-name%")) {
                                     s = s.replace("%leave-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -833,8 +857,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                 p.sendMessage(s);
                             }
                         }
-                    } else if (e.getTo().getX() >= -Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getZ() > -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    } else if (e.getTo().getX() >= -Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getZ() > -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%enter-name%")) {
                                     s = s.replace("%enter-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -880,7 +904,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                 if (block.getX() == b.getX() && block.getZ() == b.getZ()) {
                                                     if (!Main.getInstance().currentFactionLocation.containsKey(p.getUniqueId())) {
                                                         Main.getInstance().currentFactionLocation.put(p.getUniqueId(), file.getString("uuid"));
-                                                        if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                        if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                             ArrayList<String> sector = new ArrayList<>();
                                                             Players players = new Players(p.getUniqueId().toString());
                                                             for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -901,6 +925,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -933,7 +959,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             for (String s : sector) {
                                                                 p.sendMessage(s);
                                                             }
-                                                        } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                        } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                             ArrayList<String> sector = new ArrayList<>();
                                                             Players players = new Players(p.getUniqueId().toString());
                                                             for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -954,6 +980,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -1007,6 +1035,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -1044,7 +1074,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                         if (!file.getString("uuid").equals(Main.getInstance().currentFactionLocation.get(p.getUniqueId()))) {
                                                             Faction faction = new Faction(Main.getInstance().currentFactionLocation.get(p.getUniqueId()));
                                                             Main.getInstance().currentFactionLocation.put(p.getUniqueId(), file.getString("uuid"));
-                                                            if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                            if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                                 ArrayList<String> sector = new ArrayList<>();
                                                                 Players players = new Players(p.getUniqueId().toString());
                                                                 for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -1055,6 +1085,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -1087,6 +1119,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -1119,7 +1153,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                 for (String s : sector) {
                                                                     p.sendMessage(s);
                                                                 }
-                                                            } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                            } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                                 ArrayList<String> sector = new ArrayList<>();
                                                                 Players players = new Players(p.getUniqueId().toString());
                                                                 for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -1130,6 +1164,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -1162,6 +1198,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -1205,6 +1243,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -1237,6 +1277,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -1285,7 +1327,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                     String factionID = Main.getInstance().currentFactionLocation.get(p.getUniqueId());
                                     Main.getInstance().currentFactionLocation.remove(p.getUniqueId());
                                     Faction faction = new Faction(factionID);
-                                    if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                    if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                         ArrayList<String> sector = new ArrayList<>();
                                         Players players = new Players(p.getUniqueId().toString());
                                         for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -1306,6 +1348,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -1338,7 +1382,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                         for (String s : sector) {
                                             p.sendMessage(s);
                                         }
-                                    } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                    } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                         ArrayList<String> sector = new ArrayList<>();
                                         Players players = new Players(p.getUniqueId().toString());
                                         for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -1359,6 +1403,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -1412,6 +1458,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -1450,8 +1498,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                         }
                     }
                 } else if (e.getTo().getX() < 0 && e.getTo().getZ() > 0) {
-                    if (e.getTo().getX() >= -Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getZ() < Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    if (e.getTo().getX() >= -Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getZ() < Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%enter-name%")) {
                                     s = s.replace("%enter-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -1481,8 +1529,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                 p.sendMessage(s);
                             }
                         }
-                    } else if (e.getTo().getX() <= -Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getX() > -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getZ() < Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    } else if (e.getTo().getX() <= -Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getX() > -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getZ() < Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%leave-name%")) {
                                     s = s.replace("%leave-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -1512,8 +1560,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                 p.sendMessage(s);
                             }
                         }
-                    } else if (e.getTo().getZ() <= Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getX() > -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    } else if (e.getTo().getZ() <= Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getX() > -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%enter-name%")) {
                                     s = s.replace("%enter-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -1543,8 +1591,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                 p.sendMessage(s);
                             }
                         }
-                    } else if (e.getTo().getZ() >= Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getZ() < Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getX() > -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    } else if (e.getTo().getZ() >= Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getZ() < Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getX() > -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%leave-name%")) {
                                     s = s.replace("%leave-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -1590,7 +1638,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                 if (block.getX() == b.getX() && block.getZ() == b.getZ()) {
                                                     if (!Main.getInstance().currentFactionLocation.containsKey(p.getUniqueId())) {
                                                         Main.getInstance().currentFactionLocation.put(p.getUniqueId(), file.getString("uuid"));
-                                                        if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                        if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                             ArrayList<String> sector = new ArrayList<>();
                                                             Players players = new Players(p.getUniqueId().toString());
                                                             for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -1611,6 +1659,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -1643,7 +1693,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             for (String s : sector) {
                                                                 p.sendMessage(s);
                                                             }
-                                                        } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                        } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                             ArrayList<String> sector = new ArrayList<>();
                                                             Players players = new Players(p.getUniqueId().toString());
                                                             for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -1664,6 +1714,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -1717,6 +1769,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -1754,7 +1808,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                         if (!file.getString("uuid").equals(Main.getInstance().currentFactionLocation.get(p.getUniqueId()))) {
                                                             Faction faction = new Faction(Main.getInstance().currentFactionLocation.get(p.getUniqueId()));
                                                             Main.getInstance().currentFactionLocation.put(p.getUniqueId(), file.getString("uuid"));
-                                                            if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                            if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                                 ArrayList<String> sector = new ArrayList<>();
                                                                 Players players = new Players(p.getUniqueId().toString());
                                                                 for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -1765,6 +1819,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -1797,6 +1853,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -1829,7 +1887,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                 for (String s : sector) {
                                                                     p.sendMessage(s);
                                                                 }
-                                                            } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                            } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                                 ArrayList<String> sector = new ArrayList<>();
                                                                 Players players = new Players(p.getUniqueId().toString());
                                                                 for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -1840,6 +1898,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -1872,6 +1932,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -1915,6 +1977,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -1947,6 +2011,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -1995,7 +2061,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                     String factionID = Main.getInstance().currentFactionLocation.get(p.getUniqueId());
                                     Main.getInstance().currentFactionLocation.remove(p.getUniqueId());
                                     Faction faction = new Faction(factionID);
-                                    if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                    if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                         ArrayList<String> sector = new ArrayList<>();
                                         Players players = new Players(p.getUniqueId().toString());
                                         for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -2016,6 +2082,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -2048,7 +2116,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                         for (String s : sector) {
                                             p.sendMessage(s);
                                         }
-                                    } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                    } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                         ArrayList<String> sector = new ArrayList<>();
                                         Players players = new Players(p.getUniqueId().toString());
                                         for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -2069,6 +2137,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -2122,6 +2192,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -2160,8 +2232,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                         }
                     }
                 } else if (e.getTo().getX() > 0 && e.getTo().getZ() < 0) {
-                    if (e.getTo().getZ() >= -Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getX() < Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    if (e.getTo().getZ() >= -Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getX() < Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%enter-name%")) {
                                     s = s.replace("%enter-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -2191,8 +2263,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                 p.sendMessage(s);
                             }
                         }
-                    } else if (e.getTo().getZ() <= -Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getZ() > -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getX() < Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    } else if (e.getTo().getZ() <= -Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getZ() > -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getX() < Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%leave-name%")) {
                                     s = s.replace("%leave-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -2222,8 +2294,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                 p.sendMessage(s);
                             }
                         }
-                    } else if (e.getTo().getX() <= Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    } else if (e.getTo().getX() <= Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%enter-name%")) {
                                     s = s.replace("%enter-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -2253,8 +2325,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                 p.sendMessage(s);
                             }
                         }
-                    } else if (e.getTo().getX() >= Main.getInstance().getConfig().getInt("worlds.default.warzone") && e.getFrom().getX() < Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                        if (e.getFrom().getZ() > -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                    } else if (e.getTo().getX() >= Main.getInstance().getConfig().getInt("worlds.nether.warzone") && e.getFrom().getX() < Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
+                        if (e.getFrom().getZ() > -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                             for (String s : Locale.get().getStringList("move.new-claim")) {
                                 if (s.contains("%leave-name%")) {
                                     s = s.replace("%leave-name%", Main.getInstance().getConfig().getString("claim.warzone.name"));
@@ -2300,7 +2372,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                 if (block.getX() == b.getX() && block.getZ() == b.getZ()) {
                                                     if (!Main.getInstance().currentFactionLocation.containsKey(p.getUniqueId())) {
                                                         Main.getInstance().currentFactionLocation.put(p.getUniqueId(), file.getString("uuid"));
-                                                        if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                        if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                             ArrayList<String> sector = new ArrayList<>();
                                                             Players players = new Players(p.getUniqueId().toString());
                                                             for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -2321,6 +2393,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -2353,7 +2427,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             for (String s : sector) {
                                                                 p.sendMessage(s);
                                                             }
-                                                        } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                        } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                             ArrayList<String> sector = new ArrayList<>();
                                                             Players players = new Players(p.getUniqueId().toString());
                                                             for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -2374,6 +2448,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -2427,6 +2503,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -2464,7 +2542,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                         if (!file.getString("uuid").equals(Main.getInstance().currentFactionLocation.get(p.getUniqueId()))) {
                                                             Faction faction = new Faction(Main.getInstance().currentFactionLocation.get(p.getUniqueId()));
                                                             Main.getInstance().currentFactionLocation.put(p.getUniqueId(), file.getString("uuid"));
-                                                            if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                            if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                                 ArrayList<String> sector = new ArrayList<>();
                                                                 Players players = new Players(p.getUniqueId().toString());
                                                                 for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -2475,6 +2553,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -2507,6 +2587,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -2539,7 +2621,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                 for (String s : sector) {
                                                                     p.sendMessage(s);
                                                                 }
-                                                            } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                                            } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                                                 ArrayList<String> sector = new ArrayList<>();
                                                                 Players players = new Players(p.getUniqueId().toString());
                                                                 for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -2550,6 +2632,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -2582,6 +2666,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -2625,6 +2711,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -2657,6 +2745,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -2704,7 +2794,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                     String factionID = Main.getInstance().currentFactionLocation.get(p.getUniqueId());
                                     Main.getInstance().currentFactionLocation.remove(p.getUniqueId());
                                     Faction faction = new Faction(factionID);
-                                    if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                    if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                         ArrayList<String> sector = new ArrayList<>();
                                         Players players = new Players(p.getUniqueId().toString());
                                         for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -2725,6 +2815,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -2757,7 +2849,7 @@ public class FactionNetherMultimoveEvent implements Listener {
                                         for (String s : sector) {
                                             p.sendMessage(s);
                                         }
-                                    } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
+                                    } else if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
                                         ArrayList<String> sector = new ArrayList<>();
                                         Players players = new Players(p.getUniqueId().toString());
                                         for (String s : Locale.get().getStringList("move.new-claim")) {
@@ -2778,6 +2870,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -2831,6 +2925,8 @@ public class FactionNetherMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }

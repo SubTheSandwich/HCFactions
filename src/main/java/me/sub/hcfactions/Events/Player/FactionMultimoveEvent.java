@@ -191,6 +191,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -244,6 +246,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -297,6 +301,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -345,6 +351,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -377,6 +385,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -420,6 +430,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -452,6 +464,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -495,6 +509,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -527,6 +543,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -596,6 +614,8 @@ public class FactionMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -649,6 +669,8 @@ public class FactionMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -702,6 +724,8 @@ public class FactionMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -901,6 +925,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -954,6 +980,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -1007,6 +1035,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -1055,6 +1085,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -1087,6 +1119,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -1130,6 +1164,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -1162,6 +1198,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -1205,6 +1243,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -1237,6 +1277,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -1306,6 +1348,8 @@ public class FactionMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -1359,6 +1403,8 @@ public class FactionMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -1412,6 +1458,8 @@ public class FactionMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -1611,6 +1659,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -1664,6 +1714,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -1717,6 +1769,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -1765,6 +1819,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -1797,6 +1853,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -1840,6 +1898,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -1872,6 +1932,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -1915,6 +1977,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -1947,6 +2011,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -2016,6 +2082,8 @@ public class FactionMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -2069,6 +2137,8 @@ public class FactionMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -2122,6 +2192,8 @@ public class FactionMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -2321,6 +2393,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -2374,6 +2448,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -2427,6 +2503,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                             } else if (file.getString("type").equals("ROAD")) {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                            } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                             } else {
                                                                                 s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                             }
@@ -2475,6 +2553,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -2507,6 +2587,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -2550,6 +2632,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -2582,6 +2666,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -2625,6 +2711,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                                                 } else if (faction.get().getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                                                 }
@@ -2657,6 +2745,8 @@ public class FactionMultimoveEvent implements Listener {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " KOTH");
                                                                                 } else if (file.getString("type").equals("ROAD")) {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Road");
+                                                                                } else if (file.getString("type").equals("MOUNTAIN")) {
+                                                                                    s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name") + " Mountain");
                                                                                 } else {
                                                                                     s = s.replace("%enter-name%", C.convertColorCode(file.getString("color")) + file.getString("name"));
                                                                                 }
@@ -2725,6 +2815,8 @@ public class FactionMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -2778,6 +2870,8 @@ public class FactionMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }
@@ -2831,6 +2925,8 @@ public class FactionMultimoveEvent implements Listener {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH");
                                                         } else if (faction.get().getString("type").equals("ROAD")) {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road");
+                                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                                            s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain");
                                                         } else {
                                                             s = s.replace("%leave-name%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"));
                                                         }

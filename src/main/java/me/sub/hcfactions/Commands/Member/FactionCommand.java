@@ -1372,6 +1372,44 @@ public class FactionCommand implements CommandExecutor {
                                         p.sendMessage(C.chat(msg));
                                     }
                                     break;
+                                case "KOTH":
+                                    for (String msg : Messages.get().getStringList("faction.who.system")) {
+                                        if (msg.contains("%name%")) {
+                                            String factionName = C.convertColorCode(f.get().getString("color")) + f.get().getString("name") + " KOTH";
+                                            msg = msg.replace("%name%", factionName);
+                                        }
+
+                                        if (msg.contains("%home%")) {
+                                            if (f.get().isConfigurationSection("location")) {
+
+                                            } else {
+                                                msg = msg.replace("%home%", "None");
+                                            }
+                                        }
+
+
+                                        p.sendMessage(C.chat(msg));
+                                    }
+                                    break;
+                                case "MOUNTAIN":
+                                    for (String msg : Messages.get().getStringList("faction.who.system")) {
+                                        if (msg.contains("%name%")) {
+                                            String factionName = C.convertColorCode(f.get().getString("color")) + f.get().getString("name") + " Mountain";
+                                            msg = msg.replace("%name%", factionName);
+                                        }
+
+                                        if (msg.contains("%home%")) {
+                                            if (f.get().isConfigurationSection("location")) {
+
+                                            } else {
+                                                msg = msg.replace("%home%", "None");
+                                            }
+                                        }
+
+
+                                        p.sendMessage(C.chat(msg));
+                                    }
+                                    break;
                                 default:
                                     for (String msg : Messages.get().getStringList("faction.who.system")) {
                                         if (msg.contains("%name%")) {
@@ -1468,6 +1506,11 @@ public class FactionCommand implements CommandExecutor {
                         if (valid) {
                             Faction faction = new Faction(id);
                             switch (args[2].toLowerCase()) {
+                                case "mountain":
+                                    faction.get().set("type", "MOUNTAIN");
+                                    faction.save();
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.settype.set").replace("%type%", "MOUNTAIN").replace("%faction%", factionName)));
+                                    break;
                                 case "koth":
                                     faction.get().set("type", "KOTH");
                                     faction.save();
