@@ -14,6 +14,7 @@ server:
 # Basic Settings
 
 settings:
+  disable-enderchest: true
   combat-logger-time: 30 # Time is in seconds
   default-deathban: 7200 # Time is in seconds
   rally-expire-time: 10 # This time is in minutes

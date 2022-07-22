@@ -22,21 +22,20 @@ public class ReclaimCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
+            Reclaims reclaims = new Reclaims();
             if (args.length == 0) {
-                if (Reclaims.get().getStringList("reclaimed").contains(p.getUniqueId().toString())) {
+                if (reclaims.getStatic().getStringList("reclaimed").contains(p.getUniqueId().toString())) {
                     p.sendMessage(C.chat(Locale.get().getString("command.reclaim.already-used")));
                 } else {
                     Deathban deathban = new Deathban(p.getUniqueId().toString());
                     String rank = deathban.getRank();
                     if (!rank.equals("DEFAULT")) {
-                        System.out.println(Reclaims.get().getStringList("reclaimed"));
-                        System.out.println(Reclaims.get());
-                        ArrayList<String> reclaimed = new ArrayList<>(Reclaims.get().getStringList("reclaimed"));
+                        ArrayList<String> reclaimed = new ArrayList<>(reclaims.getStatic().getStringList("reclaimed"));
                         reclaimed.add(p.getUniqueId().toString());
-                        Reclaims.get().set("reclaimed", reclaimed);
-                        Reclaims.save();
+                        reclaims.getStatic().set("reclaimed", reclaimed);
+                        reclaims.saveStatic();
                         ArrayList<String> commands = new ArrayList<>();
-                        for (String s : Reclaims.get().getStringList("reclaim." + rank + ".commands")) {
+                        for (String s : reclaims.getStatic().getStringList("reclaim." + rank + ".commands")) {
                             if (s.contains("%player%")) {
                                 s = s.replace("%player%", p.getName());
                             }
@@ -45,7 +44,7 @@ public class ReclaimCommand implements CommandExecutor {
                         for (String s : commands) {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), s);
                         }
-                        Bukkit.broadcastMessage(C.chat(Reclaims.get().getString("reclaim." + rank + ".broadcast").replace("%player%", p.getName())));
+                        Bukkit.broadcastMessage(C.chat(reclaims.getStatic().getString("reclaim." + rank + ".broadcast").replace("%player%", p.getName())));
                     } else {
                         p.sendMessage(C.chat(Locale.get().getString("command.reclaim.no-reclaim")));
                     }
@@ -62,21 +61,21 @@ public class ReclaimCommand implements CommandExecutor {
                         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
                         Players players = new Players(offlinePlayer.getUniqueId().toString());
                         if (players.exists()) {
-                            if (Reclaims.get().getStringList("reclaimed").contains(p.getUniqueId().toString())) {
+                            if (reclaims.getStatic().getStringList("reclaimed").contains(p.getUniqueId().toString())) {
                                 p.sendMessage(C.chat(Locale.get().getString("command.reclaim.reset").replace("%player%", offlinePlayer.getName())));
-                                ArrayList<String> play = new ArrayList<>(Reclaims.get().getStringList("reclaimed"));
+                                ArrayList<String> play = new ArrayList<>(reclaims.getStatic().getStringList("reclaimed"));
                                 play.remove(offlinePlayer.getUniqueId().toString());
-                                Reclaims.get().set("reclaimed", play);
-                                Reclaims.save();
+                                reclaims.getStatic().set("reclaimed", play);
+                                reclaims.saveStatic();
                             } else {
                                 p.sendMessage(C.chat(Locale.get().getString("command.reclaim.usage")));
                             }
                         } else {
                             if (args[1].equalsIgnoreCase("all")) {
                                 p.sendMessage(C.chat(Locale.get().getString("command.reclaim.reset-all")));
-                                ArrayList<String> play = new ArrayList<>(Reclaims.get().getStringList("reclaimed"));
-                                Reclaims.get().set("reclaimed", play);
-                                Reclaims.save();
+                                ArrayList<String> play = new ArrayList<>(reclaims.getStatic().getStringList("reclaimed"));
+                                reclaims.getStatic().set("reclaimed", play);
+                                reclaims.saveStatic();
                             } else {
                                 p.sendMessage(C.chat(Locale.get().getString("command.reclaim.usage")));
                             }

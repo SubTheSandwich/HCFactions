@@ -9,9 +9,29 @@ import java.io.IOException;
 
 public class Reclaims {
 
+    File file;
+    FileConfiguration customFile;
+
+    public Reclaims() {
+        file = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder(), "reclaims.yml");
+        customFile = YamlConfiguration.loadConfiguration(file);
+    }
+
+    public FileConfiguration getStatic() {
+        return customFile;
+    }
+
     public static FileConfiguration get() {
         File file = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder(), "reclaims.yml");
         return YamlConfiguration.loadConfiguration(file);
+    }
+
+    public void saveStatic() {
+        try {
+            customFile.save(file);
+        } catch (IOException e) {
+            System.out.println("Unable to save file reclaims.yml");
+        }
     }
 
     public static void save() {
