@@ -279,6 +279,7 @@ public class Main extends JavaPlugin {
         getCommand("spawner").setExecutor(new SpawnerCommand());
         getCommand("profile").setExecutor(new ProfileCommand());
         getCommand("mountain").setExecutor(new MountainCommand());
+        getCommand("reclaim").setExecutor(new ReclaimCommand());
     }
 
     private void events() {
@@ -332,6 +333,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new ProfileClickEvent(), this);
         pm.registerEvents(new OreMineRegisterEvent(), this);
         pm.registerEvents(new MountainSelectEvent(), this);
+        pm.registerEvents(new EnderchestEvents(), this);
     }
 
     private void files() {

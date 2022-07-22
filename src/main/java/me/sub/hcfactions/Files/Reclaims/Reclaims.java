@@ -11,8 +11,7 @@ public class Reclaims {
 
     public static FileConfiguration get() {
         File file = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder(), "reclaims.yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        return config;
+        return YamlConfiguration.loadConfiguration(file);
     }
 
     public static void save() {
@@ -21,7 +20,7 @@ public class Reclaims {
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
             config.save(file);
         } catch (IOException e) {
-            System.out.println("Unable to save file messages.yml");
+            System.out.println("Unable to save file reclaims.yml");
         }
     }
 }

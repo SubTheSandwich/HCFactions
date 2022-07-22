@@ -17,5 +17,4 @@ reclaim:
     deathban: 5400 #Time is in seconds
     commands:
       - give %player% diamond 64
-
 reclaimed: []

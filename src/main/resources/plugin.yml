@@ -6,6 +6,8 @@ description: A Hardcore Factions Plugin
 depend:
   - Vault
 commands:
+  reclaim:
+    description: Allows for reclaiming
   mountain:
     description: Mountain command
   profile:

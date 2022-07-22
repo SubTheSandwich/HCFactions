@@ -157,6 +157,13 @@ deathmessage:
   void: '&c%dead%&4[%dead_kills%] &efell into the void'
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
+  reclaim:
+    other-use: "&cUsage: /reclaim"
+    reset: "&eYou have &creset &d%player%&e's reclaim."
+    reset-all: "&eYou have &creset &eall reclaims."
+    usage: "&cUsage: /reclaim reset <player;all>"
+    already-used: "&cYou have already reclaimed your rewards this map."
+    no-reclaim: "&cYou cannot claim any rewards as you do not have a rank."
   mountain:
     usage: "&cUsage: /mountain <create;delete;setblock;setresetdelay;setfaction,select> <name> <varible>"
     created: "&eYou have &acreated &ea new mountain called &d%name%&e."
