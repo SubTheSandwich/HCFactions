@@ -15,8 +15,9 @@ public class LeaveEndEvent implements Listener {
     public void onLeave(PlayerChangedWorldEvent e) {
         Player p = e.getPlayer();
         if (e.getFrom().getEnvironment().equals(World.Environment.THE_END)) {
-            if (Locations.get().isConfigurationSection("end.exit")) {
-                Location location = new Location(Bukkit.getWorld(Locations.get().getString("end.exit.world")), Locations.get().getDouble("end.exit.x"), Locations.get().getDouble("end.exit.y"), Locations.get().getDouble("end.exit.z"), (float) Locations.get().getDouble("end.exit.yaw") , (float) Locations.get().getDouble("end.exit.pitch"));
+            Locations locations = new Locations();
+            if (locations.getStatic().isConfigurationSection("end.exit")) {
+                Location location = new Location(Bukkit.getWorld(locations.getStatic().getString("end.exit.world")), locations.getStatic().getDouble("end.exit.x"), locations.getStatic().getDouble("end.exit.y"), locations.getStatic().getDouble("end.exit.z"), (float) locations.getStatic().getDouble("end.exit.yaw") , (float) locations.getStatic().getDouble("end.exit.pitch"));
                 p.teleport(location);
             }
         }

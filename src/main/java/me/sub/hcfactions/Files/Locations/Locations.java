@@ -9,10 +9,31 @@ import java.io.IOException;
 
 public class Locations {
 
+    // Make class non-static and operate off a constructor
+
+    File file;
+    FileConfiguration customFile;
+
+    public Locations() {
+        file = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder(), "locations.yml");
+        customFile = YamlConfiguration.loadConfiguration(file);
+    }
+
+    public FileConfiguration getStatic() {
+        return customFile;
+    }
+
     public static FileConfiguration get() {
         File file = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder(), "locations.yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        return config;
+        return YamlConfiguration.loadConfiguration(file);
+    }
+
+    public void saveStatic() {
+        try {
+            customFile.save(file);
+        } catch (IOException e) {
+            System.out.println("Unable to save file locations.yml");
+        }
     }
 
     public static void save() {
@@ -21,7 +42,7 @@ public class Locations {
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
             config.save(file);
         } catch (IOException e) {
-            System.out.println("Unable to save file locale.yml");
+            System.out.println("Unable to save file locations.yml");
         }
     }
 }

@@ -17,13 +17,14 @@ public class EnterEndEvent implements Listener {
     public void onEnter(PlayerTeleportEvent e) {
         Player p = e.getPlayer();
         if (e.getCause().equals(PlayerTeleportEvent.TeleportCause.END_PORTAL)) {
+            Locations locations = new Locations();
             if (Main.getInstance().combatTimer.containsKey(p.getUniqueId())) {
                 e.setCancelled(true);
                 p.sendMessage(C.chat(Locale.get().getString("events.enter-end-combat")));
                 return;
             }
-            if (Locations.get().isConfigurationSection("end.enter")) {
-                Location location = new Location(Bukkit.getWorld(Locations.get().getString("end.enter.world")), Locations.get().getDouble("end.enter.x"), Locations.get().getDouble("end.enter.y"), Locations.get().getDouble("end.enter.z"), (float) Locations.get().getDouble("end.enter.yaw") , (float) Locations.get().getDouble("end.enter.pitch"));
+            if (locations.getStatic().isConfigurationSection("end.enter")) {
+                Location location = new Location(Bukkit.getWorld(locations.getStatic().getString("end.enter.world")), locations.getStatic().getDouble("end.enter.x"), locations.getStatic().getDouble("end.enter.y"), locations.getStatic().getDouble("end.enter.z"), (float) locations.getStatic().getDouble("end.enter.yaw") , (float) locations.getStatic().getDouble("end.enter.pitch"));
                 p.teleport(location);
             }
         }
