@@ -157,6 +157,10 @@ deathmessage:
   void: '&c%dead%&4[%dead_kills%] &efell into the void'
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
+  filter:
+    usage: "&cUsage: /filter <add;remove> <item>"
+    added: "&eYou have &aadded &d%material% &eto your blocked items to pickup."
+    removed: "&eYou have &cremoved &d%material% &efrom your blocked items to pickup."
   reclaim:
     other-use: "&cUsage: /reclaim"
     reset: "&eYou have &creset &d%player%&e's reclaim."

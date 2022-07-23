@@ -109,6 +109,8 @@ public class Main extends JavaPlugin {
 
     public HashMap<UUID, BigDecimal> chatSlowPlayer = new HashMap<>();
 
+    public HashMap<UUID, ArrayList<Material>> blockedItems = new HashMap<>();
+
     public HashMap<Player, ItemStack[]> savedInventoryArmorStaff = new HashMap<>();
     public HashMap<Player, ItemStack[]> savedInventoryContentsStaff = new HashMap<>();
     public HashMap<Player, GameMode> savedGameModeStaff = new HashMap<>();
@@ -280,6 +282,7 @@ public class Main extends JavaPlugin {
         getCommand("profile").setExecutor(new ProfileCommand());
         getCommand("mountain").setExecutor(new MountainCommand());
         getCommand("reclaim").setExecutor(new ReclaimCommand());
+        getCommand("filter").setExecutor(new FilterCommand());
     }
 
     private void events() {
@@ -334,6 +337,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new OreMineRegisterEvent(), this);
         pm.registerEvents(new MountainSelectEvent(), this);
         pm.registerEvents(new EnderchestEvents(), this);
+        pm.registerEvents(new FilterItemEvent(), this);
     }
 
     private void files() {
