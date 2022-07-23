@@ -14,10 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.util.Vector;
 
 import java.io.File;
-import java.util.Set;
 
 public class CombatMoveEvent implements Listener {
 
@@ -57,16 +55,16 @@ public class CombatMoveEvent implements Listener {
         if (factions != null) {
             for (File f : factions) {
                 YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
-                if (file.isConfigurationSection("claims.0") && file.isConfigurationSection("claims.1")) {
-
-                } else if (file.isConfigurationSection("claims.0")) {
-                    Location locationOne = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideOne.x"), file.getDouble("claims.0.sideOne.y"), file.getDouble("claims.0.sideOne.z"));
-                    Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideTwo.x"), file.getDouble("claims.0.sideTwo.y"), file.getDouble("claims.0.sideTwo.z"));
-                    Block block = loc.getBlock().getRelative(BlockFace.DOWN);
-                    Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                    for (Block b : cuboid.getBlocks()) {
-                        if (block.getX() == b.getX() && block.getZ() == b.getZ()) {
-                            return file.getString("uuid");
+                if (file.isConfigurationSection("claims.0")) {
+                    for (String s : file.getConfigurationSection("claims").getKeys(false)) {
+                        Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideOne.x"), file.getDouble("claims." + s + ".sideOne.y"), file.getDouble("claims." + s + "sideOne.z"));
+                        Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideTwo.x"), file.getDouble("claims." + s + ".sideTwo.y"), file.getDouble("claims." + s + ".sideTwo.z"));
+                        Block block = loc.getBlock().getRelative(BlockFace.DOWN);
+                        Cuboid cuboid = new Cuboid(locationOne, locationTwo);
+                        for (Block b : cuboid.getBlocks()) {
+                            if (block.getX() == b.getX() && block.getZ() == b.getZ()) {
+                                return file.getString("uuid");
+                            }
                         }
                     }
                 }

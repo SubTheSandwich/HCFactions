@@ -350,5 +350,6 @@ public class Main extends JavaPlugin {
         saveResource("reclaims.yml", false);
         saveResource("staff.yml", false);
         saveResource("locations.yml", false);
+        saveResource("tab.yml", false);
     }
 }

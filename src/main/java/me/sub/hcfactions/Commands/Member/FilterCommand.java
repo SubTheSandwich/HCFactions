@@ -27,6 +27,7 @@ public class FilterCommand implements CommandExecutor {
                             if (Main.getInstance().blockedItems != null && Main.getInstance().blockedItems.get(p.getUniqueId()) != null) {
                                 materials = Main.getInstance().blockedItems.get(p.getUniqueId());
                             }
+
                             materials.add(material);
                             Main.getInstance().blockedItems.put(p.getUniqueId(), materials);
                             p.sendMessage(C.chat(Locale.get().getString("command.filter.added").replace("%material%", material.name())));
