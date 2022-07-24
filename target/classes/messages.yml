@@ -1,4 +1,13 @@
 faction:
+  max-listed-teams: 10
+  list:
+    - "&7&m----------------------------------------------------"
+    - "&9Team List &7(Page %page%/%max%)"
+    - "%team-format%"
+    - "&7You are currently on &fPage %page%/%max%"
+    - "&7To view other pages, use &e/%alias% list <page#>"
+    - "&7&m----------------------------------------------------"
+  team-format: "&7%team-number%. &e%team-name% &a(%online-members%/%members%)"
   help:
     main:
       - "&7&m----------------------------------------------------"
@@ -29,14 +38,12 @@ faction:
       - "&e/%alias% withdraw <amount;all> &7- Withdraw money from the faction"
       - " "
       - "&9Coleader Commands:"
-      - "&e/%alias% captain &7- Show captain management commands"
       - "&e/%alias% unclaim &7- Remove the faction's claim"
       - "&e/%alias% announcement [message] &7- Set the faction's announcement"
       - " "
       - "&9Leader Commands:"
       - "&e/%alias% promote <player> &7- Promote a player up a rank"
       - "&e/%alias% demote <player> &7- Demote a player down a rank"
-      - "&e/%alias% coleader &7- Show officer management commands"
       - "&e/%alias% revive <player> &7- Revive a teammate using faction lives"
       - "&e/%alias% rename <name> &7- Rename your faction"
       - "&e/%alias% disband &7- Disband your faction"

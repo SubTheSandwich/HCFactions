@@ -5,7 +5,12 @@ version: 1.0.0
 description: A Hardcore Factions Plugin
 depend:
   - Vault
+  - ProtocolLib
 commands:
+  report:
+    description: Reports
+  request:
+    description: Requests
   filter:
     description: Allows for the filtering of items
   reclaim:

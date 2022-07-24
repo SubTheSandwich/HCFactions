@@ -157,6 +157,17 @@ deathmessage:
   void: '&c%dead%&4[%dead_kills%] &efell into the void'
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
+  report:
+    usage: '&cUsage: /report <player> <reason>'
+    self: '&cYou cannot report yourself.'
+    cooldown: '&cPlease wait before using /report again.'
+    broadcast: '&6[Report] &e%reported% &7was reported by &e%reporter% &7for &e%reason%'
+    success: '&aThank you for your report. A staff member will look into this soon.'
+  request:
+    usage: '&cUsage: /request <message>'
+    cooldown: '&cPlease wait before using /request again.'
+    broadcast: '&6[Request] &e%sender% &7requested assistance: &e%message%'
+    success: '&aThank you for your request. A staff member will be with you shortly.'
   filter:
     usage: "&cUsage: /filter <add;remove> <item>"
     added: "&eYou have &aadded &d%material% &eto your blocked items to pickup."
@@ -362,6 +373,60 @@ command:
     sent: '&aSent %amount% to %recipient%'
     received: '&aReceived %amount% from %sender%'
   faction:
+    leave:
+      no-faction: "&cYou are not in a faction."
+      cant-leave: "&cYou cannot leave your faction if you are the leader."
+      left-self: "&eYou have left your faction."
+      left: '&c%name% has left the faction.'
+    kick:
+      invalid-player: "&cThe specified player does not exist."
+      no-faction: "&cYou are not in a faction."
+      not-in: "&cThe specified player is not in your faction."
+      not-right: "&cOnly the captains of the faction and up can kick members."
+      cant: "&cYou cannot kick %player%."
+      kicked: "&c%kicked% &ehas been kicked from the faction by &d%player%"
+    rename:
+      no-faction: "&cYou are not in a faction."
+      invalid-name: "&cThe specified name is invalid."
+      not-right: "&cOnly the leader of the faction can rename it."
+      msg: '&eRenamed faction to &a%name%&e.'
+      broadcast: '&eFaction &6%oldname% &erenamed to &a%name%&e.'
+      cooldown: '&eYou are still on rename cooldown.'
+    lives:
+      no-faction: "&cYou are not in a faction."
+      not-lives: "&cThe specified amount of lives is invalid."
+      invalid-lives: "&cYou do not have this many lives to deposit."
+      add:
+        added: "&eYou have &aadded &d%lives% &eto your faction's lives."
+    revive:
+      invalid-player: "&cThe specified player does not exist."
+      no-faction: "&cYou are not in a faction."
+      no-deathban: "&cThe specified player is not deathbanned."
+      not-faction: "&cThe specified player is not in your faction."
+      no-lives: "&cYour faction does not have any lives."
+      not-right: "&cOnly the leader of the faction can revive players."
+      revived: "&eYou have revived &d%player%&e."
+    list:
+      no-online: "&cThere are no factions online to list."
+      invalid-page: "&cThe specified page is invalid."
+    announcement:
+      no-faction: "&cYou do not have a faction."
+      not-right: "&cYou can only unclaim land if you are a coleader or a leader."
+      removed: '&d%name% &eremoved the faction announcement'
+      changed: '&d%name% &echanged the faction announcement to &d%announcement%'
+    unclaim:
+      no-faction: "&cYou do not have a faction."
+      not-right: "&cYou can only unclaim land if you are a coleader or a leader."
+      no-claim: "&cYou have no claim to unclaim."
+      not-dtr: '&cYou can not unclaim whilst being raidable.'
+      broadcast: '&eFaction claim has been voided by &d%player%.'
+      player: '&eSuccesfully unclaimed.'
+    disband:
+      no-faction: "&cYou cannot disband a faction as you have none."
+      not-right: "&cYou can only disband a faction if you are the leader."
+      broadcast: '&eFaction &9%faction% &ehas been &cdisbanded &eby &f%player%'
+      faction-broadcast: '&c&l%name% has disbanded the faction.'
+      cant-disband: "&cYou must wait a minute in between creating and disbanding a faction."
     settype:
       invalid-faction: "&cThe specified faction is invalid."
       set: "&eYou have set &b%faction%&e's type to &d%type%&e."
@@ -425,6 +490,7 @@ command:
     create:
       already-exists: "&cA faction by this name already exists."
       message: '&3Faction Created!'
+      invalid-name: "&cThe specified name is invalid."
       help: '&7To learn more about factions, do /f'
       broadcast: '&eFaction &9%faction% &ehas been &acreated &eby &f%player%'
     who:

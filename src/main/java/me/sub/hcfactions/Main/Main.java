@@ -138,6 +138,9 @@ public class Main extends JavaPlugin {
 
     public HashMap<Timers, Integer> timers = new HashMap<>();
 
+    public ArrayList<UUID> requestCooldown = new ArrayList<>();
+    public ArrayList<UUID> reportCooldown = new ArrayList<>();
+
     public HashMap<UUID, ItemStack[]> logoutArmorContents = new HashMap<>();
     public HashMap<UUID, ItemStack[]> logoutContents = new HashMap<>();
 
@@ -289,6 +292,8 @@ public class Main extends JavaPlugin {
         getCommand("mountain").setExecutor(new MountainCommand());
         getCommand("reclaim").setExecutor(new ReclaimCommand());
         getCommand("filter").setExecutor(new FilterCommand());
+        getCommand("request").setExecutor(new RequestCommand());
+        getCommand("report").setExecutor(new ReportCommand());
     }
 
     private void events() {
