@@ -336,8 +336,8 @@ public class DeathMessageSendEvent implements Listener {
 
         if (!players.get().getString("faction").equals("")) {
             Faction faction = new Faction(players.get().getString("faction"));
-            if (faction.get().getInt("dtr") != -0.99) {
-                int dtr = faction.get().getInt("dtr");
+            if (faction.get().getDouble("dtr") != -0.99) {
+                double dtr = faction.get().getInt("dtr");
                 dtr = dtr - 1;
                 faction.get().set("dtr", dtr);
                 faction.save();

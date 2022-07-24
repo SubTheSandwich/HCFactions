@@ -10,6 +10,7 @@ import me.sub.hcfactions.Main.Main;
 import me.sub.hcfactions.Utils.Color.C;
 import me.sub.hcfactions.Utils.Cooldowns.Cooldown;
 import me.sub.hcfactions.Utils.Cuboid.Cuboid;
+import me.sub.hcfactions.Utils.Deathban.Deathban;
 import me.sub.hcfactions.Utils.Economy.Economy;
 import me.sub.hcfactions.Utils.Faction.Claim;
 import me.sub.hcfactions.Utils.Faction.FactionInviteHandler;
@@ -30,8 +31,8 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class FactionCommand implements CommandExecutor {
     @Override
@@ -70,6 +71,82 @@ public class FactionCommand implements CommandExecutor {
                         }
                     } else {
                         p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));
+                    }
+                } else if (args[0].equalsIgnoreCase("list")) {
+                    for (Player d : Bukkit.getOnlinePlayers()) {
+                        Players players = new Players(d.getUniqueId().toString());
+                        if (players.hasFaction()) {
+                            Main.getInstance().onlineFactions.put(players.getFaction(), players.getFaction().getAllOnlinePlayers().size());
+                        }
+                    }
+                    Map<Faction, Integer> sortedMap = Main.getInstance().onlineFactions.entrySet().stream()
+                            .sorted(Comparator.comparingInt(e -> -e.getValue()))
+                            .collect(Collectors.toMap(
+                                    Map.Entry::getKey,
+                                    Map.Entry::getValue,
+                                    (a, b) -> { throw new AssertionError(); },
+                                    LinkedHashMap::new
+                            ));
+
+                    ArrayList<String> format = new ArrayList<>();
+
+
+                    if (sortedMap.size() != 0) {
+                        if (sortedMap.size() >= Messages.get().getInt("faction.max-listed-teams")) {
+                            for (int i = 0; i < Messages.get().getInt("faction.max-listed-teams"); i++) {
+                                format.add(C.chat(Messages.get().getString("faction.team-format").replace("%team-number%", String.valueOf(i + 1)).replace("%team-name%", new ArrayList<>(sortedMap.keySet()).get(i).get().getString("name")).replace("%online-members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllOnlinePlayers().size())).replace("%members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllMembers().size()))));
+                            }
+                        } else {
+                            for (int i = 0; i < sortedMap.size(); i++) {
+                                format.add(C.chat(Messages.get().getString("faction.team-format").replace("%team-number%", String.valueOf(i + 1)).replace("%team-name%", new ArrayList<>(sortedMap.keySet()).get(i).get().getString("name")).replace("%online-members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllOnlinePlayers().size())).replace("%members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllMembers().size()))));
+                            }
+                        }
+                        int value = sortedMap.size();
+                        int last = 0;
+                        int maxPages = 0;
+                        while (last == 0) {
+                            last = value % 10;
+                            maxPages = maxPages + 1;
+                            value = value - 10;
+                        }
+                        String message = String.join("\n", format);
+                        for (String str : Messages.get().getStringList("faction.list")) {
+                            if (str.contains("%page%")) {
+                                str = str.replace("%page%", "1");
+                            }
+                            if (str.contains("%max%")) {
+                                str = str.replace("%max%", String.valueOf(maxPages));
+                            }
+                            if (str.contains("%alias%")) {
+                                str = str.replace("%alias%", s);
+                            }
+                            if (str.contains("%team-format%")) {
+                                str = str.replace("%team-format%", message);
+                            }
+                            p.sendMessage(C.chat(str));
+                        }
+
+                        format.clear();
+                        sortedMap.clear();
+                        Main.getInstance().onlineFactions.clear();
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.list.no-online")));
+                    }
+                } else if (args[0].equalsIgnoreCase("announcement")) {
+                    Players players = new Players(p.getUniqueId().toString());
+                    if (players.hasFaction()) {
+                        if (players.getFaction().get().getStringList("coleaders").contains(p.getUniqueId().toString()) || players.getFaction().get().getString("leader").equalsIgnoreCase(p.getUniqueId().toString())) {
+                            Faction faction = players.getFaction();
+                            faction.get().set("announcement", "");
+                            faction.save();
+                            for (Player d : players.getFaction().getAllOnlinePlayers()) {
+                                d.sendMessage(C.chat(Locale.get().getString("command.faction.announcement.removed").replace("%name%", p.getName())));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.annoucnement.not-right")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.annoucnement.no-faction")));
                     }
                 } else if (args[0].equalsIgnoreCase("who")) {
                     Players players = new Players(p.getUniqueId().toString());
@@ -513,6 +590,96 @@ public class FactionCommand implements CommandExecutor {
                     } else {
                         p.sendMessage(C.chat(Locale.get().getString("command.faction.claim.no-faction")));
                     }
+                } else if (args[0].equalsIgnoreCase("disband")) {
+                    Players players = new Players(p.getUniqueId().toString());
+                    if (players.hasFaction()) {
+                        if (players.getFaction().get().getString("leader").equalsIgnoreCase(p.getUniqueId().toString())) {
+                            if (!Main.getInstance().cooldownCreate.contains(p.getUniqueId())) {
+                                Faction faction = players.getFaction();
+                                for (Player d : players.getFaction().getAllOnlinePlayers()) {
+                                    d.sendMessage(C.chat(Locale.get().getString("command.faction.disband.faction-broadcast").replace("%name%", p.getName())));
+                                }
+                                for (Player d : Bukkit.getOnlinePlayers()) {
+                                    d.sendMessage(C.chat(Locale.get().getString("command.faction.disband.broadcast").replace("%faction%", players.getFaction().get().getString("name")).replace("%player%", p.getName())));
+                                }
+                                for (OfflinePlayer d : players.getFaction().getAllMembers()) {
+                                    Players memberPlayer = new Players(d.getUniqueId().toString());
+                                    memberPlayer.get().set("faction", "");
+                                    memberPlayer.save();
+                                }
+                                faction.delete();
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.disband.cant-disband")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.disband.not-right")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.disband.no-faction")));
+                    }
+                } else if (args[0].equalsIgnoreCase("unclaim")) {
+                    Players players = new Players(p.getUniqueId().toString());
+                    if (players.hasFaction()) {
+                        if (players.getFaction().get().getString("leader").equalsIgnoreCase(p.getUniqueId().toString()) || players.getFaction().get().getStringList("coleaders").contains(p.getUniqueId().toString())) {
+                            if (players.getFaction().get().isConfigurationSection("claims.0")) {
+                                if (players.getFaction().get().getDouble("dtr") > 0) {
+                                    for (String str : players.getFaction().get().getConfigurationSection("claims").getKeys(false)) {
+                                        players.getFaction().get().set("claims." + str, null);
+                                        players.getFaction().save();
+                                    }
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.unclaim.player")));
+                                    for (Player d : players.getFaction().getAllOnlinePlayers()) {
+                                        d.sendMessage(C.chat(Locale.get().getString("command.faction.unclaim.broadcast").replace("%player%", p.getName())));
+                                    }
+                                } else {
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.unclaim.not-dtr")));
+                                }
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.unclaim.no-claim")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.unclaim.not-right")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.unclaim.no-faction")));
+                    }
+                } else if (args[0].equalsIgnoreCase("leave")) {
+                    Players players = new Players(p.getUniqueId().toString());
+                    if (players.hasFaction()) {
+                        if (!players.getFaction().get().getString("leader").equals(p.getUniqueId().toString())) {
+                            Faction faction = players.getFaction();
+                            if (faction.get().getStringList("members").contains(p.getUniqueId().toString())) {
+                                ArrayList<String> members = new ArrayList<>(faction.get().getStringList("members"));
+                                members.remove(p.getUniqueId().toString());
+                                faction.get().set("members", members);
+                                faction.save();
+                            } else if (faction.get().getStringList("captains").contains(p.getUniqueId().toString())) {
+                                ArrayList<String> members = new ArrayList<>(faction.get().getStringList("captains"));
+                                members.remove(p.getUniqueId().toString());
+                                faction.get().set("captains", members);
+                                faction.save();
+                            } else if (faction.get().getStringList("coleaders").contains(p.getUniqueId().toString())) {
+                                ArrayList<String> members = new ArrayList<>(faction.get().getStringList("coleaders"));
+                                members.remove(p.getUniqueId().toString());
+                                faction.get().set("coleaders", members);
+                                faction.save();
+                            }
+                            players.get().set("faction", "");
+                            players.save();
+
+                            for (Player d : faction.getAllOnlinePlayers()) {
+                                d.sendMessage(C.chat(Locale.get().getString("command.faction.leave.left").replace("%name%", p.getName())));
+                            }
+
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.leave.left-self")));
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.leave.cant-leave")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.leave.no-faction")));
+                    }
+                } else if (args[0].equalsIgnoreCase("stuck")) {
+
                 }
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("claimfor")) {
@@ -538,6 +705,122 @@ public class FactionCommand implements CommandExecutor {
                         }
                     } else {
                         p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));
+                    }
+                } else if (args[0].equalsIgnoreCase("revive")) {
+                    OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
+                    Players players = new Players(p.getUniqueId().toString());
+                    Players offlinePlayers = new Players(player.getUniqueId().toString());
+                    if (offlinePlayers.exists()) {
+                        if (players.hasFaction()) {
+                            if (offlinePlayers.hasFaction()) {
+                                if (players.get().getString("faction").equalsIgnoreCase(offlinePlayers.get().getString("faction"))) {
+                                    if (players.getFaction().get().getString("leader").equalsIgnoreCase(p.getUniqueId().toString())) {
+                                        Deathban deathban = new Deathban(player.getUniqueId().toString());
+                                        if (deathban.hasDeathban()) {
+                                            Faction faction = players.getFaction();
+                                            if (faction.get().getInt("lives") > 0) {
+                                                deathban.removeDeathban();
+                                                p.sendMessage(C.chat(Locale.get().getString("command.faction.revive.revived").replace("%player%", player.getName())));
+                                                faction.get().set("lives", faction.get().getInt("lives") - 1);
+                                                faction.save();
+                                            } else {
+                                                p.sendMessage(C.chat(Locale.get().getString("command.faction.revive.no-lives")));
+                                            }
+                                        } else {
+                                            p.sendMessage(C.chat(Locale.get().getString("command.faction.revive.no-deathban")));
+                                        }
+                                    } else {
+                                        p.sendMessage(C.chat(Locale.get().getString("command.faction.revive.not-right")));
+                                    }
+                                } else {
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.revive.not-faction")));
+                                }
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.revive.not-faction")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.revive.no-faction")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.revive.invalid-player")));
+                    }
+                } else if (args[0].equalsIgnoreCase("list")) {
+                    try {
+                        int pageNumber = Integer.parseInt(args[1]);
+                        if (pageNumber > 1) {
+                            for (Player d : Bukkit.getOnlinePlayers()) {
+                                Players players = new Players(d.getUniqueId().toString());
+                                if (players.hasFaction()) {
+                                    Main.getInstance().onlineFactions.put(players.getFaction(), players.getFaction().getAllOnlinePlayers().size());
+                                }
+                            }
+                            Map<Faction, Integer> sortedMap = Main.getInstance().onlineFactions.entrySet().stream()
+                                    .sorted(Comparator.comparingInt(e -> -e.getValue()))
+                                    .collect(Collectors.toMap(
+                                            Map.Entry::getKey,
+                                            Map.Entry::getValue,
+                                            (a, b) -> {
+                                                throw new AssertionError();
+                                            },
+                                            LinkedHashMap::new
+                                    ));
+
+                            ArrayList<String> format = new ArrayList<>();
+
+
+                            if (sortedMap.size() != 0) {
+                                int value = sortedMap.size();
+                                int last = 0;
+                                int maxPages = 0;
+                                while (last == 0) {
+                                    last = value % 10;
+                                    maxPages = maxPages + 1;
+                                    value = value - 10;
+                                }
+                                if (pageNumber <= maxPages) {
+                                    int size = sortedMap.size() - ((pageNumber - 1) * 10);
+                                    if (size >= Messages.get().getInt("faction.max-listed-teams")) {
+                                        for (int i = ((pageNumber - 1) * 10); i < Messages.get().getInt("faction.max-listed-teams"); i++) {
+                                            format.add(C.chat(Messages.get().getString("faction.team-format").replace("%team-number%", String.valueOf(i + 1)).replace("%team-name%", new ArrayList<>(sortedMap.keySet()).get(i).get().getString("name")).replace("%online-members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllOnlinePlayers().size())).replace("%members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllMembers().size()))));
+                                        }
+                                    } else {
+                                        for (int i = ((pageNumber - 1) * 10); i < size; i++) {
+                                            format.add(C.chat(Messages.get().getString("faction.team-format").replace("%team-number%", String.valueOf(i + 1)).replace("%team-name%", new ArrayList<>(sortedMap.keySet()).get(i).get().getString("name")).replace("%online-members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllOnlinePlayers().size())).replace("%members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllMembers().size()))));
+                                        }
+                                    }
+                                    String message = String.join("\n", format);
+                                    for (String str : Messages.get().getStringList("faction.list")) {
+                                        if (str.contains("%page%")) {
+                                            str = str.replace("%page%", String.valueOf(pageNumber));
+                                        }
+                                        if (str.contains("%max%")) {
+                                            str = str.replace("%max%", String.valueOf(maxPages));
+                                        }
+                                        if (str.contains("%alias%")) {
+                                            str = str.replace("%alias%", s);
+                                        }
+                                        if (str.contains("%team-format%")) {
+                                            str = str.replace("%team-format%", message);
+                                        }
+                                        p.sendMessage(C.chat(str));
+                                    }
+
+                                    format.clear();
+                                    sortedMap.clear();
+                                    Main.getInstance().onlineFactions.clear();
+                                } else {
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.list.invalid-page")));
+                                    sortedMap.clear();
+                                    Main.getInstance().onlineFactions.clear();
+                                }
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.list.no-online")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.list.invalid-page")));
+                        }
+                    } catch (NumberFormatException nfe) {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.list.invalid-page")));
                     }
                 } else if (args[0].equalsIgnoreCase("createsystem")) {
                     if (p.hasPermission("hcfactions.admin")) {
@@ -627,34 +910,45 @@ public class FactionCommand implements CommandExecutor {
                         p.sendMessage(C.chat(Locale.get().getString("command.faction.attempt-create")));
                         return true;
                     } else {
-                        String id = UUID.randomUUID().toString();
-                        Faction faction = new Faction(id);
-                        Players players = new Players(p.getUniqueId().toString());
-                        players.get().set("faction", id);
-                        players.save();
-                        faction.setup();
-                        faction.get().set("uuid", id);
-                        faction.get().set("name", args[1]);
-                        faction.get().set("deathban", true);
-                        faction.get().set("type", "PLAYER");
-                        faction.get().set("claims", "");
-                        faction.get().set("leader", p.getUniqueId().toString());
-                        faction.get().set("coleaders", "");
-                        faction.get().set("captains", "");
-                        faction.get().set("members", "");
-                        faction.get().set("allies", "");
-                        faction.get().set("kothcaptures", 0);
-                        faction.get().set("dtr", 1.01);
-                        faction.get().set("startregen", "");
-                        faction.get().set("regening", false);
-                        faction.get().set("lives", 0);
-                        faction.get().set("balance", 0);
-                        faction.get().set("points", 0);
-                        faction.get().set("announcement", "");
-                        faction.save();
-                        p.sendMessage(C.chat(Locale.get().getString("command.faction.create.message")));
-                        p.sendMessage(C.chat(Locale.get().getString("command.faction.create.help")));
-                        Bukkit.broadcastMessage(C.chat(Locale.get().getString("command.faction.create.broadcast").replace("%faction%", args[1]).replace("%player%", p.getName())));
+                        if (factionName.length() > 2 && factionName.length() < 16) {
+                            String id = UUID.randomUUID().toString();
+                            Faction faction = new Faction(id);
+                            Players players = new Players(p.getUniqueId().toString());
+                            players.get().set("faction", id);
+                            players.save();
+                            faction.setup();
+                            faction.get().set("uuid", id);
+                            faction.get().set("name", args[1]);
+                            faction.get().set("deathban", true);
+                            faction.get().set("type", "PLAYER");
+                            faction.get().set("claims", "");
+                            faction.get().set("leader", p.getUniqueId().toString());
+                            faction.get().set("coleaders", "");
+                            faction.get().set("captains", "");
+                            faction.get().set("members", "");
+                            faction.get().set("allies", "");
+                            faction.get().set("kothcaptures", 0);
+                            faction.get().set("dtr", 1.01);
+                            faction.get().set("startregen", "");
+                            faction.get().set("regening", false);
+                            faction.get().set("lives", 0);
+                            faction.get().set("balance", 0);
+                            faction.get().set("points", 0);
+                            faction.get().set("announcement", "");
+                            Main.getInstance().cooldownCreate.add(p.getUniqueId());
+                            faction.save();
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.create.message")));
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.create.help")));
+                            Bukkit.broadcastMessage(C.chat(Locale.get().getString("command.faction.create.broadcast").replace("%faction%", args[1]).replace("%player%", p.getName())));
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    Main.getInstance().cooldownCreate.remove(p.getUniqueId());
+                                }
+                            }.runTaskLater(Main.getInstance(), 1200);
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.create.invalid-name")));
+                        }
                     }
                 } else if (args[0].equalsIgnoreCase("invite")) {
                     Players players = new Players(p.getUniqueId().toString());
@@ -1486,6 +1780,151 @@ public class FactionCommand implements CommandExecutor {
                             p.sendMessage(C.chat(Locale.get().getString("command.faction.deposit.invalid-amount")));
                         }
                     }
+                } else if (args[0].equalsIgnoreCase("announcement")) {
+                    Players players = new Players(p.getUniqueId().toString());
+                    if (players.hasFaction()) {
+                        if (players.getFaction().get().getStringList("coleaders").contains(p.getUniqueId().toString()) || players.getFaction().get().getString("leader").equalsIgnoreCase(p.getUniqueId().toString())) {
+                            Faction faction = players.getFaction();
+                            if (!args[1].equals(" ")) {
+                                String[] split = Arrays.copyOfRange(args, 1, args.length);
+                                String announcement = String.join(" ", split);
+                                faction.get().set("announcement", announcement);
+                                faction.save();
+                                for (Player d : players.getFaction().getAllOnlinePlayers()) {
+                                    d.sendMessage(C.chat(Locale.get().getString("command.faction.announcement.changed").replace("%name%", p.getName()).replace("%announcement%", announcement)));
+                                }
+                            } else {
+                                faction.get().set("announcement", "");
+                                faction.save();
+                                for (Player d : players.getFaction().getAllOnlinePlayers()) {
+                                    d.sendMessage(C.chat(Locale.get().getString("command.faction.announcement.removed").replace("%name%", p.getName())));
+                                }
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.annoucnement.not-right")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.annoucnement.no-faction")));
+                    }
+                } else if (args[0].equalsIgnoreCase("rename")) {
+                    Players players = new Players(p.getUniqueId().toString());
+                    if (players.hasFaction()) {
+                        String factionName = args[1];
+                        File[] factions = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder().getPath() + "/data/factions").listFiles();
+                        if (factions != null) {
+                            for (File f : factions) {
+                                YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
+                                if (file.getString("name").toLowerCase(java.util.Locale.ROOT).equals(factionName.toLowerCase(java.util.Locale.ROOT))) {
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.rename.invalid-name")));
+                                    return true;
+                                }
+                            }
+                        }
+                        if (factionName.length() > 2 && factionName.length() < 16) {
+                            if (players.getFaction().get().getString("leader").equals(p.getUniqueId().toString())) {
+                                if (!Main.getInstance().renameCooldown.contains(p.getUniqueId())) {
+                                    String oldname;
+                                    Faction faction = players.getFaction();
+                                    oldname = faction.get().getString("name");
+                                    faction.get().set("name", factionName);
+                                    faction.save();
+                                    Main.getInstance().renameCooldown.add(p.getUniqueId());
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.rename.msg").replace("%name%", factionName)));
+                                    for (Player d : faction.getAllOnlinePlayers()) {
+                                        d.sendMessage(C.chat(Locale.get().getString("command.faction.rename.broadcast").replace("%name%", factionName).replace("%oldname%", oldname)));
+                                    }
+                                    new BukkitRunnable() {
+                                        @Override
+                                        public void run() {
+                                            Main.getInstance().renameCooldown.remove(p.getUniqueId());
+                                        }
+                                    }.runTaskLater(Main.getInstance(), 600);
+                                } else {
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.rename.cooldown")));
+                                }
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.rename.not-right")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.rename.invalid-name")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.rename.no-faction")));
+                    }
+                } else if (args[0].equalsIgnoreCase("kick")) {
+                    OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
+                    Players offlinePlayers = new Players(player.getUniqueId().toString());
+                    Players players = new Players(p.getUniqueId().toString());
+                    if (offlinePlayers.exists()) {
+                        if (players.hasFaction()) {
+                            if (offlinePlayers.hasFaction()) {
+                                if (players.get().getString("faction").equals(offlinePlayers.get().getString("faction"))) {
+                                    Faction faction = players.getFaction();
+                                    if (faction.get().getStringList("captains").contains(p.getUniqueId().toString()) || faction.get().getStringList("coleaders").contains(p.getUniqueId().toString()) || faction.get().getString("leader").equals(p.getUniqueId().toString())) {
+                                        String playerRole = "";
+                                        String kickedRole = "";
+                                        if (faction.get().getStringList("members").contains(player.getUniqueId().toString())) {
+                                            kickedRole = "MEMBER";
+                                        } else if (faction.get().getStringList("captains").contains(player.getUniqueId().toString())) {
+                                            kickedRole = "CAPTAIN";
+                                        } else if (faction.get().getStringList("coleaders").contains(player.getUniqueId().toString())) {
+                                            kickedRole = "COLEADER";
+                                        } else if (faction.get().getString("leader").contains(player.getUniqueId().toString())) {
+                                            kickedRole = "LEADER";
+                                        }
+                                        if (faction.get().getStringList("members").contains(p.getUniqueId().toString())) {
+                                            playerRole = "MEMBER";
+                                        } else if (faction.get().getStringList("captains").contains(p.getUniqueId().toString())) {
+                                            playerRole = "CAPTAIN";
+                                        } else if (faction.get().getStringList("coleaders").contains(p.getUniqueId().toString())) {
+                                            playerRole = "COLEADER";
+                                        } else if (faction.get().getString("leader").contains(p.getUniqueId().toString())) {
+                                            playerRole = "LEADER";
+                                        }
+                                        if (getRoleNumber(playerRole) > getRoleNumber(kickedRole)) {
+                                            switch (kickedRole) {
+                                                case "MEMBER":
+                                                    ArrayList<String> members = new ArrayList<>(faction.get().getStringList("members"));
+                                                    members.remove(player.getUniqueId().toString());
+                                                    faction.get().set("members", members);
+                                                    faction.save();
+                                                    break;
+                                                case "CAPTAIN":
+                                                    ArrayList<String> captain = new ArrayList<>(faction.get().getStringList("captains"));
+                                                    captain.remove(player.getUniqueId().toString());
+                                                    faction.get().set("captains", captain);
+                                                    faction.save();
+                                                    break;
+                                                case "COLEADER":
+                                                    ArrayList<String> coleader = new ArrayList<>(faction.get().getStringList("coleaders"));
+                                                    coleader.remove(player.getUniqueId().toString());
+                                                    faction.get().set("coleaders", coleader);
+                                                    faction.save();
+                                                    break;
+                                            }
+                                            offlinePlayers.get().set("faction", "");
+                                            offlinePlayers.save();
+                                            for (Player d : faction.getAllOnlinePlayers()) {
+                                                d.sendMessage(C.chat(Locale.get().getString("command.faction.kick.kicked").replace("%kicked%", player.getName()).replace("%player%", p.getName())));
+                                            }
+                                        } else {
+                                            p.sendMessage(C.chat(Locale.get().getString("command.faction.kick.cant").replace("%player%", player.getName())));
+                                        }
+                                    } else {
+                                        p.sendMessage(C.chat(Locale.get().getString("command.faction.kick.not-right")));
+                                    }
+                                } else {
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.kick.not-in")));
+                                }
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.kick.not-in")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.kick.no-faction")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.kick.invalid-player")));
+                    }
                 }
             } else if (args.length == 3) {
                 if (args[0].equalsIgnoreCase("settype")) {
@@ -1544,6 +1983,33 @@ public class FactionCommand implements CommandExecutor {
                         }
                     } else {
                         p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));
+                    }
+                } else if (args[0].equalsIgnoreCase("lives")) {
+                    if (args[1].equalsIgnoreCase("add")) {
+                        Players players = new Players(p.getUniqueId().toString());
+                        if (players.hasFaction()) {
+                            try {
+                                int lives = Integer.parseInt(args[2]);
+                                if (lives > 0) {
+                                    if (players.get().getInt("lives") >= lives) {
+                                        players.get().set("lives", players.get().getInt("lives") - lives);
+                                        players.save();
+                                        Faction faction = players.getFaction();
+                                        faction.get().set("lives", faction.get().getInt("lives") + lives);
+                                        faction.save();
+                                        p.sendMessage(C.chat(Locale.get().getString("command.faction.lives.add.added").replace("%lives%", String.valueOf(lives))));
+                                    } else {
+                                        p.sendMessage(C.chat(Locale.get().getString("command.faction.lives.invalid-lives")));
+                                    }
+                                } else {
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.lives.not-lives")));
+                                }
+                            } catch (NumberFormatException nfe) {
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.lives.not-lives")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.lives.no-faction")));
+                        }
                     }
                 } else if (args[0].equalsIgnoreCase("setcolor")) {
                     if (p.hasPermission("hcfactions.admin") || p.hasPermission("hcfactions.command.faction.setcolor")) {
@@ -1614,6 +2080,60 @@ public class FactionCommand implements CommandExecutor {
                     } else {
                         p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));
                     }
+                } else if (args[0].equalsIgnoreCase("announcement")) {
+                    Players players = new Players(p.getUniqueId().toString());
+                    if (players.hasFaction()) {
+                        if (players.getFaction().get().getStringList("coleaders").contains(p.getUniqueId().toString()) || players.getFaction().get().getString("leader").equalsIgnoreCase(p.getUniqueId().toString())) {
+                            Faction faction = players.getFaction();
+                            if (!args[1].equals(" ")) {
+                                String[] split = Arrays.copyOfRange(args, 1, args.length);
+                                String announcement = String.join(" ", split);
+                                faction.get().set("announcement", announcement);
+                                faction.save();
+                                for (Player d : players.getFaction().getAllOnlinePlayers()) {
+                                    d.sendMessage(C.chat(Locale.get().getString("command.faction.announcement.changed").replace("%name%", p.getName()).replace("%announcement%", announcement)));
+                                }
+                            } else {
+                                faction.get().set("announcement", "");
+                                faction.save();
+                                for (Player d : players.getFaction().getAllOnlinePlayers()) {
+                                    d.sendMessage(C.chat(Locale.get().getString("command.faction.announcement.removed").replace("%name%", p.getName())));
+                                }
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.annoucnement.not-right")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.annoucnement.no-faction")));
+                    }
+                }
+            } else {
+                if (args[0].equalsIgnoreCase("announcement")) {
+                    Players players = new Players(p.getUniqueId().toString());
+                    if (players.hasFaction()) {
+                        if (players.getFaction().get().getStringList("coleaders").contains(p.getUniqueId().toString()) || players.getFaction().get().getString("leader").equalsIgnoreCase(p.getUniqueId().toString())) {
+                            Faction faction = players.getFaction();
+                            if (!args[1].equals(" ")) {
+                                String[] split = Arrays.copyOfRange(args, 1, args.length);
+                                String announcement = String.join(" ", split);
+                                faction.get().set("announcement", announcement);
+                                faction.save();
+                                for (Player d : players.getFaction().getAllOnlinePlayers()) {
+                                    d.sendMessage(C.chat(Locale.get().getString("command.faction.announcement.changed").replace("%name%", p.getName()).replace("%announcement%", announcement)));
+                                }
+                            } else {
+                                faction.get().set("announcement", "");
+                                faction.save();
+                                for (Player d : players.getFaction().getAllOnlinePlayers()) {
+                                    d.sendMessage(C.chat(Locale.get().getString("command.faction.announcement.removed").replace("%name%", p.getName())));
+                                }
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.annoucnement.not-right")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.annoucnement.no-faction")));
+                    }
                 }
             }
         } else {
@@ -1643,6 +2163,21 @@ public class FactionCommand implements CommandExecutor {
             } else {
                 return false;
             }
+        }
+    }
+
+    private int getRoleNumber(String role) {
+        switch (role) {
+            case "MEMBER":
+                return 0;
+            case "CAPTAIN":
+                return 1;
+            case "COLEADER":
+                return 2;
+            case "LEADER":
+                return 3;
+            default:
+                return -1;
         }
     }
 

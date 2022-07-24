@@ -50,6 +50,7 @@ import me.sub.hcfactions.Events.Scoreboard.LoadScoreboard;
 import me.sub.hcfactions.Events.Scoreboard.RemoveScoreboard;
 import me.sub.hcfactions.Events.SignInteractEvent;
 import me.sub.hcfactions.Events.Staff.StaffEvents;
+import me.sub.hcfactions.Files.Faction.Faction;
 import me.sub.hcfactions.Files.Locale.Locale;
 import me.sub.hcfactions.Files.Mountain.Mountain;
 import me.sub.hcfactions.Files.Players.Players;
@@ -152,6 +153,9 @@ public class Main extends JavaPlugin {
     public ArrayList<Player> allyChat = new ArrayList<>();
     public ArrayList<Player> staffChat = new ArrayList<>();
 
+    public HashMap<Faction, Integer> onlineFactions = new HashMap<>();
+    public ArrayList<UUID> renameCooldown = new ArrayList<>();
+
     public ArrayList<UUID> loggedDeath = new ArrayList<>();
 
     public ArrayList<Player> frozen = new ArrayList<>();
@@ -161,6 +165,8 @@ public class Main extends JavaPlugin {
     public ArrayList<Player> sotwEnabled = new ArrayList<>();
     public boolean sotwStarted = false;
     public boolean sotwPaused = false;
+
+    public ArrayList<UUID> cooldownCreate = new ArrayList<>();
 
     private Chat chat;
 

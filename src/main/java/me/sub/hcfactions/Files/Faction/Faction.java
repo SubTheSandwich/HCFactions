@@ -42,6 +42,12 @@ public class Faction {
         customFile = YamlConfiguration.loadConfiguration(file);
     }
 
+    public void delete() {
+        if (file.exists()) {
+            file.delete();
+        }
+    }
+
     public FileConfiguration get() {
         return customFile;
     }
@@ -99,10 +105,6 @@ public class Faction {
         }
 
         return online;
-    }
-
-    public void createSystemFaction(String name) {
-
     }
 
     public void reload() {
