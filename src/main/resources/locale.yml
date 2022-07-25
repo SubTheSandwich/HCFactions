@@ -158,7 +158,7 @@ deathmessage:
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
   conquest:
-    usage: '&cUsage: /conquest [create;delete;start;stop;setarea;setpoints] <name>'
+    usage: '&cUsage: /conquest [create;delete;start;stop;setarea;setpoints;addreward;delreward] <name>'
     already-exists: '&7[Conquest] &eConquest &6%conquest% &ealready exists.'
     doesnt-exist: '&7[Conquest] &eConquest &6%conquest% &edoes not exist.'
     not-setup: "&7[Conquest] &eConquest &6%conquest% &eis not setup yet."
@@ -168,6 +168,8 @@ command:
     deleted: '&7[Conquest] &eConquest &6%conquest% &ehas been deleted.'
     started: '&7[Conquest] &eConquest &6%conquest% &ehas been started.'
     stopped: '&7[Conquest] &eConquest &6%conquest% &ehas been stopped.'
+    addreward: "&7[Conquest] &eConquest &6%conquest% &ehas received the following reward: &7%reward%"
+    delreward: "&7[Conquest] &eConquest &6%conquest% &ehas lost the following reward: &7%reward%"
     captured: '&7[Conquest] &eConquest &6%name% &ewas captured by &6%faction%&e.'
     control: '&7[Conquest] &6%faction% &ehas started to control %zone%&e.'
     control-team: '&7[Conquest] &eYour team is now controlling %zone%&e.'

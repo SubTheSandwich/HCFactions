@@ -2,6 +2,7 @@ package me.sub.hcfactions.Commands.Admin;
 
 import me.sub.hcfactions.Files.Conquest.Conquest;
 import me.sub.hcfactions.Files.Faction.Faction;
+import me.sub.hcfactions.Files.Koth.Koth;
 import me.sub.hcfactions.Files.Locale.Locale;
 import me.sub.hcfactions.Main.Main;
 import me.sub.hcfactions.Utils.Color.C;
@@ -13,6 +14,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -113,6 +116,36 @@ public class ConquestCommand implements CommandExecutor {
                         p.sendMessage(C.chat(Locale.get().getString("command.conquest.setpoints.usage")));
                     } else if (args[0].equalsIgnoreCase("setarea")) {
                         p.sendMessage(C.chat(Locale.get().getString("command.conquest.setarea.usage")));
+                    } else if (args[0].equalsIgnoreCase("addreward")) {
+                        if (exists(args[1])) {
+                            Conquest conquest = getConquestByName(args[1]);
+                            ArrayList<String> rewards = new ArrayList<>(conquest.get().getStringList("rewards"));
+                            String[] split = Arrays.copyOfRange(args, 2, args.length);
+                            String reason = String.join(" ", split);
+                            rewards.add(reason);
+                            conquest.get().set("rewards", rewards);
+                            conquest.save();
+                            p.sendMessage(C.chat(Locale.get().getString("command.conquest.addreward").replace("%conquest%", getConquestByName(args[1]).get().getString("name")).replace("%reward%", reason)));
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.conquest.doesnt-exist")));
+                        }
+                    } else if (args[0].equalsIgnoreCase("delreward")) {
+                        if (exists(args[1])) {
+                            Conquest conquest = getConquestByName(args[1]);
+                            ArrayList<String> rewards = new ArrayList<>(conquest.get().getStringList("rewards"));
+                            String[] split = Arrays.copyOfRange(args, 2, args.length);
+                            String reason = String.join(" ", split);
+                            if (rewards.contains(reason)) {
+                                rewards.remove(reason);
+                                conquest.get().set("rewards", rewards);
+                                conquest.save();
+                                p.sendMessage(C.chat(Locale.get().getString("command.conquest.delreward").replace("%conquest%", getConquestByName(args[1]).get().getString("name")).replace("%reward%", reason)));
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.conquest.usage")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.conquest.doesnt-exist")));
+                        }
                     } else {
                         p.sendMessage(C.chat(Locale.get().getString("command.conquest.usage")));
                     }
@@ -143,6 +176,36 @@ public class ConquestCommand implements CommandExecutor {
                             }
                         } else {
                             p.sendMessage(C.chat(Locale.get().getString("command.conquest.doesnt-exist").replace("%conquest%", args[1])));
+                        }
+                    } else if (args[0].equalsIgnoreCase("addreward")) {
+                        if (exists(args[1])) {
+                            Conquest conquest = getConquestByName(args[1]);
+                            ArrayList<String> rewards = new ArrayList<>(conquest.get().getStringList("rewards"));
+                            String[] split = Arrays.copyOfRange(args, 2, args.length);
+                            String reason = String.join(" ", split);
+                            rewards.add(reason);
+                            conquest.get().set("rewards", rewards);
+                            conquest.save();
+                            p.sendMessage(C.chat(Locale.get().getString("command.conquest.addreward").replace("%conquest%", getConquestByName(args[1]).get().getString("name")).replace("%reward%", reason)));
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.conquest.doesnt-exist")));
+                        }
+                    } else if (args[0].equalsIgnoreCase("delreward")) {
+                        if (exists(args[1])) {
+                            Conquest conquest = getConquestByName(args[1]);
+                            ArrayList<String> rewards = new ArrayList<>(conquest.get().getStringList("rewards"));
+                            String[] split = Arrays.copyOfRange(args, 2, args.length);
+                            String reason = String.join(" ", split);
+                            if (rewards.contains(reason)) {
+                                rewards.remove(reason);
+                                conquest.get().set("rewards", rewards);
+                                conquest.save();
+                                p.sendMessage(C.chat(Locale.get().getString("command.conquest.delreward").replace("%conquest%", getConquestByName(args[1]).get().getString("name")).replace("%reward%", reason)));
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.conquest.usage")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.conquest.doesnt-exist")));
                         }
                     } else if (args[0].equalsIgnoreCase("setarea")) {
                         if (exists(args[1])) {
@@ -342,7 +405,39 @@ public class ConquestCommand implements CommandExecutor {
                         p.sendMessage(C.chat(Locale.get().getString("command.conquest.usage")));
                     }
                 } else {
-                    p.sendMessage(C.chat(Locale.get().getString("command.conquest.usage")));
+                    if (args[0].equalsIgnoreCase("addreward")) {
+                        if (exists(args[1])) {
+                            Conquest conquest = getConquestByName(args[1]);
+                            ArrayList<String> rewards = new ArrayList<>(conquest.get().getStringList("rewards"));
+                            String[] split = Arrays.copyOfRange(args, 2, args.length);
+                            String reason = String.join(" ", split);
+                            rewards.add(reason);
+                            conquest.get().set("rewards", rewards);
+                            conquest.save();
+                            p.sendMessage(C.chat(Locale.get().getString("command.conquest.addreward").replace("%conquest%", getConquestByName(args[1]).get().getString("name")).replace("%reward%", reason)));
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.conquest.doesnt-exist").replace("%conquest%", args[1])));
+                        }
+                    } else if (args[0].equalsIgnoreCase("delreward")) {
+                        if (exists(args[1])) {
+                            Conquest conquest = getConquestByName(args[1]);
+                            ArrayList<String> rewards = new ArrayList<>(conquest.get().getStringList("rewards"));
+                            String[] split = Arrays.copyOfRange(args, 2, args.length);
+                            String reason = String.join(" ", split);
+                            if (rewards.contains(reason)) {
+                                rewards.remove(reason);
+                                conquest.get().set("rewards", rewards);
+                                conquest.save();
+                                p.sendMessage(C.chat(Locale.get().getString("command.conquest.delreward").replace("%conquest%", getConquestByName(args[1]).get().getString("name")).replace("%reward%", reason)));
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.conquest.usage")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.conquest.doesnt-exist").replace("%conquest%", args[1])));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.conquest.usage")));
+                    }
                 }
             } else {
                 p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));

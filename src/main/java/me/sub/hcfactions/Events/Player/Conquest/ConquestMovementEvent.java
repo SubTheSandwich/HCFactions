@@ -57,6 +57,14 @@ public class ConquestMovementEvent implements Listener {
                                             Main.getInstance().conquestPoints.clear();
                                             Main.getInstance().conquestTimer.clear();
                                             Main.getInstance().capturingColorFaction.clear();
+                                            if (conquest.get().getStringList("rewards").size() > 0) {
+                                                for (String s : conquest.get().getStringList("rewards")) {
+                                                    if (s.contains("%player%")) {
+                                                        s = s.replace("%player%", Bukkit.getPlayer(uuid).getName());
+                                                    }
+                                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), s);
+                                                }
+                                            }
                                             for (Player p : Bukkit.getOnlinePlayers()) {
                                                 p.sendMessage(C.chat(Locale.get().getString("command.conquest.captured").replace("%name%", conquest.get().getString("name")).replace("%faction%", faction.get().getString("name"))));
                                             }
@@ -102,10 +110,19 @@ public class ConquestMovementEvent implements Listener {
                                         } else {
                                             Main.getInstance().conquestPoints.put(faction.get().getString("uuid"), 1);
                                         }
-                                        if (Main.getInstance().conquestPoints.get(faction.get().getString("uuid")) >= Main.getInstance().getConfig().getInt("settings.conquest-max-points")) {
+                                        int points = Main.getInstance().conquestPoints.get(faction.get().getString("uuid"));
+                                        if (points >= Main.getInstance().getConfig().getInt("settings.conquest-max-points")) {
                                             Main.getInstance().conquestPoints.clear();
                                             Main.getInstance().conquestTimer.clear();
                                             Main.getInstance().capturingColorFaction.clear();
+                                            if (conquest.get().getStringList("rewards").size() > 0) {
+                                                for (String s : conquest.get().getStringList("rewards")) {
+                                                    if (s.contains("%player%")) {
+                                                        s = s.replace("%player%", Bukkit.getPlayer(uuid).getName());
+                                                    }
+                                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), s);
+                                                }
+                                            }
                                             for (Player p : Bukkit.getOnlinePlayers()) {
                                                 p.sendMessage(C.chat(Locale.get().getString("command.conquest.captured").replace("%name%", conquest.get().getString("name")).replace("%faction%", faction.get().getString("name"))));
                                             }
@@ -151,10 +168,19 @@ public class ConquestMovementEvent implements Listener {
                                         } else {
                                             Main.getInstance().conquestPoints.put(faction.get().getString("uuid"), 1);
                                         }
-                                        if (Main.getInstance().conquestPoints.get(faction.get().getString("uuid")) >= Main.getInstance().getConfig().getInt("settings.conquest-max-points")) {
+                                        int points = Main.getInstance().conquestPoints.get(faction.get().getString("uuid"));
+                                        if (points >= Main.getInstance().getConfig().getInt("settings.conquest-max-points")) {
                                             Main.getInstance().conquestPoints.clear();
                                             Main.getInstance().conquestTimer.clear();
                                             Main.getInstance().capturingColorFaction.clear();
+                                            if (conquest.get().getStringList("rewards").size() > 0) {
+                                                for (String s : conquest.get().getStringList("rewards")) {
+                                                    if (s.contains("%player%")) {
+                                                        s = s.replace("%player%", Bukkit.getPlayer(uuid).getName());
+                                                    }
+                                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), s);
+                                                }
+                                            }
                                             for (Player p : Bukkit.getOnlinePlayers()) {
                                                 p.sendMessage(C.chat(Locale.get().getString("command.conquest.captured").replace("%name%", conquest.get().getString("name")).replace("%faction%", faction.get().getString("name"))));
                                             }
@@ -200,10 +226,19 @@ public class ConquestMovementEvent implements Listener {
                                         } else {
                                             Main.getInstance().conquestPoints.put(faction.get().getString("uuid"), 1);
                                         }
-                                        if (Main.getInstance().conquestPoints.get(faction.get().getString("uuid")) >= Main.getInstance().getConfig().getInt("settings.conquest-max-points")) {
+                                        int points = Main.getInstance().conquestPoints.get(faction.get().getString("uuid"));
+                                        if (points >= Main.getInstance().getConfig().getInt("settings.conquest-max-points")) {
                                             Main.getInstance().conquestPoints.clear();
                                             Main.getInstance().conquestTimer.clear();
                                             Main.getInstance().capturingColorFaction.clear();
+                                            if (conquest.get().getStringList("rewards").size() > 0) {
+                                                for (String s : conquest.get().getStringList("rewards")) {
+                                                    if (s.contains("%player%")) {
+                                                        s = s.replace("%player%", Bukkit.getPlayer(uuid).getName());
+                                                    }
+                                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), s);
+                                                }
+                                            }
                                             for (Player p : Bukkit.getOnlinePlayers()) {
                                                 p.sendMessage(C.chat(Locale.get().getString("command.conquest.captured").replace("%name%", conquest.get().getString("name")).replace("%faction%", faction.get().getString("name"))));
                                             }
