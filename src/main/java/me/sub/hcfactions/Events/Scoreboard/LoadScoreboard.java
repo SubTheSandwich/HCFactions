@@ -1,5 +1,7 @@
 package me.sub.hcfactions.Events.Scoreboard;
 
+import me.sub.hcfactions.Files.Conquest.Conquest;
+import me.sub.hcfactions.Files.Faction.Faction;
 import me.sub.hcfactions.Files.Locale.Locale;
 import me.sub.hcfactions.Files.Players.Players;
 import me.sub.hcfactions.Main.Main;
@@ -25,6 +27,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LoadScoreboard implements Listener {
 
@@ -75,6 +78,154 @@ public class LoadScoreboard implements Listener {
                 if (p.isOnline()) {
                     ArrayList<String> lines = new ArrayList<>();
                     for (String s : Main.getInstance().getConfig().getStringList("scoreboard.lines")) {
+                        if (s.contains("%conquest-lines%")) {
+                            s = s.replace("%conquest-lines%", "");
+                            if (Main.getInstance().conquestTimer.keySet().size() != 0) {
+                                Conquest conquest = new Conquest(new ArrayList<>(Main.getInstance().conquestTimer.keySet()).get(0));
+                                ArrayList<String> conquestLines = new ArrayList<>();
+                                for (String str : Main.getInstance().getConfig().getStringList("scoreboard.conquest.normal")) {
+                                    if (str.contains("%faction-conquest-lines%")) {
+                                        str = str.replace("%faction-conquest-lines%", "");
+                                        if (Main.getInstance().conquestPoints.size() != 0) {
+                                            ArrayList<String> stuff = new ArrayList<>();
+
+                                            Map<String, Integer> sortedMap =
+                                                    Main.getInstance().conquestPoints.entrySet().stream()
+                                                            .sorted(Map.Entry.comparingByValue())
+                                                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                                                                    (e1, e2) -> e1, LinkedHashMap::new));
+                                            ArrayList<String> keySet = new ArrayList<>(sortedMap.keySet());
+                                            for (String newStr : Main.getInstance().getConfig().getStringList("scoreboard.conquest.faction")) {
+                                                if (newStr.contains("%faction-one%")) {
+                                                    if (players.hasFaction()) {
+                                                        if (players.getFaction().get().getString("uuid").equals(keySet.get(0))) {
+                                                            Faction faction = new Faction(keySet.get(0));
+                                                            newStr = newStr.replace("%faction-one%", "&a" + faction.get().getString("name"));
+                                                        } else {
+                                                            Faction faction = new Faction(keySet.get(0));
+                                                            newStr = newStr.replace("%faction-one%", "&a" + faction.get().getString("name"));
+                                                        }
+                                                    } else {
+                                                        Faction faction = new Faction(keySet.get(0));
+                                                        newStr = newStr.replace("%faction-one%", "&a" + faction.get().getString("name"));
+                                                    }
+                                                }
+                                                if (newStr.contains("%faction-one-points%")) {
+                                                    newStr = newStr.replace("%faction-one-points%", String.valueOf(sortedMap.get(keySet.get(0))));
+                                                }
+                                                if (newStr.contains("%faction-two%")) {
+                                                    if (keySet.size() > 1) {
+                                                        if (players.hasFaction()) {
+                                                            if (players.getFaction().get().getString("uuid").equals(keySet.get(1))) {
+                                                                Faction faction = new Faction(keySet.get(1));
+                                                                newStr = newStr.replace("%faction-two%", "&a" + faction.get().getString("name"));
+                                                            } else {
+                                                                Faction faction = new Faction(keySet.get(1));
+                                                                newStr = newStr.replace("%faction-two%", "&a" + faction.get().getString("name"));
+                                                            }
+                                                        } else {
+                                                            Faction faction = new Faction(keySet.get(1));
+                                                            newStr = newStr.replace("%faction-two%", "&a" + faction.get().getString("name"));
+                                                        }
+                                                    } else {
+                                                        continue;
+                                                    }
+                                                }
+                                                if (newStr.contains("%faction-two-points%")) {
+                                                    if (keySet.size() > 1) {
+                                                        newStr = newStr.replace("%faction-two-points%", String.valueOf(sortedMap.get(keySet.get(1))));
+                                                    } else {
+                                                        continue;
+                                                    }
+                                                }
+                                                if (newStr.contains("%faction-three%")) {
+                                                    if (keySet.size() > 2) {
+                                                        if (players.hasFaction()) {
+                                                            if (players.getFaction().get().getString("uuid").equals(keySet.get(2))) {
+                                                                Faction faction = new Faction(keySet.get(2));
+                                                                newStr = newStr.replace("%faction-three%", "&a" + faction.get().getString("name"));
+                                                            } else {
+                                                                Faction faction = new Faction(keySet.get(2));
+                                                                newStr = newStr.replace("%faction-three%", "&a" + faction.get().getString("name"));
+                                                            }
+                                                        } else {
+                                                            Faction faction = new Faction(keySet.get(2));
+                                                            newStr = newStr.replace("%faction-three%", "&a" + faction.get().getString("name"));
+                                                        }
+                                                    } else {
+                                                        continue;
+                                                    }
+                                                }
+                                                if (newStr.contains("%faction-three-points%")) {
+                                                    if (keySet.size() > 2) {
+                                                        newStr = newStr.replace("%faction-three-points%", String.valueOf(sortedMap.get(keySet.get(1))));
+                                                    } else {
+                                                        continue;
+                                                    }
+                                                }
+                                                if (!newStr.equals("")) {
+                                                    stuff.add(newStr);
+                                                }
+                                            }
+
+                                            conquestLines.addAll(stuff);
+                                        } else {
+                                            continue;
+                                        }
+                                    }
+                                    if (str.contains("%name%")) {
+                                        str = str.replace("%name%", conquest.get().getString("name"));
+                                    }
+                                    if (str.contains("%blue-time%")) {
+                                        int time = Main.getInstance().conquestTimer.get(conquest.get().getString("uuid")).get("BLUE");
+                                        Calendar calender = Calendar.getInstance();
+                                        calender.clear();
+                                        calender.add(Calendar.SECOND, time);
+                                        String format = "mm:ss";
+                                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+                                        String timee = simpleDateFormat.format(calender.getTimeInMillis());
+                                        str = str.replace("%blue-time%", timee);
+                                    }
+                                    if (str.contains("%red-time%")) {
+                                        int time = Main.getInstance().conquestTimer.get(conquest.get().getString("uuid")).get("RED");
+                                        Calendar calender = Calendar.getInstance();
+                                        calender.clear();
+                                        calender.add(Calendar.SECOND, time);
+                                        String format = "mm:ss";
+                                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+                                        String timee = simpleDateFormat.format(calender.getTimeInMillis());
+                                        str = str.replace("%red-time%", timee);
+                                    }
+                                    if (str.contains("%green-time%")) {
+                                        int time = Main.getInstance().conquestTimer.get(conquest.get().getString("uuid")).get("GREEN");
+                                        Calendar calender = Calendar.getInstance();
+                                        calender.clear();
+                                        calender.add(Calendar.SECOND, time);
+                                        String format = "mm:ss";
+                                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+                                        String timee = simpleDateFormat.format(calender.getTimeInMillis());
+                                        str = str.replace("%green-time%", timee);
+                                    }
+                                    if (str.contains("%yellow-time%")) {
+                                        int time = Main.getInstance().conquestTimer.get(conquest.get().getString("uuid")).get("YELLOW");
+                                        Calendar calender = Calendar.getInstance();
+                                        calender.clear();
+                                        calender.add(Calendar.SECOND, time);
+                                        String format = "mm:ss";
+                                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+                                        String timee = simpleDateFormat.format(calender.getTimeInMillis());
+                                        str = str.replace("%yellow-time%", timee);
+                                    }
+
+                                    if (!str.equals("")) {
+                                        conquestLines.add(str);
+                                    }
+                                }
+                                lines.addAll(conquestLines);
+                            } else {
+                                continue;
+                            }
+                        }
                         if (s.contains("%custom-timers%")) {
                             s = s.replace("%custom-timers%", "");
                             if (Main.getInstance().customTimers.size() > 0) {

@@ -157,6 +157,35 @@ deathmessage:
   void: '&c%dead%&4[%dead_kills%] &efell into the void'
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
+  conquest:
+    usage: '&cUsage: /conquest [create;delete;start;stop;setarea;setpoints] <name>'
+    already-exists: '&7[Conquest] &eConquest &6%conquest% &ealready exists.'
+    doesnt-exist: '&7[Conquest] &eConquest &6%conquest% &edoes not exist.'
+    not-setup: "&7[Conquest] &eConquest &6%conquest% &eis not setup yet."
+    not-right: "&7[Conquest] &eConquest &6%conquest% &eis not running."
+    ongoing: "&7[Conquest] &eConquest &6%conquest% &ecannot be started as there is already an ongoing conquest."
+    created: '&7[Conquest] &eConquest &6%conquest% &ehas been created.'
+    deleted: '&7[Conquest] &eConquest &6%conquest% &ehas been deleted.'
+    started: '&7[Conquest] &eConquest &6%conquest% &ehas been started.'
+    stopped: '&7[Conquest] &eConquest &6%conquest% &ehas been stopped.'
+    captured: '&7[Conquest] &eConquest &6%name% &ewas captured by &6%faction%&e.'
+    control: '&7[Conquest] &6%faction% &ehas started to control %zone%&e.'
+    control-team: '&7[Conquest] &eYour team is now controlling %zone%&e.'
+    knock: '&7[Conquest] &6%faction% &ehas lost control of %zone%&e.'
+    zone-capped: '&7[Conquest] %zone% &ewas captured by &6%name%&e.'
+    zone-capping: '&7[Conquest] &eAttempting to capture %zone% &b(%time%)'
+    setarea:
+      usage: '&cUsage: /conquest setarea <name> <RED;YELLOW;GREEN;BLUE> <1;2>'
+      one: '&7[Conquest] %zonetype%&7: &ePosition #1 set for &6%conquest%'
+      two: '&7[Conquest] %zonetype%&7: &ePosition #2 set for &6%conquest%'
+      invalid-zone: '&7[Conquest] &eZone &6%zone% &eis invalid.'
+      not-world: "&7[Conquest] &eThe world for both positions must be the same."
+      invalid-position: "&7[Conquest] &ePosition &6%position% &eis invalid."
+    setpoints:
+      usage: '&cUsage: /conquest setpoints <name> <faction> <points>'
+      invalid-points: "&7[Conquest] &eThe specified amount of points is invalid."
+      invalid-faction: "&7[Conquest] &eThe specified faction is invalid."
+      success: '&7[Conquest] &eFaction &6%faction% &epoints have been set to &6%points%'
   report:
     usage: '&cUsage: /report <player> <reason>'
     self: '&cYou cannot report yourself.'

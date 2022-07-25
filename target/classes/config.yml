@@ -14,6 +14,7 @@ server:
 # Basic Settings
 
 settings:
+  conquest-max-points: 300
   tab: enabled
   disable-enderchest: true
   combat-logger-time: 30 # Time is in seconds
@@ -260,6 +261,7 @@ scoreboard:
     - '  &eOnline: &f%online%<display=%in_staff_mode%>'
     - '  &eBypass: %bypass%<display=%in_staff_mode%>'
     - "%custom-timers%"
+    - "%conquest-lines%"
     - "&9&l%koth-name%&7: &c%time%<display=%has_active_koth%>"
     - "&6&l%active_class%<display=%has_active_class%>"
     - " * &eEnergy: &r%bard_energy%<display=%is_bard%>"
@@ -275,3 +277,17 @@ scoreboard:
     - '&6&lApple&7: &c%player_apple_timer%<display=%player_has_apple_timer%>'
     - '&9&lHome&7: &c%player_home_timer%<display=%player_has_home_timer%>'
     - "&7&m--------------------"
+  conquest:
+    normal:
+      - "&e&l%name%: "
+      - "  &9Blue&7: &f%blue-time%"
+      - "  &cRed&7: &f%red-time%"
+      - "  &eYellow&7: &f%yellow-time%"
+      - "  &aGreen&7: &f%green-time%"
+      - "%faction-conquest-lines%"
+    faction:
+      - "&6&lTop Factions"
+      - "  %faction-one%&7: %faction-one-points%"
+      - "  %faction-two%&7: %faction-two-points%"
+      - "  %faction-three%&7: %faction-three-points%"
+

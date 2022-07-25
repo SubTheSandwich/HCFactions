@@ -1945,6 +1945,11 @@ public class FactionCommand implements CommandExecutor {
                         if (valid) {
                             Faction faction = new Faction(id);
                             switch (args[2].toLowerCase()) {
+                                case "conquest":
+                                    faction.get().set("type", "CONQUEST");
+                                    faction.save();
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.settype.set").replace("%type%", "CONQUEST").replace("%faction%", factionName)));
+                                    break;
                                 case "mountain":
                                     faction.get().set("type", "MOUNTAIN");
                                     faction.save();

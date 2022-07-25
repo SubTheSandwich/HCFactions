@@ -31,6 +31,7 @@ import me.sub.hcfactions.Events.Player.Classes.Rogue.BackstabEvent;
 import me.sub.hcfactions.Events.Player.Classes.Rogue.RogueJumpEffect;
 import me.sub.hcfactions.Events.Player.Classes.Rogue.RogueSpeedEffect;
 import me.sub.hcfactions.Events.Player.Combat.PlayerEnterCombat;
+import me.sub.hcfactions.Events.Player.Conquest.ConquestMovementEvent;
 import me.sub.hcfactions.Events.Player.Consume.AppleConsumeEvent;
 import me.sub.hcfactions.Events.Player.Crowbar.CrowbarUseEvent;
 import me.sub.hcfactions.Events.Player.Crowbar.SpawnerPlaceEvent;
@@ -84,6 +85,10 @@ public class Main extends JavaPlugin {
     public HashMap<UUID, Location> mountainPositionOne = new HashMap<>();
     public HashMap<UUID, Location> mountainPositionTwo = new HashMap<>();
     public HashMap<String, Integer> resetTimerMountain = new HashMap<>();
+
+    public HashMap<String, HashMap<String, Integer>> conquestTimer = new HashMap<>();
+    public HashMap<String, HashMap<String, UUID>> capturingColorFaction = new HashMap<>();
+    public HashMap<String, Integer> conquestPoints = new HashMap<>();
 
     public HashMap<String, Integer> kothTimer = new HashMap<>();
     public HashMap<String, UUID> capturingKothFaction = new HashMap<>();
@@ -172,6 +177,8 @@ public class Main extends JavaPlugin {
     public ArrayList<UUID> cooldownCreate = new ArrayList<>();
 
     private Chat chat;
+
+    public UUID randomGeneratedUUIDConquest = null;
 
     public boolean eotwStarted = false;
 
@@ -294,6 +301,7 @@ public class Main extends JavaPlugin {
         getCommand("filter").setExecutor(new FilterCommand());
         getCommand("request").setExecutor(new RequestCommand());
         getCommand("report").setExecutor(new ReportCommand());
+        getCommand("conquest").setExecutor(new ConquestCommand());
     }
 
     private void events() {
@@ -349,6 +357,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new MountainSelectEvent(), this);
         pm.registerEvents(new EnderchestEvents(), this);
         pm.registerEvents(new FilterItemEvent(), this);
+        pm.registerEvents(new ConquestMovementEvent(), this);
     }
 
     private void files() {

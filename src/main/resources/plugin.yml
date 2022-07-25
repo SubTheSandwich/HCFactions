@@ -7,6 +7,8 @@ depend:
   - Vault
   - ProtocolLib
 commands:
+  conquest:
+    description: Conquest
   report:
     description: Reports
   request:

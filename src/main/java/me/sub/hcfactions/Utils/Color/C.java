@@ -48,6 +48,8 @@ public class C {
     public static String convertColorCode(String s) {
         s = s.toLowerCase(Locale.ROOT);
         switch (s) {
+            case "purple":
+                return "&5";
             case "black":
                 return "&0";
             case "yellow":
@@ -86,6 +88,7 @@ public class C {
     public static Boolean isValidColor(String s) {
         s = s.toLowerCase(Locale.ROOT);
         switch (s) {
+            case "purple":
             case "black":
             case "yellow":
             case "light_purple":

@@ -42,7 +42,7 @@ public class ICommand implements CommandExecutor {
                             p.sendMessage(C.chat(Locale.get().getString("command.i.invalid-item")));
                         }
                     } else {
-                        p.sendMessage(C.chat(Locale.get().getString("command.i.invalid-material")));
+                        p.sendMessage(C.chat(Locale.get().getString("command.i.invalid-item")));
                     }
                 } else {
                     p.sendMessage(C.chat(Locale.get().getString("command.i.usage")));
