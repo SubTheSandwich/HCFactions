@@ -2,7 +2,6 @@ package me.sub.hcfactions.Commands.Admin;
 
 import me.sub.hcfactions.Files.Conquest.Conquest;
 import me.sub.hcfactions.Files.Faction.Faction;
-import me.sub.hcfactions.Files.Koth.Koth;
 import me.sub.hcfactions.Files.Locale.Locale;
 import me.sub.hcfactions.Main.Main;
 import me.sub.hcfactions.Utils.Color.C;
