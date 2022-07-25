@@ -7,6 +7,10 @@ depend:
   - Vault
   - ProtocolLib
 commands:
+  heal:
+    description: Heal
+  feed:
+    description: Feed
   conquest:
     description: Conquest
   report:

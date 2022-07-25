@@ -11,8 +11,10 @@ public class FilterItemEvent implements Listener {
     @EventHandler
     public void onPickup(PlayerPickupItemEvent e) {
         Player p = e.getPlayer();
-        if (Main.getInstance().blockedItems.get(p.getUniqueId()).contains(e.getItem().getItemStack().getType())) {
-            e.setCancelled(true);
+        if (Main.getInstance().blockedItems.size() != 0) {
+            if (Main.getInstance().blockedItems.get(p.getUniqueId()).contains(e.getItem().getItemStack().getType())) {
+                e.setCancelled(true);
+            }
         }
     }
 }

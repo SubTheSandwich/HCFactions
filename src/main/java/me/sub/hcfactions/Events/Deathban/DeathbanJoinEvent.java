@@ -35,6 +35,7 @@ public class DeathbanJoinEvent implements Listener {
                     faction.save();
                     deathban.removeDeathban();
                     p.sendMessage(C.chat(Locale.get().getString("events.deathban.life-use.faction").replace("%lives%", String.valueOf(factionLives))));
+                    p.spigot().respawn();
                     return;
                 }
                 if (lives != 0) {
@@ -43,6 +44,7 @@ public class DeathbanJoinEvent implements Listener {
                     players.save();
                     deathban.removeDeathban();
                     p.sendMessage(C.chat(Locale.get().getString("events.deathban.life-use.player").replace("%lives%", String.valueOf(lives))));
+                    p.spigot().respawn();
                     return;
                 }
 
@@ -64,6 +66,7 @@ public class DeathbanJoinEvent implements Listener {
                 } else {
                     deathban.removeDeathban();
                     p.sendMessage(C.chat(Locale.get().getString("events.deathban.expired")));
+                    p.spigot().respawn();
                 }
             } else {
                 if (lives != 0) {
@@ -72,6 +75,7 @@ public class DeathbanJoinEvent implements Listener {
                     players.save();
                     deathban.removeDeathban();
                     p.sendMessage(C.chat(Locale.get().getString("events.deathban.life-use.player").replace("%lives%", String.valueOf(lives))));
+                    p.spigot().respawn();
                     return;
                 }
 
@@ -93,6 +97,7 @@ public class DeathbanJoinEvent implements Listener {
                 } else {
                     deathban.removeDeathban();
                     p.sendMessage(C.chat(Locale.get().getString("events.deathban.expired")));
+                    p.spigot().respawn();
                 }
             }
         } else {

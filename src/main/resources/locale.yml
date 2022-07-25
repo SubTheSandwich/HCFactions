@@ -22,6 +22,11 @@ archer:
   speed-cooldown-expired: "&eYour speed cooldown has &aexpired&e."
   jump-cooldown: "&cYou cannot use your jump boost for &l%time% seconds&r&c."
   jump-cooldown-expired: "&eYour jump boost cooldown has &aexpired&e."
+  tag: '&e[&9Arrow Range &e(&c%range%&e)] &6Marked player for %time% seconds. &9(%hearts%
+    hearts)'
+  cannot-tag: '&e[&9Arrow Range &e(&c%range%&e)] &cCannot mark other Archers. &9(%hearts%
+    hearts)'
+  expired: "&eYour archer tag has &aexpired&e."
 rogue:
   backstab-failed: "&cBackstab failed!"
   backstab-succeed: "&eYou have &abaskstabbed &b%player-hit%&e."
@@ -157,6 +162,14 @@ deathmessage:
   void: '&c%dead%&4[%dead_kills%] &efell into the void'
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
+  heal:
+    usage: "&cUsage: /heal <player>"
+    heal: "&6You have been healed."
+    heal-other: "&6You have healed &f%player%"
+  feed:
+    usage: "&cUsage: /feed <player>"
+    feed: "&6You have been fed."
+    feed-other: "&6You have fed &f%player%"
   conquest:
     usage: '&cUsage: /conquest [create;delete;start;stop;setarea;setpoints;addreward;delreward] <name>'
     already-exists: '&7[Conquest] &eConquest &6%conquest% &ealready exists.'

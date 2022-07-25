@@ -67,23 +67,47 @@ public class LoadPlayerName implements Listener {
                                     }
                                 } else {
                                     if (other.getFaction().get().getBoolean("regening")) {
-                                        name.add(C.chat("&6[" + Lunar.get().getString("lunar.colors.enemy.team-color") + f1.get().getString("name") + " " + msg + "&a&l\u25B2" + "&r&6]"));
-                                        name.add(C.chat(Lunar.get().getString("lunar.colors.enemy.color") + d.getName()));
-                                        Main.getInstance().lunarClientAPI.overrideNametag(d, name, p);
+                                        if (!Main.getInstance().archerTag.containsKey(d.getUniqueId())) {
+                                            name.add(C.chat("&6[" + Lunar.get().getString("lunar.colors.enemy.team-color") + f1.get().getString("name") + " " + msg + "&a&l\u25B2" + "&r&6]"));
+                                            name.add(C.chat(Lunar.get().getString("lunar.colors.enemy.color") + d.getName()));
+                                            Main.getInstance().lunarClientAPI.overrideNametag(d, name, p);
+                                        } else {
+                                            name.add(C.chat("&6[" + Lunar.get().getString("lunar.colors.enemy.team-color") + f1.get().getString("name") + " " + msg + "&a&l\u25B2" + "&r&6]"));
+                                            name.add(C.chat(Lunar.get().getString("lunar.colors.mark.color") + d.getName()));
+                                            Main.getInstance().lunarClientAPI.overrideNametag(d, name, p);
+                                        }
                                     } else if (!other.getFaction().get().getString("startregen").equalsIgnoreCase("")) {
-                                        name.add(C.chat("&6[" + Lunar.get().getString("lunar.colors.enemy.team-color") + f1.get().getString("name") + " " + msg + "&c&l\u25AA" + "&r&6]"));
-                                        name.add(C.chat(Lunar.get().getString("lunar.colors.enemy.color") + d.getName()));
-                                        Main.getInstance().lunarClientAPI.overrideNametag(d, name, p);
+                                        if (!Main.getInstance().archerTag.containsKey(d.getUniqueId())) {
+                                            name.add(C.chat("&6[" + Lunar.get().getString("lunar.colors.enemy.team-color") + f1.get().getString("name") + " " + msg + "&c&l\u25AA" + "&r&6]"));
+                                            name.add(C.chat(Lunar.get().getString("lunar.colors.enemy.color") + d.getName()));
+                                            Main.getInstance().lunarClientAPI.overrideNametag(d, name, p);
+                                        } else {
+                                            name.add(C.chat("&6[" + Lunar.get().getString("lunar.colors.enemy.team-color") + f1.get().getString("name") + " " + msg + "&c&l\u25AA" + "&r&6]"));
+                                            name.add(C.chat(Lunar.get().getString("lunar.colors.mark.color") + d.getName()));
+                                            Main.getInstance().lunarClientAPI.overrideNametag(d, name, p);
+                                        }
                                     } else {
-                                        name.add(C.chat("&6[" + Lunar.get().getString("lunar.colors.enemy.team-color") + f1.get().getString("name") + " " + msg + "&a&l\u25C4" + "&r&6]"));
-                                        name.add(C.chat(Lunar.get().getString("lunar.colors.enemy.color") + d.getName()));
-                                        Main.getInstance().lunarClientAPI.overrideNametag(d, name, p);
+                                        if (!Main.getInstance().archerTag.containsKey(d.getUniqueId())) {
+                                            name.add(C.chat("&6[" + Lunar.get().getString("lunar.colors.enemy.team-color") + f1.get().getString("name") + " " + msg + "&a&l\u25C4" + "&r&6]"));
+                                            name.add(C.chat(Lunar.get().getString("lunar.colors.enemy.color") + d.getName()));
+                                            Main.getInstance().lunarClientAPI.overrideNametag(d, name, p);
+                                        } else {
+                                            name.add(C.chat("&6[" + Lunar.get().getString("lunar.colors.enemy.team-color") + f1.get().getString("name") + " " + msg + "&a&l\u25C4" + "&r&6]"));
+                                            name.add(C.chat(Lunar.get().getString("lunar.colors.mark.color") + d.getName()));
+                                            Main.getInstance().lunarClientAPI.overrideNametag(d, name, p);
+                                        }
                                     }
                                 }
                             } else {
-                                name.add(C.chat("&6[" + Lunar.get().getString("lunar.colors.enemy.team-color") + "*&6]"));
-                                name.add(C.chat(Lunar.get().getString("lunar.colors.enemy.color") + d.getName()));
-                                Main.getInstance().lunarClientAPI.overrideNametag(d, name, p);
+                                if (!Main.getInstance().archerTag.containsKey(d.getUniqueId())) {
+                                    name.add(C.chat("&6[" + Lunar.get().getString("lunar.colors.enemy.team-color") + "*&6]"));
+                                    name.add(C.chat(Lunar.get().getString("lunar.colors.enemy.color") + d.getName()));
+                                    Main.getInstance().lunarClientAPI.overrideNametag(d, name, p);
+                                } else {
+                                    name.add(C.chat("&6[" + Lunar.get().getString("lunar.colors.enemy.team-color") + "*&6]"));
+                                    name.add(C.chat(Lunar.get().getString("lunar.colors.mark.color") + d.getName()));
+                                    Main.getInstance().lunarClientAPI.overrideNametag(d, name, p);
+                                }
                             }
                         } else {
                             name.add(C.chat("&7[Mod Mode]"));

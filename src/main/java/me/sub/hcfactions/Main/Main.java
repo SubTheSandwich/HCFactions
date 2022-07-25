@@ -30,6 +30,7 @@ import me.sub.hcfactions.Events.Player.Classes.LoadClass;
 import me.sub.hcfactions.Events.Player.Classes.Rogue.BackstabEvent;
 import me.sub.hcfactions.Events.Player.Classes.Rogue.RogueJumpEffect;
 import me.sub.hcfactions.Events.Player.Classes.Rogue.RogueSpeedEffect;
+import me.sub.hcfactions.Events.Player.Combat.ArcherTagEvent;
 import me.sub.hcfactions.Events.Player.Combat.PlayerEnterCombat;
 import me.sub.hcfactions.Events.Player.Conquest.ConquestMovementEvent;
 import me.sub.hcfactions.Events.Player.Consume.AppleConsumeEvent;
@@ -99,6 +100,8 @@ public class Main extends JavaPlugin {
 
     public HashMap<String, Integer> customTimers = new HashMap<>();
     public HashMap<String, Boolean> customTimersPaused = new HashMap<>();
+
+    public HashMap<UUID, BigDecimal> archerTag = new HashMap<>();
 
     public HashMap<UUID, Location> posClaimOne = new HashMap<>();
     public HashMap<UUID, Location> posClaimTwo = new HashMap<>();
@@ -302,6 +305,8 @@ public class Main extends JavaPlugin {
         getCommand("request").setExecutor(new RequestCommand());
         getCommand("report").setExecutor(new ReportCommand());
         getCommand("conquest").setExecutor(new ConquestCommand());
+        getCommand("feed").setExecutor(new FeedCommand());
+        getCommand("heal").setExecutor(new HealCommand());
     }
 
     private void events() {
@@ -358,6 +363,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new EnderchestEvents(), this);
         pm.registerEvents(new FilterItemEvent(), this);
         pm.registerEvents(new ConquestMovementEvent(), this);
+        pm.registerEvents(new ArcherTagEvent(), this);
     }
 
     private void files() {

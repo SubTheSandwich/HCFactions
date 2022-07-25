@@ -141,7 +141,9 @@ public class DeathMessageSendEvent implements Listener {
         Main.getInstance().savedInventoryArmorDeath.put(p.getUniqueId(), p.getInventory().getArmorContents());
         Main.getInstance().savedInventoryContentsDeath.put(p.getUniqueId(), p.getInventory().getContents());
 
-
+        if (p.getLastDamageCause() == null) {
+            return;
+        }
 
         switch (p.getLastDamageCause().getCause()) {
             case ENTITY_ATTACK:

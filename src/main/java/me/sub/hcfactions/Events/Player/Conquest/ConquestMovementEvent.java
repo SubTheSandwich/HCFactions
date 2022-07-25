@@ -1,5 +1,5 @@
 package me.sub.hcfactions.Events.Player.Conquest;
-// Line 469 of this class produces a null exception error. Possible solution is just checking if the player's UUID is a value.
+
 import me.sub.hcfactions.Files.Conquest.Conquest;
 import me.sub.hcfactions.Files.Faction.Faction;
 import me.sub.hcfactions.Files.Locale.Locale;
@@ -297,7 +297,7 @@ public class ConquestMovementEvent implements Listener {
                                     Players knocked = new Players(capturingPlayer.getUniqueId().toString());
                                     HashMap<String, UUID> play = new HashMap<>();
                                     for (Player d : Bukkit.getOnlinePlayers()) {
-                                        d.sendMessage(C.chat(Locale.get().getString("command.conquest.control").replace("%zone%", "&cRed").replace("%faction%", knocked.getFaction().get().getString("name"))));
+                                        d.sendMessage(C.chat(Locale.get().getString("command.conquest.knock").replace("%zone%", "&cRed").replace("%faction%", knocked.getFaction().get().getString("name"))));
                                     }
                                     play.put("RED", p.getUniqueId());
                                     play.put("BLUE", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("BLUE"));
@@ -322,7 +322,7 @@ public class ConquestMovementEvent implements Listener {
                                 Players knocked = new Players(Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("RED").toString());
                                 HashMap<String, UUID> play = new HashMap<>();
                                 for (Player d : Bukkit.getOnlinePlayers()) {
-                                    d.sendMessage(C.chat(Locale.get().getString("command.conquest.control").replace("%zone%", "&cRed").replace("%faction%", knocked.getFaction().get().getString("name"))));
+                                    d.sendMessage(C.chat(Locale.get().getString("command.conquest.knock").replace("%zone%", "&cRed").replace("%faction%", knocked.getFaction().get().getString("name"))));
                                 }
                                 HashMap<String, Integer> time = new HashMap<>();
                                 time.put("RED", 30);
@@ -375,7 +375,7 @@ public class ConquestMovementEvent implements Listener {
                                     Players knocked = new Players(capturingPlayer.getUniqueId().toString());
                                     HashMap<String, UUID> play = new HashMap<>();
                                     for (Player d : Bukkit.getOnlinePlayers()) {
-                                        d.sendMessage(C.chat(Locale.get().getString("command.conquest.control").replace("%zone%", "&eYellow").replace("%faction%", knocked.getFaction().get().getString("name"))));
+                                        d.sendMessage(C.chat(Locale.get().getString("command.conquest.knock").replace("%zone%", "&eYellow").replace("%faction%", knocked.getFaction().get().getString("name"))));
                                     }
                                     play.put("YELLOW", p.getUniqueId());
                                     play.put("BLUE", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("BLUE"));
@@ -400,7 +400,7 @@ public class ConquestMovementEvent implements Listener {
                                 Players knocked = new Players(Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("YELLOW").toString());
                                 HashMap<String, UUID> play = new HashMap<>();
                                 for (Player d : Bukkit.getOnlinePlayers()) {
-                                    d.sendMessage(C.chat(Locale.get().getString("command.conquest.control").replace("%zone%", "&eYellow").replace("%faction%", knocked.getFaction().get().getString("name"))));
+                                    d.sendMessage(C.chat(Locale.get().getString("command.conquest.knock").replace("%zone%", "&eYellow").replace("%faction%", knocked.getFaction().get().getString("name"))));
                                 }
                                 play.put("YELLOW", p.getUniqueId());
                                 play.put("BLUE", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("BLUE"));
@@ -444,6 +444,15 @@ public class ConquestMovementEvent implements Listener {
                         }
                     }
                 } else if (conquest.getColorCuboid("BLUE").contains(p.getLocation())) {
+                    if (Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("BLUE") == null) {
+                        UUID uuid = Main.getInstance().randomGeneratedUUIDConquest;
+                        HashMap<String, UUID> play = new HashMap<>();
+                        play.put("BLUE", uuid);
+                        play.put("GREEN", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("GREEN"));
+                        play.put("YELLOW", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("YELLOW"));
+                        play.put("RED", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("RED"));
+                        Main.getInstance().capturingColorFaction.put(conquest.get().getString("uuid"), play);
+                    }
                     if (!Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("BLUE").equals(p.getUniqueId())) {
                         UUID uuid = Main.getInstance().randomGeneratedUUIDConquest;
                         if (!Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("BLUE").equals(uuid)) {
@@ -456,16 +465,16 @@ public class ConquestMovementEvent implements Listener {
                                         d.sendMessage(C.chat(Locale.get().getString("command.conquest.control").replace("%zone%", "&9Blue").replace("%faction%", knocked.getFaction().get().getString("name"))));
                                     }
                                     play.put("BLUE", p.getUniqueId());
-                                    play.put("RED", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("RED"));
-                                    play.put("YELLOW", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("YELLOW"));
                                     play.put("GREEN", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("GREEN"));
-                                    Main.getInstance().capturingColorFaction.put(conquest.get().getString("uuid"), play);
+                                    play.put("YELLOW", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("YELLOW"));
+                                    play.put("RED", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("RED"));
                                     HashMap<String, Integer> time = new HashMap<>();
                                     time.put("BLUE", 30);
                                     time.put("YELLOW", Main.getInstance().conquestTimer.get(conquest.get().getString("uuid")).get("YELLOW"));
                                     time.put("RED", Main.getInstance().conquestTimer.get(conquest.get().getString("uuid")).get("RED"));
                                     time.put("GREEN", Main.getInstance().conquestTimer.get(conquest.get().getString("uuid")).get("GREEN"));
                                     Main.getInstance().conquestTimer.put(conquest.get().getString("uuid"), time);
+                                    Main.getInstance().capturingColorFaction.put(conquest.get().getString("uuid"), play);
                                     for (Player d : faction.getAllOnlinePlayers()) {
                                         d.sendMessage(C.chat(Locale.get().getString("command.conquest.control-team").replace("%zone%", "&9Blue")));
                                     }
@@ -481,9 +490,9 @@ public class ConquestMovementEvent implements Listener {
                                     d.sendMessage(C.chat(Locale.get().getString("command.conquest.control").replace("%zone%", "&9Blue").replace("%faction%", knocked.getFaction().get().getString("name"))));
                                 }
                                 play.put("BLUE", p.getUniqueId());
-                                play.put("RED", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("RED"));
-                                play.put("YELLOW", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("YELLOW"));
                                 play.put("GREEN", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("GREEN"));
+                                play.put("YELLOW", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("YELLOW"));
+                                play.put("RED", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("RED"));
                                 HashMap<String, Integer> time = new HashMap<>();
                                 time.put("BLUE", 30);
                                 time.put("YELLOW", Main.getInstance().conquestTimer.get(conquest.get().getString("uuid")).get("YELLOW"));
@@ -502,9 +511,9 @@ public class ConquestMovementEvent implements Listener {
                         } else {
                             HashMap<String, UUID> play = new HashMap<>();
                             play.put("BLUE", p.getUniqueId());
-                            play.put("RED", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("RED"));
-                            play.put("YELLOW", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("YELLOW"));
                             play.put("GREEN", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("GREEN"));
+                            play.put("YELLOW", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("YELLOW"));
+                            play.put("RED", Main.getInstance().capturingColorFaction.get(conquest.get().getString("uuid")).get("RED"));
                             HashMap<String, Integer> time = new HashMap<>();
                             time.put("BLUE", 30);
                             time.put("YELLOW", Main.getInstance().conquestTimer.get(conquest.get().getString("uuid")).get("YELLOW"));
