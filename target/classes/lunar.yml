@@ -26,5 +26,7 @@ lunar:
     focused:
       color: "&d"
       team-color: "&d"
+    mark:
+      color: "&4"
   team-arrows:
     enabled: true

@@ -1,5 +1,6 @@
 package me.sub.hcfactions.Files.Faction;
 
+import me.sub.hcfactions.Main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -105,6 +106,18 @@ public class Faction {
         }
 
         return online;
+    }
+
+    public Double getMaximumDTR() {
+        if (getAllMembers().size() >= Main.getInstance().getConfig().getInt("faction.max-members")) {
+            return Main.getInstance().getConfig().getDouble("dtr.max");
+        } else {
+            if (getAllMembers().size() != 1) {
+                return Main.getInstance().getConfig().getDouble("dtr.multiple") * getAllMembers().size();
+            } else {
+                return 1.01;
+            }
+        }
     }
 
     public void reload() {

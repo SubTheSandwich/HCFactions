@@ -56,6 +56,8 @@ chat:
       faction: '&6[%color%%name%&6] %prefix%%display%%suffix%&7: &f%message%'
       no-faction: '&6[%color%*&6] %prefix%%display%%suffix%&7: &f%message%'
 events:
+  border:
+    cross: "&cYou cannot cross the world border."
   crowbar:
     used: "&eYou have used your crowbar to pick up a &d%spawner% &espawner. You have &a%charges% &eremaining."
   cant-claim: "&cYou cannot claim this location as it contains blocks from another claim."
@@ -162,6 +164,11 @@ deathmessage:
   void: '&c%dead%&4[%dead_kills%] &efell into the void'
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
+  regen:
+    no-faction: "&cYou do not have a faction."
+    full: "&eYour faction has full DTR."
+    freeze: "&eYour faction is currently on DTR freeze for another &f%time%&e."
+    regen: "&eYour faction currently has &d%dtr% &eDTR and is regenerating at a rate of &d%dtr-regen-rate% &eevery &d%dtr-regen-time%&e minutes. At this rate, your DTR will be fully regenerated at &d%dtr-regen-finished-time%&e."
   heal:
     usage: "&cUsage: /heal <player>"
     heal: "&6You have been healed."
@@ -186,6 +193,7 @@ command:
     captured: '&7[Conquest] &eConquest &6%name% &ewas captured by &6%faction%&e.'
     control: '&7[Conquest] &6%faction% &ehas started to control %zone%&e.'
     control-team: '&7[Conquest] &eYour team is now controlling %zone%&e.'
+    lost-points: '&7[Conquest] &6%faction% &ehas lost &6%loss-points% points &efor the death of &6%player%'
     knock: '&7[Conquest] &6%faction% &ehas lost control of %zone%&e.'
     zone-capped: '&7[Conquest] %zone% &ewas captured by &6%name%&e.'
     zone-capping: '&7[Conquest] &eAttempting to capture %zone% &b(%time%)'

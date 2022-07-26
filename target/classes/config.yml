@@ -15,6 +15,8 @@ server:
 
 settings:
   conquest-max-points: 300
+  allow-negative-points: true
+  points-loss-per-death: 10
   tab: enabled
   disable-enderchest: true
   combat-logger-time: 30 # Time is in seconds
@@ -56,6 +58,8 @@ settings:
     gopple: 21600
     logout: 30
     lff: 60
+faction:
+  max-members: 5
 dtr:
   max: 5.5
   multiple: 1.1
@@ -66,9 +70,11 @@ dtr:
     increment: 0.03
 worlds:
   default:
+    border: 2000
     warzone-build-limit: 300
     warzone: 750
   nether:
+    border: 1000
     warzone-build-limit: 80
     warzone: 200
 welcome:

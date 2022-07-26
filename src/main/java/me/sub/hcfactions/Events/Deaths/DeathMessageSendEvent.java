@@ -28,6 +28,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DeathMessageSendEvent implements Listener {
@@ -81,7 +82,7 @@ public class DeathMessageSendEvent implements Listener {
                             deathban.createDeathban();
                         }
                     } else {
-                        if (Main.getInstance().getConfig().getBoolean("claim.wilderness.deathban")) {;
+                        if (Main.getInstance().getConfig().getBoolean("claim.wilderness.deathban")) {
                             Deathban deathban = new Deathban(Bukkit.getOfflinePlayer(name).getUniqueId().toString());
                             deathban.createDeathban();
                         }
@@ -123,6 +124,9 @@ public class DeathMessageSendEvent implements Listener {
     public void onDeath(PlayerDeathEvent e) {
         e.setDeathMessage(null);
         Player p = e.getEntity();
+        if (p.getLastDamageCause() == null) {
+            return;
+        }
         p.getWorld().strikeLightningEffect(p.getLocation());
         if (Main.getInstance().combatTimer.containsKey(p.getUniqueId())) {
             Main.getInstance().combatTimer.remove(p.getUniqueId());
@@ -141,8 +145,22 @@ public class DeathMessageSendEvent implements Listener {
         Main.getInstance().savedInventoryArmorDeath.put(p.getUniqueId(), p.getInventory().getArmorContents());
         Main.getInstance().savedInventoryContentsDeath.put(p.getUniqueId(), p.getInventory().getContents());
 
-        if (p.getLastDamageCause() == null) {
-            return;
+        if (players.hasFaction()) {
+            if (Main.getInstance().conquestPoints.containsKey(players.getFaction().get().getString("uuid"))) {
+                for (Player d : Bukkit.getOnlinePlayers()) {
+                    d.sendMessage(C.chat(Locale.get().getString("command.conquest.lost-points").replace("%faction%", players.getFaction().get().getString("name")).replace("%player%", p.getName()).replace("%loss-points%", String.valueOf(Main.getInstance().getConfig().getInt("settings.points-loss-per-death")))));
+                }
+                int lost = Main.getInstance().conquestPoints.get(players.getFaction().get().getString("uuid")) - 10;
+                if (lost < 0) {
+                    if (Main.getInstance().getConfig().getBoolean("settings.allow-negative-points")) {
+                        Main.getInstance().conquestPoints.put(players.getFaction().get().getString("uuid"), lost);
+                    } else {
+                        Main.getInstance().conquestPoints.put(players.getFaction().get().getString("uuid"), 0);
+                    }
+                } else {
+                    Main.getInstance().conquestPoints.put(players.getFaction().get().getString("uuid"), lost);
+                }
+            }
         }
 
         switch (p.getLastDamageCause().getCause()) {
@@ -339,10 +357,18 @@ public class DeathMessageSendEvent implements Listener {
         if (!players.get().getString("faction").equals("")) {
             Faction faction = new Faction(players.get().getString("faction"));
             if (faction.get().getDouble("dtr") != -0.99) {
-                double dtr = faction.get().getInt("dtr");
-                dtr = dtr - 1;
+                double dtr = faction.get().getDouble("dtr");
+                dtr = dtr - 1.00;
+                dtr = Cooldown.round(dtr, 2);
                 faction.get().set("dtr", dtr);
+                faction.get().set("regening", false);
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.MINUTE, Main.getInstance().getConfig().getInt("dtr.regen.start-delay"));
+                faction.get().set("startregen", calendar.getTimeInMillis());
                 faction.save();
+
+
+
             }
         }
 

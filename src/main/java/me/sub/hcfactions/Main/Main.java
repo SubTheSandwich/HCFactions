@@ -22,6 +22,7 @@ import me.sub.hcfactions.Events.Logger.LoggerRemove;
 import me.sub.hcfactions.Events.Logout.LogoutEvents;
 import me.sub.hcfactions.Events.Mapkit.MapkitClickEvent;
 import me.sub.hcfactions.Events.Player.*;
+import me.sub.hcfactions.Events.Player.Border.CrossWorldBorderEvent;
 import me.sub.hcfactions.Events.Player.Chat.PlayerGlobalChatEvent;
 import me.sub.hcfactions.Events.Player.Classes.Archer.ArcherJumpEffect;
 import me.sub.hcfactions.Events.Player.Classes.Archer.ArcherSpeedEffect;
@@ -57,6 +58,7 @@ import me.sub.hcfactions.Files.Locale.Locale;
 import me.sub.hcfactions.Files.Mountain.Mountain;
 import me.sub.hcfactions.Files.Players.Players;
 import me.sub.hcfactions.Utils.Color.C;
+import me.sub.hcfactions.Utils.Cooldowns.Cooldown;
 import me.sub.hcfactions.Utils.Timer.Timer;
 import me.sub.hcfactions.Utils.Timer.Timers;
 import net.milkbowl.vault.chat.Chat;
@@ -73,6 +75,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -177,7 +180,11 @@ public class Main extends JavaPlugin {
     public boolean sotwStarted = false;
     public boolean sotwPaused = false;
 
+    public HashMap<String, Integer> regen = new HashMap<>();
+
     public ArrayList<UUID> cooldownCreate = new ArrayList<>();
+
+    public ArrayList<UUID> messageSent = new ArrayList<>();
 
     private Chat chat;
 
@@ -219,7 +226,9 @@ public class Main extends JavaPlugin {
         files();
         events();
         commands();
+        loadTab();
         generateMountains();
+        regenerateDTR();
         Timer.trackTimers();
         if (Locale.get().getBoolean("firstRun")) {
             Locale.get().set("firstRun", false);
@@ -229,6 +238,65 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
 
+    }
+
+    private void loadTab() {
+
+    }
+
+    private void regenerateDTR(){
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (Bukkit.getOnlinePlayers().size() > 0) {
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        if (new Players(p.getUniqueId().toString()).hasFaction()) {
+                            Faction faction = new Players(p.getUniqueId().toString()).getFaction();
+                            if (faction.get().getBoolean("regening")) {
+                                if (!Main.getInstance().regen.containsKey(faction.get().getString("uuid"))) {
+                                    Main.getInstance().regen.put(faction.get().getString("uuid"), 1);
+                                } else {
+                                    int time = Main.getInstance().regen.get(faction.get().getString("uuid")) + 1;
+                                    int delay = Main.getInstance().getConfig().getInt("dtr.regen.delay") * 60 * 20;
+                                    if (time >= delay) {
+                                        Main.getInstance().regen.put(faction.get().getString("uuid"), 0);
+                                        double dtr = faction.get().getDouble("dtr");
+                                        if (dtr > faction.getMaximumDTR()) {
+                                            dtr = faction.getMaximumDTR();
+                                            dtr = Cooldown.round(dtr, 2);
+                                            faction.get().set("dtr", dtr);
+                                            faction.get().set("regening", false);
+                                            faction.get().set("startregen", "");
+                                            faction.save();
+                                        } else if (dtr < faction.getMaximumDTR()) {
+                                            dtr = dtr + Main.getInstance().getConfig().getDouble("dtr.regen.increment");
+                                            dtr = Cooldown.round(dtr, 2);
+                                            if (dtr > faction.getMaximumDTR()) {
+                                                dtr = faction.getMaximumDTR();
+                                                faction.get().set("regening", false);
+                                                faction.get().set("startregen", "");
+                                            }
+                                            faction.get().set("dtr", dtr);
+                                            faction.save();
+                                        }
+                                    } else {
+                                        Main.getInstance().regen.put(faction.get().getString("uuid"), time);
+                                    }
+                                }
+                            } else {
+                                if (faction.get().getLong("startregen") != 0) {
+                                    if (faction.get().getLong("startregen") - System.currentTimeMillis() <= 0) {
+                                        faction.get().set("regening", true);
+                                        faction.get().set("startregen", 0);
+                                        faction.save();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }.runTaskTimer(Main.getInstance(), 0, 1);
     }
 
     private void generateMountains() {
@@ -307,6 +375,7 @@ public class Main extends JavaPlugin {
         getCommand("conquest").setExecutor(new ConquestCommand());
         getCommand("feed").setExecutor(new FeedCommand());
         getCommand("heal").setExecutor(new HealCommand());
+        getCommand("regen").setExecutor(new RegenCommand());
     }
 
     private void events() {
@@ -364,6 +433,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new FilterItemEvent(), this);
         pm.registerEvents(new ConquestMovementEvent(), this);
         pm.registerEvents(new ArcherTagEvent(), this);
+        pm.registerEvents(new CrossWorldBorderEvent(), this);
     }
 
     private void files() {
