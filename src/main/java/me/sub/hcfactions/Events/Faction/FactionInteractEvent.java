@@ -145,19 +145,23 @@ public class FactionInteractEvent implements Listener {
                         Faction faction = new Faction(getFactionInClaim(p, e.getClickedBlock().getLocation()));
                         if (players.hasFaction()) {
                             if (!players.getFaction().get().getString("uuid").equals(faction.get().getString("uuid"))) {
+                                if (!faction.isRaidable()) {
+                                    e.setCancelled(true);
+                                    if (faction.get().getString("color") != null) {
+                                        p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
+                                    } else {
+                                        p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
+                                    }
+                                }
+                            }
+                        } else {
+                            if (!faction.isRaidable()) {
                                 e.setCancelled(true);
                                 if (faction.get().getString("color") != null) {
                                     p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
                                 } else {
                                     p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
                                 }
-                            }
-                        } else {
-                            e.setCancelled(true);
-                            if (faction.get().getString("color") != null) {
-                                p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
-                            } else {
-                                p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
                             }
                         }
                     }
@@ -288,26 +292,7 @@ public class FactionInteractEvent implements Listener {
                 if (players.hasFaction()) {
                     if (!players.getFaction().get().getString("uuid").equals(faction.get().getString("uuid"))) {
                         if (!faction.get().getString("type").equals("MOUNTAIN") || faction.get().getString("mountain") == null) {
-                            e.setCancelled(true);
-                            if (faction.get().getString("color") != null) {
-                                if (faction.get().getString("type").equals("KOTH")) {
-                                    p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH")));
-                                } else if (faction.get().getString("type").equals("ROAD")) {
-                                    p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road")));
-                                } else if (faction.get().getString("type").equals("MOUNTAIN")) {
-                                    p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain")));
-                                } else {
-                                    p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
-                                }
-
-                            } else {
-                                p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
-                            }
-                        } else {
-                            Mountain mountain = new Mountain(faction.get().getString("mountain"));
-                            if (e.getBlock().getType().equals(Material.matchMaterial(mountain.get().getString("block")))) {
-                                e.setCancelled(false);
-                            } else {
+                            if (!faction.isRaidable()) {
                                 e.setCancelled(true);
                                 if (faction.get().getString("color") != null) {
                                     if (faction.get().getString("type").equals("KOTH")) {
@@ -319,26 +304,51 @@ public class FactionInteractEvent implements Listener {
                                     } else {
                                         p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
                                     }
+
                                 } else {
                                     p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
+                                }
+                            }
+                        } else {
+                            Mountain mountain = new Mountain(faction.get().getString("mountain"));
+                            if (e.getBlock().getType().equals(Material.matchMaterial(mountain.get().getString("block")))) {
+                                e.setCancelled(false);
+                            } else {
+                                if (!faction.isRaidable()) {
+                                    e.setCancelled(true);
+                                    if (faction.get().getString("color") != null) {
+                                        if (faction.get().getString("type").equals("KOTH")) {
+                                            p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH")));
+                                        } else if (faction.get().getString("type").equals("ROAD")) {
+                                            p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road")));
+                                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                            p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain")));
+                                        } else {
+                                            p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
+                                        }
+                                    } else {
+                                        p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
+                                    }
                                 }
                             }
                         }
                     }
                 } else {
-                    e.setCancelled(true);
-                    if (faction.get().getString("color") != null) {
-                        if (faction.get().getString("type").equals("KOTH")) {
-                            p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH")));
-                        } else if (faction.get().getString("type").equals("ROAD")) {
-                            p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road")));
-                        } else if (faction.get().getString("type").equals("MOUNTAIN")) {
-                            p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain")));
+                    if (!faction.isRaidable()) {
+                        e.setCancelled(true);
+                        if (faction.get().getString("color") != null) {
+                            if (faction.get().getString("type").equals("KOTH")) {
+                                p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " KOTH")));
+                            } else if (faction.get().getString("type").equals("ROAD")) {
+                                p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Road")));
+                            } else if (faction.get().getString("type").equals("MOUNTAIN")) {
+                                p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name") + " Mountain")));
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
+                            }
                         } else {
-                            p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
+                            p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
                         }
-                    } else {
-                        p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
                     }
                 }
             }
@@ -354,19 +364,23 @@ public class FactionInteractEvent implements Listener {
                 Faction faction = new Faction(getFactionInClaim(p, e.getBlock().getLocation()));
                 if (players.hasFaction()) {
                     if (!players.getFaction().get().getString("uuid").equals(faction.get().getString("uuid"))) {
+                        if (!faction.isRaidable()) {
+                            e.setCancelled(true);
+                            if (faction.get().getString("color") != null) {
+                                p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
+                            }
+                        }
+                    }
+                } else {
+                    if (!faction.isRaidable()) {
                         e.setCancelled(true);
                         if (faction.get().getString("color") != null) {
                             p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
                         } else {
                             p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
                         }
-                    }
-                } else {
-                    e.setCancelled(true);
-                    if (faction.get().getString("color") != null) {
-                        p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
-                    } else {
-                        p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
                     }
                 }
             }
@@ -387,19 +401,23 @@ public class FactionInteractEvent implements Listener {
                 Faction faction = new Faction(getFactionInClaim(p, e.getEntity().getLocation()));
                 if (players.hasFaction()) {
                     if (!players.getFaction().get().getString("uuid").equals(faction.get().getString("uuid"))) {
+                        if (!faction.isRaidable()) {
+                            e.setCancelled(true);
+                            if (faction.get().getString("color") != null) {
+                                p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
+                            }
+                        }
+                    }
+                } else {
+                    if (!faction.isRaidable()) {
                         e.setCancelled(true);
                         if (faction.get().getString("color") != null) {
                             p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
                         } else {
                             p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
                         }
-                    }
-                } else {
-                    e.setCancelled(true);
-                    if (faction.get().getString("color") != null) {
-                        p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
-                    } else {
-                        p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
                     }
                 }
             }
@@ -415,6 +433,17 @@ public class FactionInteractEvent implements Listener {
                 Faction faction = new Faction(getFactionInClaim(p, e.getBlockClicked().getLocation()));
                 if (players.hasFaction()) {
                     if (!players.getFaction().get().getString("uuid").equals(faction.get().getString("uuid"))) {
+                        if (!faction.isRaidable()) {
+                            e.setCancelled(true);
+                            if (faction.get().getString("color") != null) {
+                                p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
+                            }
+                        }
+                    }
+                } else {
+                    if (!faction.isRaidable()) {
                         e.setCancelled(true);
                         if (faction.get().getString("color") != null) {
                             p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
@@ -422,17 +451,8 @@ public class FactionInteractEvent implements Listener {
                             p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
                         }
                     }
-                } else {
-                    e.setCancelled(true);
-                    if (faction.get().getString("color") != null) {
-                        p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
-                    } else {
-                        p.sendMessage(C.chat(Locale.get().getString("events.faction.deny").replace("%faction%", faction.get().getString("name"))));
-                    }
                 }
             }
         }
     }
-
-
 }

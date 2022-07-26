@@ -10,7 +10,6 @@ import me.sub.hcfactions.Events.Brew.BrewItemEvent;
 import me.sub.hcfactions.Events.Brew.BrewSpeedEvent;
 import me.sub.hcfactions.Events.Deathban.DeathbanJoinEvent;
 import me.sub.hcfactions.Events.Deaths.DeathMessageSendEvent;
-import me.sub.hcfactions.Events.Economy.ParseEconomyDisconnect;
 import me.sub.hcfactions.Events.Enchant.AnvilEnchantEvent;
 import me.sub.hcfactions.Events.Enchant.EnchantmentLimiter;
 import me.sub.hcfactions.Events.End.EnterEndEvent;
@@ -75,7 +74,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -391,7 +389,6 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new RogueJumpEffect(), this);
         pm.registerEvents(new DeathMessageSendEvent(), this);
         pm.registerEvents(new EnderpearlEvent(), this);
-        pm.registerEvents(new ParseEconomyDisconnect(), this);
         pm.registerEvents(new SetupSpawnWaypoint(), this);
         pm.registerEvents(new EnchantmentLimiter(), this);
         pm.registerEvents(new MapkitClickEvent(), this);

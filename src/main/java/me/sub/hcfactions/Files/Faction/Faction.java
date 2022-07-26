@@ -108,6 +108,14 @@ public class Faction {
         return online;
     }
 
+    public Boolean isRaidable() {
+        if (customFile.getString("type").equals("PLAYER")) {
+            return customFile.getDouble("dtr") < 0.01;
+        } else {
+            return false;
+        }
+    }
+
     public Double getMaximumDTR() {
         if (getAllMembers().size() >= Main.getInstance().getConfig().getInt("faction.max-members")) {
             return Main.getInstance().getConfig().getDouble("dtr.max");
