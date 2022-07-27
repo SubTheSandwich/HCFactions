@@ -48,6 +48,7 @@ import me.sub.hcfactions.Events.Player.Lunar.SetupSpawnWaypoint;
 import me.sub.hcfactions.Events.Player.Mountain.MountainSelectEvent;
 import me.sub.hcfactions.Events.Player.Ore.OreMineRegisterEvent;
 import me.sub.hcfactions.Events.Player.Profile.ProfileClickEvent;
+import me.sub.hcfactions.Events.Player.Subclaim.SubclaimEvents;
 import me.sub.hcfactions.Events.Scoreboard.LoadScoreboard;
 import me.sub.hcfactions.Events.Scoreboard.RemoveScoreboard;
 import me.sub.hcfactions.Events.SignInteractEvent;
@@ -76,6 +77,15 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+
+// Code in EOTW
+// Fix Lunar Client Nametags (Includes adding in default client nametags)
+// Add rank reviving system
+// Add /f map
+// Fix pillars not showing up when claiming
+// Add subclaims
+
+
 
 public class Main extends JavaPlugin {
 
@@ -178,6 +188,8 @@ public class Main extends JavaPlugin {
     public boolean sotwStarted = false;
     public boolean sotwPaused = false;
 
+    public HashMap<UUID, Integer> goppleTimer = new HashMap<>();
+
     public HashMap<String, Integer> regen = new HashMap<>();
 
     public ArrayList<UUID> cooldownCreate = new ArrayList<>();
@@ -189,13 +201,6 @@ public class Main extends JavaPlugin {
     public UUID randomGeneratedUUIDConquest = null;
 
     public boolean eotwStarted = false;
-
-    // Add money for kills
-    // Lunar Client Nametags are buggy fix them soon
-    // Do some work on faction command
-
-    //End command doesn't work
-
 
     private static Main instance;
 
@@ -431,6 +436,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new ConquestMovementEvent(), this);
         pm.registerEvents(new ArcherTagEvent(), this);
         pm.registerEvents(new CrossWorldBorderEvent(), this);
+        pm.registerEvents(new SubclaimEvents(), this);
     }
 
     private void files() {

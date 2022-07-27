@@ -30,12 +30,9 @@ public class ArcherTagEvent implements Listener {
                     if (time.doubleValue() <= 0) {
                         if (Bukkit.getPlayer(uuid) != null) {
                             Bukkit.getPlayer(uuid).sendMessage(C.chat(Locale.get().getString("archer.expired")));
-                            Main.getInstance().archerTag.remove(uuid);
-                            cancel();
-                        } else {
-                            Main.getInstance().archerTag.remove(uuid);
-                            cancel();
                         }
+                        Main.getInstance().archerTag.remove(uuid);
+                        cancel();
                     } else {
                         Main.getInstance().archerTag.put(uuid, time);
                     }

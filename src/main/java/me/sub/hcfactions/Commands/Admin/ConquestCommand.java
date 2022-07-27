@@ -159,7 +159,6 @@ public class ConquestCommand implements CommandExecutor {
                                         if (factionExists(args[2]) && getFactionByName(args[2]).get().getString("type").equals("PLAYER")) {
                                             Main.getInstance().conquestPoints.remove(getFactionByName(args[2]).get().getString("uuid"));
                                             Main.getInstance().conquestPoints.put(getFactionByName(args[2]).get().getString("uuid"), points);
-                                            System.out.println(Main.getInstance().conquestPoints);
                                             p.sendMessage(C.chat(Locale.get().getString("command.conquest.setpoints.success").replace("%faction%", args[2]).replace("%points%", String.valueOf(points))));
                                         } else {
                                             p.sendMessage(C.chat(Locale.get().getString("command.conquest.setpoints.invalid-faction")));

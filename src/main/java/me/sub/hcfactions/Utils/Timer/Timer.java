@@ -171,6 +171,65 @@ public class Timer {
         }.runTaskTimer(Main.getInstance(), 0, 1);
     }
 
+    public static void tickArcherTag(UUID uuid) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (Main.getInstance().archerTag.containsKey(uuid)) {
+                    BigDecimal num = new BigDecimal("0.05");
+                    BigDecimal time = Main.getInstance().archerTag.get(uuid);
+                    time = time.subtract(num);
+                    if (time.doubleValue() <= 0) {
+                        if (Bukkit.getPlayer(uuid) != null) {
+                            Bukkit.getPlayer(uuid).sendMessage(C.chat(Locale.get().getString("archer.expired")));
+                            Main.getInstance().archerTag.remove(uuid);
+                            cancel();
+                        } else {
+                            Main.getInstance().archerTag.remove(uuid);
+                            cancel();
+                        }
+                    } else {
+                        Main.getInstance().archerTag.put(uuid, time);
+                    }
+                } else {
+                    cancel();
+                }
+            }
+        }.runTaskTimer(Main.getInstance(), 0, 1);
+    }
+
+    public static void tickGoppleTimer(UUID uuid) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (Bukkit.getPlayer(uuid) != null) {
+                    int time = Main.getInstance().goppleTimer.get(uuid);
+                    if (Main.getInstance().goppleTimer.containsKey(uuid)) {
+                        time = time - 1;
+                        if (time <= 0) {
+                            Main.getInstance().goppleTimer.remove(uuid);
+                            Players players = new Players(uuid.toString());
+                            players.get().set("savedTimers.goppleTimer", 0);
+                            Bukkit.getPlayer(uuid).sendMessage(C.chat(Locale.get().getString("events.gopple.expired")));
+                            players.save();
+                            cancel();
+                        } else {
+                            Main.getInstance().goppleTimer.put(uuid, time);
+                        }
+                    } else {
+                        cancel();
+                    }
+                } else {
+                    Players players = new Players(uuid.toString());
+                    players.get().set("savedTimers.goppleTimer", Main.getInstance().goppleTimer.get(uuid));
+                    players.save();
+                    Main.getInstance().goppleTimer.remove(uuid);
+                    cancel();
+                }
+            }
+        }.runTaskTimer(Main.getInstance(), 0, 20);
+    }
+
     public static void tickLogoutTimer(Player p) {
         new BukkitRunnable() {
             @Override

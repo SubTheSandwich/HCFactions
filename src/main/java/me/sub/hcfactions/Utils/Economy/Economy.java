@@ -33,7 +33,7 @@ public class Economy {
 
     public Boolean has(Double v) {
         double balance = getBalance();
-        if (balance - v >= 0) {
+        if (balance >= v) {
             return true;
         } else {
             return false;

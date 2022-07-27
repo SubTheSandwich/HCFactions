@@ -1,6 +1,7 @@
 package me.sub.hcfactions.Commands.Admin;
 
 import me.sub.hcfactions.Files.Locale.Locale;
+import me.sub.hcfactions.Files.Players.Players;
 import me.sub.hcfactions.Main.Main;
 import me.sub.hcfactions.Utils.Color.C;
 import me.sub.hcfactions.Utils.Cooldowns.Cooldown;
@@ -28,7 +29,7 @@ public class TimersCommand implements CommandExecutor {
                 }
             } else if (args.length == 4) {
                 ArrayList<String> timers = new ArrayList<>();
-                timers.add("enderpearl"); timers.add("gapple"); timers.add("apple");
+                timers.add("enderpearl"); timers.add("gopple"); timers.add("apple");
                 timers.add("pvptimer"); timers.add("bardeffect"); timers.add("bardenergy");
                 timers.add("logout"); timers.add("starting"); timers.add("stuck");
                 timers.add("archermark"); timers.add("backstab"); timers.add("combat");
@@ -36,7 +37,8 @@ public class TimersCommand implements CommandExecutor {
                 timers.add("roguejump"); timers.add("roguespeed");
                 if (args[0].equalsIgnoreCase("set")) {
                     Player target = Bukkit.getPlayer(args[1]);
-                    if (target != null) {
+                    Players targetPlayers = new Players(target.getUniqueId().toString());
+                    if (target.isOnline()) {
                         if (timers.contains(args[2].toLowerCase(java.util.Locale.ROOT))) {
                             try {
                                 int time = Integer.parseInt(args[3]);
@@ -53,7 +55,13 @@ public class TimersCommand implements CommandExecutor {
                                             }
 
                                             break;
-                                        case "gapple":
+                                        case "gopple":
+                                            if (Main.getInstance().goppleTimer.containsKey(target.getUniqueId())) {
+                                                Main.getInstance().goppleTimer.put(target.getUniqueId(), time);
+                                            } else {
+                                                Main.getInstance().goppleTimer.put(target.getUniqueId(), time);
+                                                Timer.tickGoppleTimer(target.getUniqueId());
+                                            }
                                             sender.sendMessage(C.chat(Locale.get().getString("command.timers.started").replace("%timer%", timer).replace("%name%", target.getName()).replace("%time%", String.valueOf(time))));
                                             break;
                                         case "apple":
@@ -108,6 +116,12 @@ public class TimersCommand implements CommandExecutor {
                                             sender.sendMessage(C.chat(Locale.get().getString("command.timers.started").replace("%timer%", timer).replace("%name%", target.getName()).replace("%time%", String.valueOf(time))));
                                             break;
                                         case "archermark":
+                                            if (Main.getInstance().archerTag.containsKey(target.getUniqueId())) {
+                                                Main.getInstance().archerTag.put(target.getUniqueId(), new BigDecimal(time));
+                                            } else {
+                                                Main.getInstance().archerTag.put(target.getUniqueId(), new BigDecimal(time));
+                                                Timer.tickArcherTag(target.getUniqueId());
+                                            }
                                             sender.sendMessage(C.chat(Locale.get().getString("command.timers.started").replace("%timer%", timer).replace("%name%", target.getName()).replace("%time%", String.valueOf(time))));
                                             break;
                                         case "backstab":
@@ -129,6 +143,12 @@ public class TimersCommand implements CommandExecutor {
                                             sender.sendMessage(C.chat(Locale.get().getString("command.timers.started").replace("%timer%", timer).replace("%name%", target.getName()).replace("%time%", String.valueOf(time))));
                                             break;
                                         case "home":
+                                            if (Main.getInstance().homeTimer.containsKey(target)) {
+                                                Main.getInstance().homeTimer.put(target, new BigDecimal(time));
+                                            } else {
+                                                Main.getInstance().homeTimer.put(target, new BigDecimal(time));
+                                                Timer.tickHomeTimer(target);
+                                            }
                                             sender.sendMessage(C.chat(Locale.get().getString("command.timers.started").replace("%timer%", timer).replace("%name%", target.getName()).replace("%time%", String.valueOf(time))));
                                             break;
                                         case "archerjump":
@@ -182,7 +202,8 @@ public class TimersCommand implements CommandExecutor {
                     }
                 } else if (args[0].equalsIgnoreCase("remove")) {
                     Player target = Bukkit.getPlayer(args[1]);
-                    if (target != null) {
+                    Players targetPlayers = new Players(target.getUniqueId().toString());
+                    if (target.isOnline()) {
                         if (timers.contains(args[2].toLowerCase(java.util.Locale.ROOT))) {
                             try {
                                 int time = Integer.parseInt(args[3]);
@@ -198,8 +219,13 @@ public class TimersCommand implements CommandExecutor {
                                             }
 
                                             break;
-                                        case "gapple":
-                                            sender.sendMessage(C.chat(Locale.get().getString("command.timers.started").replace("%timer%", timer).replace("%name%", target.getName()).replace("%time%", String.valueOf(time))));
+                                        case "gopple":
+                                            if (Main.getInstance().goppleTimer.containsKey(target.getUniqueId())) {
+                                                Main.getInstance().goppleTimer.put(target.getUniqueId(), Main.getInstance().goppleTimer.get(target.getUniqueId()) - time);
+                                                sender.sendMessage(C.chat(Locale.get().getString("command.timers.stopped").replace("%timer%", timer).replace("%name%", target.getName()).replace("%time%", String.valueOf(time))));
+                                            } else {
+                                                sender.sendMessage(C.chat(Locale.get().getString("command.timers.not-running").replace("%name%", target.getName())));
+                                            }
                                             break;
                                         case "apple":
                                             if (Main.getInstance().appleTimer.containsKey(target.getUniqueId())) {
@@ -252,7 +278,12 @@ public class TimersCommand implements CommandExecutor {
                                             sender.sendMessage(C.chat(Locale.get().getString("command.timers.started").replace("%timer%", timer).replace("%name%", target.getName()).replace("%time%", String.valueOf(time))));
                                             break;
                                         case "archermark":
-                                            sender.sendMessage(C.chat(Locale.get().getString("command.timers.started").replace("%timer%", timer).replace("%name%", target.getName()).replace("%time%", String.valueOf(time))));
+                                            if (Main.getInstance().archerTag.containsKey(target.getUniqueId())) {
+                                                Main.getInstance().archerTag.put(target.getUniqueId(), Main.getInstance().archerTag.get(target.getUniqueId()).subtract(new BigDecimal(time)));
+                                            } else {
+                                                sender.sendMessage(C.chat(Locale.get().getString("command.timers.not-running").replace("%name%", target.getName())));
+                                            }
+                                            sender.sendMessage(C.chat(Locale.get().getString("command.timers.stopped").replace("%timer%", timer).replace("%name%", target.getName()).replace("%time%", String.valueOf(time))));
                                             break;
                                         case "backstab":
                                             if (Main.getInstance().rogueBackstabCooldown.containsKey(target.getUniqueId())) {
@@ -273,7 +304,12 @@ public class TimersCommand implements CommandExecutor {
                                             //sender.sendMessage(C.chat(Locale.get().getString("command.timers.started").replace("%timer%", timer).replace("%name%", target.getName()).replace("%time%", String.valueOf(time))));
                                             break;
                                         case "home":
-                                            sender.sendMessage(C.chat(Locale.get().getString("command.timers.started").replace("%timer%", timer).replace("%name%", target.getName()).replace("%time%", String.valueOf(time))));
+                                            if (Main.getInstance().homeTimer.containsKey(target)) {
+                                                sender.sendMessage(C.chat(Locale.get().getString("command.timers.stopped").replace("%timer%", timer).replace("%name%", target.getName()).replace("%time%", String.valueOf(time))));
+                                                Main.getInstance().homeTimer.put(target, Main.getInstance().homeTimer.get(target).subtract(new BigDecimal(time)));
+                                            } else {
+                                                sender.sendMessage(C.chat(Locale.get().getString("command.timers.not-running").replace("%name%", target.getName())));
+                                            }
                                             break;
                                         case "archerjump":
                                             if (Main.getInstance().archerJumpCooldown.containsKey(target.getUniqueId())) {

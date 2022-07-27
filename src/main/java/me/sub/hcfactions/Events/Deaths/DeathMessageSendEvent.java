@@ -169,15 +169,13 @@ public class DeathMessageSendEvent implements Listener {
                 if (entity instanceof Player) {
                     Player killer = e.getEntity().getKiller();
                     if (killer != null) {
-
-                        Economy deadPlayer = new Economy(p.getUniqueId().toString());
-                        Economy killerPlayer = new Economy(killer.getUniqueId().toString());
-
-                        if (deadPlayer.getBalance() > 0) {
-                            double deposited = deadPlayer.getBalance();
-                            killerPlayer.depositBalance(deadPlayer.getBalance());
-                            deadPlayer.withdrawBalance(deposited);
-                            killer.sendMessage(C.chat(Locale.get().getString("deathmessage.money-earn").replace("%player%", p.getName()).replace("%money%", String.valueOf(Cooldown.round(deposited, 1)))));
+                        Economy killerEconomy = new Economy(killer.getUniqueId().toString());
+                        Economy deadEconomy = new Economy(p.getUniqueId().toString());
+                        if (deadEconomy.getBalance() > 0) {
+                            double balance = deadEconomy.getBalance();
+                            killerEconomy.depositBalance(balance);
+                            deadEconomy.setBalance(0.00);
+                            killer.sendMessage(C.chat(Locale.get().getString("deathmessage.money-earn").replace("%money%", String.valueOf(Cooldown.round(balance, 1))).replace("%player%", p.getName())));
                         }
 
 
@@ -325,6 +323,14 @@ public class DeathMessageSendEvent implements Listener {
             case PROJECTILE:
                 Player killer = e.getEntity().getKiller();
                 if (killer != null) {
+                    Economy killerEconomy = new Economy(killer.getUniqueId().toString());
+                    Economy deadEconomy = new Economy(p.getUniqueId().toString());
+                    if (deadEconomy.getBalance() > 0) {
+                        double balance = deadEconomy.getBalance();
+                        killerEconomy.depositBalance(balance);
+                        deadEconomy.setBalance(0.00);
+                        killer.sendMessage(C.chat(Locale.get().getString("deathmessage.money-earn").replace("%money%", String.valueOf(Cooldown.round(balance, 1))).replace("%player%", p.getName())));
+                    }
                     Players killerConfig = new Players(killer.getUniqueId().toString());
                     msg = Locale.get().getString("deathmessage.projectile.player");
                     msg = msg.replace("%dead%", p.getName());

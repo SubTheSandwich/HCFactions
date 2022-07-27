@@ -280,7 +280,9 @@ scoreboard:
     - '&c&lSpawn Tag&7: &c%player_combat_timer%<display=%player_has_combat_timer%>'
     - '&a&lSOTW&7: &c%server_sotw_timer%<display=%server_has_sotw_timer%>'
     - '&4&lLogout&7: &c%player_logout_timer%<display=%player_has_logout_timer%>'
+    - '&6&lArcher Tag&7: &c%player_archer-mark_timer%<display=%player_has_archer-mark_timer%>'
     - '&6&lApple&7: &c%player_apple_timer%<display=%player_has_apple_timer%>'
+    - '&6&lGopple&7: &c%player_gopple_timer%<display=%player_has_gapple_timer%>'
     - '&9&lHome&7: &c%player_home_timer%<display=%player_has_home_timer%>'
     - "&7&m--------------------"
   conquest:

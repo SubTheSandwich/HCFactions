@@ -62,6 +62,10 @@ public class LoadScoreboard implements Listener {
                 Timer.setPvPTimer(p.getUniqueId(), players.get().getInt("savedTimers.pvpTimer"));
                 Timer.tickPvPTimer(p.getUniqueId());
             }
+            if (players.get().getInt("savedTimers.goppleTimer") != 0) {
+                Main.getInstance().goppleTimer.put(p.getUniqueId(), players.get().getInt("savedTimers.goppleTimer"));
+                Timer.tickGoppleTimer(p.getUniqueId());
+            }
         }
 
        // Economy economy = Main.getEconomy();
@@ -245,6 +249,33 @@ public class LoadScoreboard implements Listener {
                                     customTimers.add(textFormat);
                                 }
                                 lines.addAll(customTimers);
+                            } else {
+                                continue;
+                            }
+                        }
+
+                        if (s.contains("<display=%player_has_archer-mark_timer%>")) {
+                            if (Main.getInstance().archerTag.containsKey(p.getUniqueId())) {
+                                s = s.replace("<display=%player_has_archer-mark_timer%>", "");
+                                double time = Cooldown.round(Main.getInstance().archerTag.get(p.getUniqueId()).doubleValue(), 1);
+                                String newFormat = time + "s";
+                                s = s.replace("%player_archer-mark_timer%", newFormat);
+                            } else {
+                                continue;
+                            }
+                        }
+
+                        if (s.contains("<display=%player_has_gapple_timer%>")) {
+                            if (Main.getInstance().goppleTimer.containsKey(p.getUniqueId())) {
+                                s = s.replace("<display=%player_has_gapple_timer%>", "");
+                                int time = Main.getInstance().goppleTimer.get(p.getUniqueId());
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.clear();
+                                calendar.set(Calendar.SECOND, time);
+                                String format = "HH:mm:ss";
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+                                String timee = simpleDateFormat.format(calendar.getTimeInMillis());
+                                s = s.replace("%player_gopple_timer%", timee);
                             } else {
                                 continue;
                             }

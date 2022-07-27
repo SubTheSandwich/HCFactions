@@ -56,6 +56,13 @@ chat:
       faction: '&6[%color%%name%&6] %prefix%%display%%suffix%&7: &f%message%'
       no-faction: '&6[%color%*&6] %prefix%%display%%suffix%&7: &f%message%'
 events:
+  subclaim:
+    cant-open: "&cYou cannot open &l%player%&r&c's subclaim."
+    invalid: "&cThe creation of your subclaim has been cancelled due to the format being invalid."
+    not-faction: "&cThe specified player is not in your faction, therefore the creation of your subclaim has been cancelled."
+    no-faction: "&cYou cannot create a subclaim as you have no faction."
+    not-exist: "&cThe specified player does not exist, therefore the creation of your subclaim has been cancelled."
+    created: "&eYou have &acreated &ea subclaim for &d%player%&e."
   border:
     cross: "&cYou cannot cross the world border."
   crowbar:
@@ -103,6 +110,9 @@ events:
   apple:
     expired: "&eYour apple timer has &aexpired&e."
     cooldown: "&cYou are currently on apple cooldown for &l%time% seconds&r&c."
+  gopple:
+    expired: "&eYour gopple timer has &aexpired&e."
+    cooldown: "&cYou are currently on gopple cooldown for &l%time%&r&c."
   diamond-mine:
     one: "&f[FD] &b%player% found 1 diamond."
     multiple: "&f[FD] &b%player% found %amount% diamonds."

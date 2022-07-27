@@ -26,9 +26,9 @@ public class RegenCommand implements CommandExecutor {
                     long newTime = players.getFaction().get().getLong("startregen") - System.currentTimeMillis();
                     String format;
                     if (newTime < 60) {
-                        format = "ss 'seconds'";
+                        format = "s 'seconds'";
                     } else {
-                        format = "mm 'minutes and 'ss 'seconds'";
+                        format = "m 'minutes and 's 'seconds'";
                     }
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
                     String timee = simpleDateFormat.format(newTime);
@@ -38,7 +38,7 @@ public class RegenCommand implements CommandExecutor {
                     message = message.replace("%dtr%", String.valueOf(players.getFaction().get().getDouble("dtr")));
                     message = message.replace("%dtr-regen-rate%", String.valueOf(Main.getInstance().getConfig().getDouble("dtr.regen.increment")));
                     message = message.replace("%dtr-regen-time%", String.valueOf(Main.getInstance().getConfig().getInt("dtr.regen.delay")));
-                    String format = "H 'hour(s) and 'mm 'minute(s)'";
+                    String format = "H 'hour(s) and 'm 'minute(s)'";
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
                     int timesRan = 0;
                     double dtrAtRan = players.getFaction().get().getDouble("dtr");
