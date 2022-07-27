@@ -680,6 +680,16 @@ public class FactionCommand implements CommandExecutor {
                     }
                 } else if (args[0].equalsIgnoreCase("stuck")) {
 
+                } else if (args[0].equalsIgnoreCase("subclaim")) {
+                    for (String s1 : Messages.get().getStringList("faction.help.subclaim")) {
+                        if (s1.contains("%primary%")) {
+                            s1 = s1.replace("%primary%", Main.getInstance().getConfig().getString("server.color.primary"));
+                        }
+                        if (s1.contains("%secondary%")) {
+                            s1 = s1.replace("%secondary%", Main.getInstance().getConfig().getString("server.color.secondary"));
+                        }
+                        p.sendMessage(C.chat(s1));
+                    }
                 }
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("claimfor")) {

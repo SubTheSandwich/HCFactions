@@ -48,6 +48,16 @@ faction:
       - "&e/%alias% rename <name> &7- Rename your faction"
       - "&e/%alias% disband &7- Disband your faction"
       - "&7&m----------------------------------------------------"
+    subclaim:
+      - "&7&m----------------------------------------------------"
+      - "%primary%&lSubclaiming %secondary%Help"
+      - "&7&m----------------------------------------------------"
+      - "&7Place a sign on top of a container block and in"
+      - "&7the first line type [Subclaim]. In the second line"
+      - "&7type the name of the member the container belongs to."
+      - "&7Example:"
+      - "[Subclaim]"
+      - "subFN"
   who:
     system:
       - "&7&m----------------------------------------------------"
