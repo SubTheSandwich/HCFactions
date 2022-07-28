@@ -281,6 +281,22 @@ public class LoadScoreboard implements Listener {
                             }
                         }
 
+                        if (s.contains("<display=%server_has_eotw_timer%>")) {
+                            if (!Main.getInstance().eotwStarted && Main.getInstance().timers.containsKey(Timers.EOTW)) {
+                                s = s.replace("<display=%server_has_eotw_timer%>", "");
+                                int time = Main.getInstance().timers.get(Timers.EOTW);
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.clear();
+                                calendar.set(Calendar.SECOND, time);
+                                String format = "mm:ss";
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+                                String timee = simpleDateFormat.format(calendar.getTimeInMillis());
+                                s = s.replace("%server_eotw_timer%", timee);
+                            } else {
+                                continue;
+                            }
+                        }
+
                         if (s.contains("<display=%has_active_koth%>")) {
                             if (Main.getInstance().kothTimer.keySet().size() != 0) {
                                 s = s.replace("<display=%has_active_koth%>", "");

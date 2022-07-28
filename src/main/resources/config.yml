@@ -279,6 +279,7 @@ scoreboard:
     - "&a&lPvP Timer&7: &c%player_pvptimer_timer%<display=%player_has_pvptimer_timer%>"
     - '&c&lSpawn Tag&7: &c%player_combat_timer%<display=%player_has_combat_timer%>'
     - '&a&lSOTW&7: &c%server_sotw_timer%<display=%server_has_sotw_timer%>'
+    - '&c&lEOTW&7: &c%server_eotw_timer%<display=%server_has_eotw_timer%>'
     - '&4&lLogout&7: &c%player_logout_timer%<display=%player_has_logout_timer%>'
     - '&6&lArcher Tag&7: &c%player_archer-mark_timer%<display=%player_has_archer-mark_timer%>'
     - '&6&lApple&7: &c%player_apple_timer%<display=%player_has_apple_timer%>'

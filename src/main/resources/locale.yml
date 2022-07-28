@@ -1,6 +1,7 @@
 firstRun: true
 primary:
   not-player: "&cYou must be a player to execute this command."
+  not-console: "&cYou must be console to execute this command."
   no-permission: "&cNo permission."
   lunar-only: "&cThis command can only be executed if Lunar Client API support is enabled."
 combat:
@@ -174,6 +175,11 @@ deathmessage:
   void: '&c%dead%&4[%dead_kills%] &efell into the void'
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
+  eotw:
+    usage: "&cUsage: /eotw <start;stop;commence>"
+    start: "&cEOTW will commence in 10 minutes."
+    stop: "&cEOTW has been cancelled."
+    commenced: "&cThe EOTW period has commenced."
   regen:
     no-faction: "&cYou do not have a faction."
     full: "&eYour faction has full DTR."
@@ -436,7 +442,6 @@ command:
     received: '&aReceived %amount% from %sender%'
   faction:
     map:
-      cooldown: "&cYou cannot execute this command so rapidly. Please wait."
       shown: '&eThe faction map is now &ashown&e.'
       hidden: '&eThe faction map is now &chidden&e.'
       faction: '&b%faction% &eis shown with block &c%material%&e.'

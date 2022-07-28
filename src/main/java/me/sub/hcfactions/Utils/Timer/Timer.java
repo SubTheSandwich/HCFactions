@@ -376,9 +376,21 @@ public class Timer {
                                 for (Player p : Bukkit.getOnlinePlayers()) {
                                     p.sendMessage(C.chat(Locale.get().getString("command.sotw.ended")));
                                 }
+                                Main.getInstance().timers.remove(Timers.SOTW);
                             } else {
                                 setTimer(Timers.SOTW, time);
                             }
+                        }
+                    }
+                    if (timers.contains(Timers.EOTW)) {
+                        int time = Main.getInstance().timers.get(Timers.EOTW);
+                        time = time - 1;
+                        if (time == 0) {
+                            Main.getInstance().eotwStarted = true;
+                            Bukkit.broadcastMessage(C.chat(Locale.get().getString("command.eotw.commenced")));
+                            Main.getInstance().timers.remove(Timers.EOTW);
+                        } else {
+                            setTimer(Timers.EOTW, time);
                         }
                     }
                 }

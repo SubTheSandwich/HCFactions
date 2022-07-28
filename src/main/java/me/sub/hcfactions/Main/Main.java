@@ -82,14 +82,14 @@ import java.util.UUID;
 // Code in EOTW
 // Fix Lunar Client Nametags (Includes adding in default client nametags)
 // Add rank reviving system
+// Add in /f stuck
+// Add /f focus faction
 
 
 
 public class Main extends JavaPlugin {
 
     public HashMap<UUID, String> claimFor = new HashMap<>();
-
-    public ArrayList<UUID> mapKickCooldown = new ArrayList<>();
 
     public HashMap<UUID, Material> randomlyGeneratedMaterial = new HashMap<>();
 
@@ -383,6 +383,7 @@ public class Main extends JavaPlugin {
         getCommand("feed").setExecutor(new FeedCommand());
         getCommand("heal").setExecutor(new HealCommand());
         getCommand("regen").setExecutor(new RegenCommand());
+        getCommand("eotw").setExecutor(new EOTWCommand());
     }
 
     private void events() {

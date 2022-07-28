@@ -643,90 +643,77 @@ public class FactionCommand implements CommandExecutor {
                     }
                 } else if (args[0].equalsIgnoreCase("map")) {
                     if (!Main.getInstance().mappedLocations.containsKey(p.getUniqueId())) {
-                        if (!Main.getInstance().mapKickCooldown.contains(p.getUniqueId())) {
-                            ArrayList<Cuboid> cuboids = new ArrayList<>();
-                            for (int x = p.getLocation().getBlockX() - 25; x < p.getLocation().getX() + 25; ++x) {
-                                for (int z = p.getLocation().getBlockZ() - 25; z < p.getLocation().getZ() + 25; z++) {
-                                    Location location = new Location(p.getWorld(), x, 0, z);
-                                    if (getFactionAtLocation(location) != null) {
-                                        boolean valid = true;
-                                        Faction faction = new Faction(getFactionAtLocation(location));
-                                        String number = getClaimNumber(location);
-                                        Location locationOne = new Location(Bukkit.getWorld(faction.get().getString("claims." + number + ".world")), faction.get().getInt("claims." + number + ".sideOne.x"), faction.get().getInt("claims." + number + ".sideOne.y"), faction.get().getInt("claims." + number + ".sideOne.z"));
-                                        Location locationTwo = new Location(Bukkit.getWorld(faction.get().getString("claims." + number + ".world")), faction.get().getInt("claims." + number + ".sideTwo.x"), faction.get().getInt("claims." + number + ".sideTwo.y"), faction.get().getInt("claims." + number + ".sideTwo.z"));
-                                        Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                                        if (cuboids.size() > 0) {
-                                            for (Cuboid c : cuboids) {
-                                                if (c.getCenter().getX() == cuboid.getCenter().getX() && c.getCenter().getZ() == cuboid.getCenter().getZ()) {
-                                                    valid = false;
-                                                }
+                        ArrayList<Cuboid> cuboids = new ArrayList<>();
+                        for (int x = p.getLocation().getBlockX() - 5; x < p.getLocation().getX() + 5; ++x) {
+                            for (int z = p.getLocation().getBlockZ() - 5; z < p.getLocation().getZ() + 5; z++) {
+                                Location location = new Location(p.getWorld(), x, 0, z);
+                                if (getFactionAtLocation(location) != null) {
+                                    boolean valid = true;
+                                    Faction faction = new Faction(getFactionAtLocation(location));
+                                    String number = getClaimNumber(location);
+                                    Location locationOne = new Location(Bukkit.getWorld(faction.get().getString("claims." + number + ".world")), faction.get().getInt("claims." + number + ".sideOne.x"), faction.get().getInt("claims." + number + ".sideOne.y"), faction.get().getInt("claims." + number + ".sideOne.z"));
+                                    Location locationTwo = new Location(Bukkit.getWorld(faction.get().getString("claims." + number + ".world")), faction.get().getInt("claims." + number + ".sideTwo.x"), faction.get().getInt("claims." + number + ".sideTwo.y"), faction.get().getInt("claims." + number + ".sideTwo.z"));
+                                    Cuboid cuboid = new Cuboid(locationOne, locationTwo);
+                                    if (cuboids.size() > 0) {
+                                        for (Cuboid c : cuboids) {
+                                            if (c.getCenter().getX() == cuboid.getCenter().getX() && c.getCenter().getZ() == cuboid.getCenter().getZ()) {
+                                                valid = false;
                                             }
                                         }
-                                        if (valid) {
-                                            cuboids.add(cuboid);
-                                        }
+                                    }
+                                    if (valid) {
+                                        cuboids.add(cuboid);
                                     }
                                 }
-                            }
+                               }
+                        }
 
-                            p.sendMessage(C.chat(Locale.get().getString("command.faction.map.shown")));
-
-                            ArrayList<Material> blockTypes = new ArrayList<>();
-                            blockTypes.add(Material.DIAMOND_BLOCK);
-                            blockTypes.add(Material.EMERALD_BLOCK);
-                            blockTypes.add(Material.IRON_BLOCK);
-                            blockTypes.add(Material.GOLD_BLOCK);
-                            blockTypes.add(Material.COAL_BLOCK);
-                            blockTypes.add(Material.REDSTONE_BLOCK);
-                            blockTypes.add(Material.LAPIS_BLOCK);
-                            blockTypes.add(Material.LOG);
-                            blockTypes.add(Material.WOOL);
-                            blockTypes.add(Material.BOOKSHELF);
-                            blockTypes.add(Material.STONE);
-                            blockTypes.add(Material.QUARTZ_BLOCK);
-                            blockTypes.add(Material.SPONGE);
-                            blockTypes.add(Material.GLOWSTONE);
-                            blockTypes.add(Material.HAY_BLOCK);
-                            blockTypes.add(Material.NETHER_BRICK);
-                            blockTypes.add(Material.SANDSTONE);
-                            blockTypes.add(Material.NOTE_BLOCK);
-
-                            if (cuboids.size() > 0) {
-                                Main.getInstance().mappedLocations.put(p.getUniqueId(), cuboids);
-                                for (Cuboid cuboid : cuboids) {
-                                    Faction faction = new Faction(getFactionAtLocation(cuboid.getCenter()));
-                                    Random random = new Random();
-                                    int pos = random.nextInt(blockTypes.size());
-                                    Material material = blockTypes.get(pos);
-                                    blockTypes.remove(material);
-                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.map.faction").replace("%faction%", faction.get().getString("name")).replace("%material%", material.name())));
-                                    for (Block b : cuboid.flatCorners()) {
-                                        Location location = b.getLocation();
-                                        for (int i = 0; i < 255; i++) {
-                                            location.setY(i);
-                                            location.setY(i);
-                                            if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
-                                                if (i % 4 == 0) {
-                                                    p.sendBlockChange(location, material, (byte) 0);
-                                                } else {
-                                                    p.sendBlockChange(location, Material.GLASS, (byte) 0);
-                                                }
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.map.shown")));
+                        ArrayList<Material> blockTypes = new ArrayList<>();
+                        blockTypes.add(Material.DIAMOND_BLOCK);
+                        blockTypes.add(Material.EMERALD_BLOCK);
+                        blockTypes.add(Material.IRON_BLOCK);
+                        blockTypes.add(Material.GOLD_BLOCK);
+                        blockTypes.add(Material.COAL_BLOCK);
+                        blockTypes.add(Material.REDSTONE_BLOCK);
+                        blockTypes.add(Material.LAPIS_BLOCK);
+                        blockTypes.add(Material.LOG);
+                        blockTypes.add(Material.WOOL);
+                        blockTypes.add(Material.BOOKSHELF);
+                        blockTypes.add(Material.STONE);
+                        blockTypes.add(Material.QUARTZ_BLOCK);
+                        blockTypes.add(Material.SPONGE);
+                        blockTypes.add(Material.GLOWSTONE);
+                        blockTypes.add(Material.HAY_BLOCK);
+                        blockTypes.add(Material.NETHER_BRICK);
+                        blockTypes.add(Material.SANDSTONE);
+                        blockTypes.add(Material.NOTE_BLOCK);
+                        if (cuboids.size() > 0) {
+                            Main.getInstance().mappedLocations.put(p.getUniqueId(), cuboids);
+                            for (Cuboid cuboid : cuboids) {
+                                Faction faction = new Faction(getFactionAtLocation(cuboid.getCenter()));
+                                Random random = new Random();
+                                int pos = random.nextInt(blockTypes.size());
+                                Material material = blockTypes.get(pos);
+                                blockTypes.remove(material);
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.map.faction").replace("%faction%", faction.get().getString("name")).replace("%material%", material.name())));
+                                for (Block b : cuboid.flatCorners()) {
+                                    Location location = b.getLocation();
+                                    for (int i = 0; i < 255; i++) {
+                                        location.setY(i);
+                                        location.setY(i);
+                                        if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
+                                            if (i % 4 == 0) {
+                                                p.sendBlockChange(location, material, (byte) 0);
+                                            } else {
+                                                p.sendBlockChange(location, Material.GLASS, (byte) 0);
                                             }
                                         }
                                     }
                                 }
-                            } else {
-                                p.sendMessage(C.chat(Locale.get().getString("command.faction.map.none-nearby")));
                             }
-                            Main.getInstance().mapKickCooldown.add(p.getUniqueId());
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    Main.getInstance().mapKickCooldown.remove(p.getUniqueId());
-                                }
-                            }.runTaskLater(Main.getInstance(), 600);
                         } else {
-                            p.sendMessage(C.chat(Locale.get().getString("command.faction.map.cooldown")));
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.map.none-nearby")));
                         }
                     } else {
                         for (Cuboid cuboid : Main.getInstance().mappedLocations.get(p.getUniqueId())) {
