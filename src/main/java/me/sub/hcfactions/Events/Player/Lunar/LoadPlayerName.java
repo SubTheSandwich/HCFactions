@@ -31,8 +31,7 @@ public class LoadPlayerName implements Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    ArrayList<Player> playerArrayList = new ArrayList<>(Bukkit.getOnlinePlayers());
-                    for (Player d : playerArrayList) {
+                    for (Player d : Bukkit.getOnlinePlayers()) {
                         ArrayList<String> name = new ArrayList<>();
                         Players other = new Players(d.getUniqueId().toString());
                         if (!Main.getInstance().staff.contains(d)) {

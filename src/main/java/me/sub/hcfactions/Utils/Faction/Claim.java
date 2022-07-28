@@ -279,9 +279,57 @@ public class Claim {
                     faction.get().set("claims.0.sideTwo.y", newLocationTwo.getY());
                     faction.get().set("claims.0.sideTwo.z", newLocationTwo.getZ());
                     faction.save();
+                    if (Main.getInstance().posClaimOne.containsKey(p.getUniqueId())) {
+                        Location location = Main.getInstance().posClaimOne.get(p.getUniqueId());
+                        for (int i = 0; i < 255; i++) {
+                            location.setY(i);
+                            if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
+                                p.sendBlockChange(location, Material.AIR, (byte) 0);
+                            }
+                        }
+                    }
+                    if (Main.getInstance().posClaimTwo.containsKey(p.getUniqueId())) {
+                        Location location = Main.getInstance().posClaimTwo.get(p.getUniqueId());
+                        for (int i = 0; i < 255; i++) {
+                            location.setY(i);
+                            if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
+                                p.sendBlockChange(location, Material.AIR, (byte) 0);
+                            }
+                        }
+                    }
+
+                    Cuboid newCuboid = new Cuboid(newLocationOne, newLocationTwo);
+                    Block[] blocks = newCuboid.flatCorners();
+                    for (Block b : blocks) {
+                        Location location = b.getLocation();
+                        for (int i = 0; i < 255; i++) {
+                            location.setY(i);
+                            if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
+                                if (i % 4 == 0) {
+                                    p.sendBlockChange(location, Main.getInstance().randomlyGeneratedMaterial.get(p.getUniqueId()), (byte) 0);
+                                } else {
+                                    p.sendBlockChange(location, Material.GLASS, (byte) 0);
+                                }
+                            }
+                        }
+                    }
+
+                    if (Main.getInstance().mappedLocations.containsKey(p.getUniqueId())) {
+                        ArrayList<Cuboid> cuboids = new ArrayList<>(Main.getInstance().mappedLocations.get(p.getUniqueId()));
+                        cuboids.add(cuboid);
+                        Main.getInstance().mappedLocations.put(p.getUniqueId(), cuboids);
+                    } else {
+                        ArrayList<Cuboid> cuboids = new ArrayList<>();
+                        cuboids.add(cuboid);
+                        Main.getInstance().mappedLocations.put(p.getUniqueId(), cuboids);
+                    }
+
+
                     Main.getInstance().posClaimOne.remove(p.getUniqueId());
                     Main.getInstance().posClaimTwo.remove(p.getUniqueId());
                     Main.getInstance().claimFor.remove(p.getUniqueId());
+                    Main.getInstance().randomlyGeneratedMaterial.remove(p.getUniqueId());
+
                     p.sendMessage(C.chat(Locale.get().getString("command.faction.claimfor.purchased").replace("%faction%", faction.get().getString("name"))));
                     p.getInventory().remove(p.getItemInHand());
                 } else {
@@ -304,9 +352,56 @@ public class Claim {
                     faction.get().set("claims." + ofNumber + ".sideTwo.y", newLocationTwo.getY());
                     faction.get().set("claims." + ofNumber + ".sideTwo.z", newLocationTwo.getZ());
                     faction.save();
+                    if (Main.getInstance().posClaimOne.containsKey(p.getUniqueId())) {
+                        Location location = Main.getInstance().posClaimOne.get(p.getUniqueId());
+                        for (int i = 0; i < 255; i++) {
+                            location.setY(i);
+                            if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
+                                p.sendBlockChange(location, Material.AIR, (byte) 0);
+                            }
+                        }
+                    }
+                    if (Main.getInstance().posClaimTwo.containsKey(p.getUniqueId())) {
+                        Location location = Main.getInstance().posClaimTwo.get(p.getUniqueId());
+                        for (int i = 0; i < 255; i++) {
+                            location.setY(i);
+                            if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
+                                p.sendBlockChange(location, Material.AIR, (byte) 0);
+                            }
+                        }
+                    }
+
+                    if (Main.getInstance().mappedLocations.containsKey(p.getUniqueId())) {
+                        ArrayList<Cuboid> cuboids = new ArrayList<>(Main.getInstance().mappedLocations.get(p.getUniqueId()));
+                        cuboids.add(cuboid);
+                        Main.getInstance().mappedLocations.put(p.getUniqueId(), cuboids);
+                    } else {
+                        ArrayList<Cuboid> cuboids = new ArrayList<>();
+                        cuboids.add(cuboid);
+                        Main.getInstance().mappedLocations.put(p.getUniqueId(), cuboids);
+                    }
+
+                    Cuboid newCuboid = new Cuboid(newLocationOne, newLocationTwo);
+                    Block[] blocks = newCuboid.flatCorners();
+                    for (Block b : blocks) {
+                        Location location = b.getLocation();
+                        for (int i = 0; i < 255; i++) {
+                            location.setY(i);
+                            if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
+                                if (i % 4 == 0) {
+                                    p.sendBlockChange(location, Main.getInstance().randomlyGeneratedMaterial.get(p.getUniqueId()), (byte) 0);
+                                } else {
+                                    p.sendBlockChange(location, Material.GLASS, (byte) 0);
+                                }
+                            }
+                        }
+                    }
+
+
                     Main.getInstance().posClaimOne.remove(p.getUniqueId());
                     Main.getInstance().posClaimTwo.remove(p.getUniqueId());
                     Main.getInstance().claimFor.remove(p.getUniqueId());
+                    Main.getInstance().randomlyGeneratedMaterial.remove(p.getUniqueId());
                     p.sendMessage(C.chat(Locale.get().getString("command.faction.claimfor.purchased").replace("%faction%", faction.get().getString("name"))));
                     p.getInventory().remove(p.getItemInHand());
                 }
@@ -319,28 +414,38 @@ public class Claim {
     }
 
     public static void claimSelectOne(Player p, Location clickedLocation) {
-        ArrayList<Material> blockTypes = new ArrayList<>();
-        blockTypes.add(Material.DIAMOND_BLOCK);
-        blockTypes.add(Material.EMERALD_BLOCK);
-        blockTypes.add(Material.IRON_BLOCK);
-        blockTypes.add(Material.GOLD_BLOCK);
-        blockTypes.add(Material.COAL_BLOCK);
-        blockTypes.add(Material.LOG);
+        if (!Main.getInstance().randomlyGeneratedMaterial.containsKey(p.getUniqueId())) {
+            ArrayList<Material> blockTypes = new ArrayList<>();
+            blockTypes.add(Material.DIAMOND_BLOCK);
+            blockTypes.add(Material.EMERALD_BLOCK);
+            blockTypes.add(Material.IRON_BLOCK);
+            blockTypes.add(Material.GOLD_BLOCK);
+            blockTypes.add(Material.COAL_BLOCK);
+            blockTypes.add(Material.LOG);
+            Random random = new Random();
+            int pos = random.nextInt(blockTypes.size());
+            Material material = blockTypes.get(pos);
+            Main.getInstance().randomlyGeneratedMaterial.put(p.getUniqueId(), material);
+        }
 
-        Random random = new Random();
-        int pos = random.nextInt(blockTypes.size());
-        Material material = blockTypes.get(pos);
 
-        int startingInt = clickedLocation.getBlockY() + 1;
-
-        for (int i = 0; i < startingInt; i++) {
-            Location loc = clickedLocation;
-            loc.setY(i);
-            if (loc.getWorld().getBlockAt(loc).getType().equals(Material.AIR)) {
-                if (i / 3 == 0) {
-                    p.sendBlockChange(loc, material, (byte) 0);
+        for (int i = 0; i < 255; i++) {
+            clickedLocation.setY(i);
+            if (clickedLocation.getWorld().getBlockAt(clickedLocation).getType().equals(Material.AIR)) {
+                if (i % 4 == 0) {
+                    p.sendBlockChange(clickedLocation, Main.getInstance().randomlyGeneratedMaterial.get(p.getUniqueId()), (byte) 0);
                 } else {
-                    p.sendBlockChange(loc, Material.GLASS, (byte) 0);
+                    p.sendBlockChange(clickedLocation, Material.GLASS, (byte) 0);
+                }
+            }
+        }
+
+        if (Main.getInstance().posClaimOne.containsKey(p.getUniqueId())) {
+            Location location = Main.getInstance().posClaimOne.get(p.getUniqueId());
+            for (int i = 0; i < 255; i++) {
+                location.setY(i);
+                if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
+                    p.sendBlockChange(location, Material.AIR, (byte) 0);
                 }
             }
         }
@@ -417,10 +522,6 @@ public class Claim {
                     locationOne.setY(0);
                     locationTwo.setY(0);
                     Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                    int size = 0;
-                    for (Block b : cuboid.getBlocks()) {
-                        size++;
-                    }
                     double cost;
                     String blockSize = cuboid.getSizeX() + "x" + cuboid.getSizeZ();
                     if (blockSize.equals("5x5")) {
@@ -447,9 +548,57 @@ public class Claim {
                                 faction.get().set("claims.0.sideTwo.y", newLocationTwo.getY());
                                 faction.get().set("claims.0.sideTwo.z", newLocationTwo.getZ());
                                 faction.save();
+
+                                if (Main.getInstance().posClaimOne.containsKey(p.getUniqueId())) {
+                                    Location location = Main.getInstance().posClaimOne.get(p.getUniqueId());
+                                    for (int i = 0; i < 255; i++) {
+                                        location.setY(i);
+                                        if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
+                                            p.sendBlockChange(location, Material.AIR, (byte) 0);
+                                        }
+                                    }
+                                }
+                                if (Main.getInstance().posClaimTwo.containsKey(p.getUniqueId())) {
+                                    Location location = Main.getInstance().posClaimTwo.get(p.getUniqueId());
+                                    for (int i = 0; i < 255; i++) {
+                                        location.setY(i);
+                                        if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
+                                            p.sendBlockChange(location, Material.AIR, (byte) 0);
+                                        }
+                                    }
+                                }
+
+                                Cuboid newCuboid = new Cuboid(newLocationOne, newLocationTwo);
+                                Block[] blocks = newCuboid.flatCorners();
+                                for (Block b : blocks) {
+                                    Location location = b.getLocation();
+                                    for (int i = 0; i < 255; i++) {
+                                        location.setY(i);
+                                        if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
+                                            if (i % 4 == 0) {
+                                                p.sendBlockChange(location, Main.getInstance().randomlyGeneratedMaterial.get(p.getUniqueId()), (byte) 0);
+                                            } else {
+                                                p.sendBlockChange(location, Material.GLASS, (byte) 0);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (Main.getInstance().mappedLocations.containsKey(p.getUniqueId())) {
+                                    ArrayList<Cuboid> cuboids = new ArrayList<>(Main.getInstance().mappedLocations.get(p.getUniqueId()));
+                                    cuboids.add(cuboid);
+                                    Main.getInstance().mappedLocations.put(p.getUniqueId(), cuboids);
+                                } else {
+                                    ArrayList<Cuboid> cuboids = new ArrayList<>();
+                                    cuboids.add(cuboid);
+                                    Main.getInstance().mappedLocations.put(p.getUniqueId(), cuboids);
+                                }
+
+
                                 Main.getInstance().posClaimOne.remove(p.getUniqueId());
                                 Main.getInstance().posClaimTwo.remove(p.getUniqueId());
                                 Main.getInstance().claiming.remove(p.getUniqueId());
+                                Main.getInstance().randomlyGeneratedMaterial.remove(p.getUniqueId());
                                 p.sendMessage(C.chat(Locale.get().getString("command.faction.claim.purchased").replace("%cost%", String.valueOf(cost))));
                                 p.getInventory().remove(p.getItemInHand());
                             } else {
@@ -473,6 +622,25 @@ public class Claim {
     }
 
     public static void cancelClaim(Player p) {
+        if (Main.getInstance().posClaimOne.containsKey(p.getUniqueId())) {
+            Location location = Main.getInstance().posClaimOne.get(p.getUniqueId());
+            for (int i = 0; i < 255; i++) {
+                location.setY(i);
+                if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
+                    p.sendBlockChange(location, Material.AIR, (byte) 0);
+                }
+            }
+        }
+        if (Main.getInstance().posClaimTwo.containsKey(p.getUniqueId())) {
+            Location location = Main.getInstance().posClaimTwo.get(p.getUniqueId());
+            for (int i = 0; i < 255; i++) {
+                location.setY(i);
+                if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
+                    p.sendBlockChange(location, Material.AIR, (byte) 0);
+                }
+            }
+        }
+        Main.getInstance().randomlyGeneratedMaterial.remove(p.getUniqueId());
         Main.getInstance().posClaimOne.remove(p.getUniqueId());
         Main.getInstance().posClaimTwo.remove(p.getUniqueId());
         if (Main.getInstance().claiming.contains(p.getUniqueId())) {
@@ -487,31 +655,42 @@ public class Claim {
     }
 
     public static void claimSelectTwo(Player p, Location clickedLocation) {
-        ArrayList<Material> blockTypes = new ArrayList<>();
-        blockTypes.add(Material.DIAMOND_BLOCK);
-        blockTypes.add(Material.EMERALD_BLOCK);
-        blockTypes.add(Material.IRON_BLOCK);
-        blockTypes.add(Material.GOLD_BLOCK);
-        blockTypes.add(Material.COAL_BLOCK);
-        blockTypes.add(Material.LOG);
+        if (!Main.getInstance().randomlyGeneratedMaterial.containsKey(p.getUniqueId())) {
+            ArrayList<Material> blockTypes = new ArrayList<>();
+            blockTypes.add(Material.DIAMOND_BLOCK);
+            blockTypes.add(Material.EMERALD_BLOCK);
+            blockTypes.add(Material.IRON_BLOCK);
+            blockTypes.add(Material.GOLD_BLOCK);
+            blockTypes.add(Material.COAL_BLOCK);
+            blockTypes.add(Material.LOG);
+            Random random = new Random();
+            int pos = random.nextInt(blockTypes.size());
+            Material material = blockTypes.get(pos);
+            Main.getInstance().randomlyGeneratedMaterial.put(p.getUniqueId(), material);
+        }
 
-        Random random = new Random();
-        int pos = random.nextInt(blockTypes.size());
-        Material material = blockTypes.get(pos);
 
-        int startingInt = clickedLocation.getBlockY() + 1;
-
-        for (int i = 0; i < startingInt; i++) {
-            Location loc = clickedLocation;
-            loc.setY(i);
-            if (loc.getWorld().getBlockAt(loc).getType().equals(Material.AIR)) {
-                if (i / 3 == 0) {
-                    p.sendBlockChange(loc, material, (byte) 0);
+        for (int i = 0; i < 255; i++) {
+            clickedLocation.setY(i);
+            if (clickedLocation.getWorld().getBlockAt(clickedLocation).getType().equals(Material.AIR)) {
+                if (i % 4 == 0) {
+                    p.sendBlockChange(clickedLocation, Main.getInstance().randomlyGeneratedMaterial.get(p.getUniqueId()), (byte) 0);
                 } else {
-                    p.sendBlockChange(loc, Material.GLASS, (byte) 0);
+                    p.sendBlockChange(clickedLocation, Material.GLASS, (byte) 0);
                 }
             }
         }
+
+        if (Main.getInstance().posClaimTwo.containsKey(p.getUniqueId())) {
+            Location location = Main.getInstance().posClaimTwo.get(p.getUniqueId());
+            for (int i = 0; i < 255; i++) {
+                location.setY(i);
+                if (location.getWorld().getBlockAt(location).getType().equals(Material.AIR)) {
+                    p.sendBlockChange(location, Material.AIR, (byte) 0);
+                }
+            }
+        }
+
         Main.getInstance().posClaimTwo.put(p.getUniqueId(), clickedLocation);
         p.sendMessage(C.chat(Locale.get().getString("command.faction.claim.selected-position-two").replace("%x%", String.valueOf(Cooldown.round(p.getLocation().getX(), 1))).replace("%z%", String.valueOf(Cooldown.round(p.getLocation().getZ(), 1)))));
         if (Main.getInstance().posClaimOne.containsKey(p.getUniqueId())) {

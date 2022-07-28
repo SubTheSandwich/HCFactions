@@ -59,6 +59,7 @@ import me.sub.hcfactions.Files.Mountain.Mountain;
 import me.sub.hcfactions.Files.Players.Players;
 import me.sub.hcfactions.Utils.Color.C;
 import me.sub.hcfactions.Utils.Cooldowns.Cooldown;
+import me.sub.hcfactions.Utils.Cuboid.Cuboid;
 import me.sub.hcfactions.Utils.Timer.Timer;
 import me.sub.hcfactions.Utils.Timer.Timers;
 import net.milkbowl.vault.chat.Chat;
@@ -81,15 +82,18 @@ import java.util.UUID;
 // Code in EOTW
 // Fix Lunar Client Nametags (Includes adding in default client nametags)
 // Add rank reviving system
-// Add /f map
-// Fix pillars not showing up when claiming
-// Add subclaims
 
 
 
 public class Main extends JavaPlugin {
 
     public HashMap<UUID, String> claimFor = new HashMap<>();
+
+    public ArrayList<UUID> mapKickCooldown = new ArrayList<>();
+
+    public HashMap<UUID, Material> randomlyGeneratedMaterial = new HashMap<>();
+
+    public HashMap<UUID, ArrayList<Cuboid>> mappedLocations = new HashMap<>();
 
     public ArrayList<UUID> bypass = new ArrayList<>();
 

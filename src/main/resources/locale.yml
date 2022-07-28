@@ -435,6 +435,12 @@ command:
     sent: '&aSent %amount% to %recipient%'
     received: '&aReceived %amount% from %sender%'
   faction:
+    map:
+      cooldown: "&cYou cannot execute this command so rapidly. Please wait."
+      shown: '&eThe faction map is now &ashown&e.'
+      hidden: '&eThe faction map is now &chidden&e.'
+      faction: '&b%faction% &eis shown with block &c%material%&e.'
+      none-nearby: '&cThere are no Factions within 25 blocks from you.'
     leave:
       no-faction: "&cYou are not in a faction."
       cant-leave: "&cYou cannot leave your faction if you are the leader."

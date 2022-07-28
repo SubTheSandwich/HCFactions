@@ -1,5 +1,6 @@
 package me.sub.hcfactions.Utils.Cuboid;
 
+import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -289,6 +290,16 @@ public class Cuboid implements Iterable<Block>, Cloneable, ConfigurationSerializ
         res[5] = w.getBlockAt(this.x2, this.y1, this.z2);
         res[6] = w.getBlockAt(this.x2, this.y2, this.z1);
         res[7] = w.getBlockAt(this.x2, this.y2, this.z2);
+        return res;
+    }
+
+    public Block[] flatCorners() {
+        Block[] res = new Block[4];
+        World w = this.getWorld();
+        res[0] = w.getBlockAt(this.x1, 0, this.z1);
+        res[1] = w.getBlockAt(this.x1, 0, this.z2);
+        res[2] = w.getBlockAt(this.x2, 0, this.z1);
+        res[3] = w.getBlockAt(this.x2, 0, this.z2);
         return res;
     }
 
@@ -596,7 +607,7 @@ public class Cuboid implements Iterable<Block>, Cloneable, ConfigurationSerializ
 
     @Override
     public String toString() {
-        return new String("Cuboid: " + this.worldName + "," + this.x1 + "," + this.y1 + "," + this.z1 + "=>" + this.x2 + "," + this.y2 + "," + this.z2);
+        return "Cuboid: " + this.worldName + "," + this.x1 + "," + this.y1 + "," + this.z1 + "=>" + this.x2 + "," + this.y2 + "," + this.z2;
     }
 
     public class CuboidIterator implements Iterator<Block> {
