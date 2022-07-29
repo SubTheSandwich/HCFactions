@@ -7,6 +7,8 @@ depend:
   - Vault
   - ProtocolLib
 commands:
+  eotw:
+    description: Eotw
   regen:
     description: Regen
   heal:

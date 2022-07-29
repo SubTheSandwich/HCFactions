@@ -79,12 +79,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-// Code in EOTW
-// Fix Lunar Client Nametags (Includes adding in default client nametags)
+// add in default client nametags
 // Add rank reviving system
 // Add in /f stuck
-// Add /f focus faction
-
 
 
 public class Main extends JavaPlugin {

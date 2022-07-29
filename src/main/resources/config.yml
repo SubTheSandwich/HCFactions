@@ -285,7 +285,13 @@ scoreboard:
     - '&6&lApple&7: &c%player_apple_timer%<display=%player_has_apple_timer%>'
     - '&6&lGopple&7: &c%player_gopple_timer%<display=%player_has_gapple_timer%>'
     - '&9&lHome&7: &c%player_home_timer%<display=%player_has_home_timer%>'
+    - "%focus-lines%"
     - "&7&m--------------------"
+  focus:
+    - "&6&lTeam&7: &e%name%"
+    - "&6&lHQ&7: &e%home%"
+    - "&6&lDTR&7: &e%dtr%"
+    - "&6&lOnline&7: &e%online%"
   conquest:
     normal:
       - "&e&l%name%: "

@@ -585,10 +585,13 @@ command:
       already-in-faction: "&cYou must leave your current faction before you join another one."
       join-successful: '&e%name% has joined the faction.'
     focus:
+      doesnt-exist: "&cThe specified player or faction does not exist."
       no-faction: "&cYou can only execute this command if you are in a faction."
       not-focusing: "&cYour faction is not focusing any player or faction currently."
+      cant-focus: "&cYou cannot focus the specified faction."
       cancel-focus: "&eYou are no longer focusing &b%player%&e."
       same-player: "&cYou cannot focus yourself."
+      same-faction: "&cYou cannot focus your own faction."
       in-faction: "&cThe player you are trying to focus is in your faction."
       focused: "&eYou are now focusing &b%player%&e."
     promote:

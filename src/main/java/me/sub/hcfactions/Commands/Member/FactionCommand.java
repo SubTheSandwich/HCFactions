@@ -410,14 +410,15 @@ public class FactionCommand implements CommandExecutor {
                             Main.getInstance().focusedPlayer.remove(players.get().getString("faction"), player);
                         } else {
                             if (Main.getInstance().focusedFaction.containsKey(players.get().getString("faction"))) {
-
+                                Faction faction = new Faction(Main.getInstance().focusedFaction.get(players.get().getString("faction")));
+                                Main.getInstance().focusedFaction.remove(players.get().getString("faction"));
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.focus.cancel-focus").replace("%player%", faction.get().getString("name"))));
                             } else {
                                 p.sendMessage(C.chat(Locale.get().getString("command.faction.focus.not-focusing")));
                             }
                         }
                     }
                 } else if (args[0].equalsIgnoreCase("rally")) {
-                    Location rallyPoint = p.getLocation();
                     Players players = new Players(p.getUniqueId().toString());
                     Faction f = new Faction(players.get().getString("faction"));
                     ArrayList<Player> onlinePlayers = new ArrayList<>(f.getAllOnlinePlayers());
@@ -1256,29 +1257,14 @@ public class FactionCommand implements CommandExecutor {
                                 Players additionalPlayer = new Players(player.getUniqueId().toString());
                                 if (!player.getName().equals(p.getName())) {
                                     if (!additionalPlayer.get().getString("faction").equals(players.get().getString("faction"))) {
-                                        double dtr = f.get().getDouble("dtr");
-                                        String msg = "%dtr%";
-                                        if (dtr <= 0) {
-                                            msg = msg.replace("%dtr%", "&c" + String.valueOf(f.get().getDouble("dtr")));
-                                        } else if (dtr <= 1) {
-                                            msg = msg.replace("%dtr%", "&e" + String.valueOf(f.get().getDouble("dtr")));
-                                        } else {
-                                            msg = msg.replace("%dtr%", "&a" + String.valueOf(f.get().getDouble("dtr")));
-                                        }
-                                        Faction getName = new Faction(additionalPlayer.get().getString("faction"));
                                         Player leader = Bukkit.getPlayer(UUID.fromString(f.get().getString("leader")));
-                                        ArrayList<String> name = new ArrayList<>();
-                                        name.add(C.chat("&6[" + Lunar.get().getString("lunar.colors.focused.team-color") + getName.get().getString("name") + "&6]&r " + msg));
-                                        name.add(C.chat(Lunar.get().getString("lunar.colors.focused.color") + player.getName()));
                                         if (leader != null) {
-                                            Main.getInstance().lunarClientAPI.overrideNametag(player, name, leader);
                                             leader.sendMessage(C.chat(Locale.get().getString("command.faction.focus.focused").replace("%player%", player.getName())));
                                         }
 
                                         for (String play : f.get().getStringList("coleaders")) {
                                             Player d = Bukkit.getPlayer(UUID.fromString(play));
                                             if (d != null) {
-                                                Main.getInstance().lunarClientAPI.overrideNametag(player, name, d);
                                                 d.sendMessage(C.chat(Locale.get().getString("command.faction.focus.focused").replace("%player%", player.getName())));
                                             }
                                         }
@@ -1286,7 +1272,6 @@ public class FactionCommand implements CommandExecutor {
                                         for (String play : f.get().getStringList("captains")) {
                                             Player d = Bukkit.getPlayer(UUID.fromString(play));
                                             if (d != null) {
-                                                Main.getInstance().lunarClientAPI.overrideNametag(player, name, d);
                                                 d.sendMessage(C.chat(Locale.get().getString("command.faction.focus.focused").replace("%player%", player.getName())));
                                             }
                                         }
@@ -1294,7 +1279,6 @@ public class FactionCommand implements CommandExecutor {
                                         for (String play : f.get().getStringList("members")) {
                                             Player d = Bukkit.getPlayer(UUID.fromString(play));
                                             if (d != null) {
-                                                Main.getInstance().lunarClientAPI.overrideNametag(player, name, d);
                                                 d.sendMessage(C.chat(Locale.get().getString("command.faction.focus.focused").replace("%player%", player.getName())));
                                             }
                                         }
@@ -1310,7 +1294,21 @@ public class FactionCommand implements CommandExecutor {
                                 p.sendMessage(C.chat(Locale.get().getString("primary.lunar-only")));
                             }
                         } else {
-
+                            Faction faction = getFactionByName(args[1]);
+                            if (faction != null) {
+                                if (faction.get().getString("type").equals("PLAYER")) {
+                                    if (!faction.get().getString("uuid").equals(players.getFaction().get().getString("uuid"))) {
+                                        Main.getInstance().focusedFaction.put(players.getFaction().get().getString("uuid"), faction.get().getString("uuid"));
+                                        p.sendMessage(C.chat(Locale.get().getString("command.faction.focus.focused").replace("%player%", faction.get().getString("name"))));
+                                    } else {
+                                        p.sendMessage(C.chat(Locale.get().getString("command.faction.focus.same-faction")));
+                                    }
+                                } else {
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.focus.cant-focus")));
+                                }
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.focus.doesnt-exist")));
+                            }
                         }
                     }
                 } else if (args[0].equalsIgnoreCase("who")) {
@@ -2350,6 +2348,19 @@ public class FactionCommand implements CommandExecutor {
             }
         }
 
+        return null;
+    }
+
+    private Faction getFactionByName(String name) {
+        File[] factions = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder().getPath() + "/data/factions").listFiles();
+        if (factions != null) {
+            for (File f : factions) {
+                YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
+                if (file.getString("name").equals(name)) {
+                    return new Faction(file.getString("uuid"));
+                }
+            }
+        }
         return null;
     }
 }

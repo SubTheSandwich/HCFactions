@@ -3,6 +3,7 @@ package me.sub.hcfactions.Events.Scoreboard;
 import me.sub.hcfactions.Files.Conquest.Conquest;
 import me.sub.hcfactions.Files.Faction.Faction;
 import me.sub.hcfactions.Files.Locale.Locale;
+import me.sub.hcfactions.Files.Lunar.Lunar;
 import me.sub.hcfactions.Files.Players.Players;
 import me.sub.hcfactions.Main.Main;
 import me.sub.hcfactions.Utils.Class.Classes;
@@ -292,6 +293,54 @@ public class LoadScoreboard implements Listener {
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
                                 String timee = simpleDateFormat.format(calendar.getTimeInMillis());
                                 s = s.replace("%server_eotw_timer%", timee);
+                            } else {
+                                continue;
+                            }
+                        }
+
+                        if (s.contains("%focus-lines%")) {
+                            if (players.hasFaction() && Main.getInstance().focusedFaction.containsKey(players.get().getString("faction"))) {
+                                Faction faction = new Faction(Main.getInstance().focusedFaction.get(players.get().getString("faction")));
+                                s = s.replace("%focus-lines%", "");
+                                ArrayList<String> format = new ArrayList<>();
+                                for (String str : Main.getInstance().getConfig().getStringList("scoreboard.focus")) {
+                                    if (str.contains("%online%")) {
+                                        str = str.replace("%online%", String.valueOf(faction.getAllOnlinePlayers().size()));
+                                    }
+                                    if (str.contains("%name%")) {
+                                        str = str.replace("%name%", String.valueOf(faction.get().getString("name")));
+                                    }
+                                    if (str.contains("%home%")) {
+                                        if (faction.get().isConfigurationSection("home")) {
+                                            String home = "%x%, %z%";
+                                            home = home.replace("%x%", String.valueOf(faction.get().getInt("home.x")));
+                                            home = home.replace("%z%", String.valueOf(faction.get().getInt("home.z")));
+                                            str = str.replace("%home%", home);
+                                        } else {
+                                            str = str.replace("%home%", "None");
+                                        }
+                                    }
+                                    if (str.contains("%dtr%")) {
+                                        String formattedDTR = "%dtr%%symbol%";
+                                        if (faction.get().getDouble("dtr") <= 0) {
+                                            formattedDTR = formattedDTR.replace("%dtr%", "&c" + String.valueOf(faction.get().getDouble("dtr")));
+                                        } else if (faction.get().getDouble("dtr") <= 1) {
+                                            formattedDTR = formattedDTR.replace("%dtr%", "&e" + String.valueOf(faction.get().getDouble("dtr")));
+                                        } else {
+                                            formattedDTR = formattedDTR.replace("%dtr%", "&a" + String.valueOf(faction.get().getDouble("dtr")));
+                                        }
+                                        if (faction.get().getBoolean("regening")) {
+                                            formattedDTR = formattedDTR.replace("%symbol%", "&a&l\u25B2");
+                                        } else if (!faction.get().getString("startregen").equalsIgnoreCase("")) {
+                                            formattedDTR = formattedDTR.replace("%symbol%", "&c&l\u25AA");
+                                        } else {
+                                           formattedDTR = formattedDTR.replace("%symbol%", "&a&l\u25C4");
+                                        }
+                                        str = str.replace("%dtr%", formattedDTR);
+                                    }
+                                    format.add(str);
+                                }
+                                lines.addAll(format);
                             } else {
                                 continue;
                             }
