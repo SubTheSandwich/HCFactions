@@ -83,8 +83,8 @@ import java.util.UUID;
 // add in default client nametags
 // Add rank reviving system
 // Add in /f stuck
-// Add in /f setlocation and locational commands for all other things
 // ADD IN END MOVEMENT SUPOPORT
+// Add in regening in /f who
 
 
 public class Main extends JavaPlugin {

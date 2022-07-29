@@ -804,6 +804,24 @@ public class FactionCommand implements CommandExecutor {
                     } else {
                         p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));
                     }
+                } else if (args[0].equalsIgnoreCase("setlocation")) {
+                    if (p.hasPermission("hcfactions.command.faction.setlocation") || p.hasPermission("hcfactions.admin")) {
+                        if (getFactionByName(args[1]) != null) {
+                            Faction faction = getFactionByName(args[1]);
+                            if (!faction.get().getString("type").equals("PLAYER")) {
+                                faction.get().set("location.x", p.getLocation().getBlockX());
+                                faction.get().set("location.z", p.getLocation().getBlockZ());
+                                faction.save();
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.setlocation.set-location").replace("%faction%", C.convertColorCode(faction.get().getString("color")) + faction.get().getString("name"))));
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.setlocation.not-right")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.setlocation.invalid")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));
+                    }
                 } else if (args[0].equalsIgnoreCase("revive")) {
                     OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
                     Players players = new Players(p.getUniqueId().toString());
@@ -1751,7 +1769,10 @@ public class FactionCommand implements CommandExecutor {
 
                                         if (msg.contains("%home%")) {
                                             if (f.get().isConfigurationSection("location")) {
-
+                                                String format = "%x%, %z%";
+                                                format = format.replace("%x%", String.valueOf(f.get().getString("location.x")));
+                                                format = format.replace("%z%", String.valueOf(f.get().getString("location.z")));
+                                                msg = msg.replace("%home%", format);
                                             } else {
                                                 msg = msg.replace("%home%", "None");
                                             }
@@ -1770,7 +1791,10 @@ public class FactionCommand implements CommandExecutor {
 
                                         if (msg.contains("%home%")) {
                                             if (f.get().isConfigurationSection("location")) {
-
+                                                String format = "%x%, %z%";
+                                                format = format.replace("%x%", String.valueOf(f.get().getString("location.x")));
+                                                format = format.replace("%z%", String.valueOf(f.get().getString("location.z")));
+                                                msg = msg.replace("%home%", format);
                                             } else {
                                                 msg = msg.replace("%home%", "None");
                                             }
@@ -1789,7 +1813,10 @@ public class FactionCommand implements CommandExecutor {
 
                                         if (msg.contains("%home%")) {
                                             if (f.get().isConfigurationSection("location")) {
-
+                                                String format = "%x%, %z%";
+                                                format = format.replace("%x%", String.valueOf(f.get().getString("location.x")));
+                                                format = format.replace("%z%", String.valueOf(f.get().getString("location.z")));
+                                                msg = msg.replace("%home%", format);
                                             } else {
                                                 msg = msg.replace("%home%", "None");
                                             }
@@ -1808,7 +1835,10 @@ public class FactionCommand implements CommandExecutor {
 
                                         if (msg.contains("%home%")) {
                                             if (f.get().isConfigurationSection("location")) {
-
+                                                String format = "%x%, %z%";
+                                                format = format.replace("%x%", String.valueOf(f.get().getString("location.x")));
+                                                format = format.replace("%z%", String.valueOf(f.get().getString("location.z")));
+                                                msg = msg.replace("%home%", format);
                                             } else {
                                                 msg = msg.replace("%home%", "None");
                                             }

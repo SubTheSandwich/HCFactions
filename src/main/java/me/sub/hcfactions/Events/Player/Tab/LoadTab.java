@@ -197,7 +197,7 @@ public class LoadTab implements Listener {
                             String format = "mm:ss";
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
                             String timee = simpleDateFormat.format(calender.getTimeInMillis());
-                            s = s.replace("%time%", timee);
+                            s = s.replace("%koth-time%", timee);
                         } else {
                             s = s.replace("%koth-time%", "&7");
                         }
@@ -205,9 +205,16 @@ public class LoadTab implements Listener {
                     if (s.contains("%koth-location%")) {
                         if (Main.getInstance().kothTimer.size() != 0) {
                             ArrayList<String> keys = new ArrayList<>(Main.getInstance().kothTimer.keySet());
-                            Koth koth = new Koth(keys.get(0));
-                            if (koth.get().isConfigurationSection("location")) {
-
+                            if (getFactionByName(keys.get(0)) != null) {
+                                Faction faction = getFactionByName(keys.get(0));
+                                if (faction.get().isConfigurationSection("location")) {
+                                    String format = "%x%, %z%";
+                                    format = format.replace("%x%", String.valueOf(faction.get().getString("location.x")));
+                                    format = format.replace("%z%", String.valueOf(faction.get().getString("location.z")));
+                                    s = s.replace("%koth-location%", format);
+                                } else {
+                                    s = s.replace("%koth-location%", "None");
+                                }
                             } else {
                                 s = s.replace("%koth-location%", "None");
                             }
@@ -354,7 +361,7 @@ public class LoadTab implements Listener {
                             String format = "mm:ss";
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
                             String timee = simpleDateFormat.format(calender.getTimeInMillis());
-                            s = s.replace("%time%", timee);
+                            s = s.replace("%koth-time%", timee);
                         } else {
                             s = s.replace("%koth-time%", "&7");
                         }
@@ -362,9 +369,16 @@ public class LoadTab implements Listener {
                     if (s.contains("%koth-location%")) {
                         if (Main.getInstance().kothTimer.size() != 0) {
                             ArrayList<String> keys = new ArrayList<>(Main.getInstance().kothTimer.keySet());
-                            Koth koth = new Koth(keys.get(0));
-                            if (koth.get().isConfigurationSection("location")) {
-
+                            if (getFactionByName(keys.get(0)) != null) {
+                                Faction faction = getFactionByName(keys.get(0));
+                                if (faction.get().isConfigurationSection("location")) {
+                                    String format = "%x%, %z%";
+                                    format = format.replace("%x%", String.valueOf(faction.get().getString("location.x")));
+                                    format = format.replace("%z%", String.valueOf(faction.get().getString("location.z")));
+                                    s = s.replace("%koth-location%", format);
+                                } else {
+                                    s = s.replace("%koth-location%", "None");
+                                }
                             } else {
                                 s = s.replace("%koth-location%", "None");
                             }
@@ -511,7 +525,7 @@ public class LoadTab implements Listener {
                             String format = "mm:ss";
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
                             String timee = simpleDateFormat.format(calender.getTimeInMillis());
-                            s = s.replace("%time%", timee);
+                            s = s.replace("%koth-time%", timee);
                         } else {
                             s = s.replace("%koth-time%", "&7");
                         }
@@ -519,9 +533,16 @@ public class LoadTab implements Listener {
                     if (s.contains("%koth-location%")) {
                         if (Main.getInstance().kothTimer.size() != 0) {
                             ArrayList<String> keys = new ArrayList<>(Main.getInstance().kothTimer.keySet());
-                            Koth koth = new Koth(keys.get(0));
-                            if (koth.get().isConfigurationSection("location")) {
-
+                            if (getFactionByName(keys.get(0)) != null) {
+                                Faction faction = getFactionByName(keys.get(0));
+                                if (faction.get().isConfigurationSection("location")) {
+                                    String format = "%x%, %z%";
+                                    format = format.replace("%x%", String.valueOf(faction.get().getString("location.x")));
+                                    format = format.replace("%z%", String.valueOf(faction.get().getString("location.z")));
+                                    s = s.replace("%koth-location%", format);
+                                } else {
+                                    s = s.replace("%koth-location%", "None");
+                                }
                             } else {
                                 s = s.replace("%koth-location%", "None");
                             }
@@ -668,7 +689,7 @@ public class LoadTab implements Listener {
                             String format = "mm:ss";
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
                             String timee = simpleDateFormat.format(calender.getTimeInMillis());
-                            s = s.replace("%time%", timee);
+                            s = s.replace("%koth-time%", timee);
                         } else {
                             s = s.replace("%koth-time%", "&7");
                         }
@@ -676,9 +697,16 @@ public class LoadTab implements Listener {
                     if (s.contains("%koth-location%")) {
                         if (Main.getInstance().kothTimer.size() != 0) {
                             ArrayList<String> keys = new ArrayList<>(Main.getInstance().kothTimer.keySet());
-                            Koth koth = new Koth(keys.get(0));
-                            if (koth.get().isConfigurationSection("location")) {
-
+                            if (getFactionByName(keys.get(0)) != null) {
+                                Faction faction = getFactionByName(keys.get(0));
+                                if (faction.get().isConfigurationSection("location")) {
+                                    String format = "%x%, %z%";
+                                    format = format.replace("%x%", String.valueOf(faction.get().getString("location.x")));
+                                    format = format.replace("%z%", String.valueOf(faction.get().getString("location.z")));
+                                    s = s.replace("%koth-location%", format);
+                                } else {
+                                    s = s.replace("%koth-location%", "None");
+                                }
                             } else {
                                 s = s.replace("%koth-location%", "None");
                             }
@@ -754,5 +782,18 @@ public class LoadTab implements Listener {
                 return null;
             }
         });
+    }
+
+    private Faction getFactionByName(String name) {
+        File[] factions = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder().getPath() + "/data/factions").listFiles();
+        if (factions != null) {
+            for (File f : factions) {
+                YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
+                if (file.getString("name").equals(name)) {
+                    return new Faction(file.getString("uuid"));
+                }
+            }
+        }
+        return null;
     }
 }
