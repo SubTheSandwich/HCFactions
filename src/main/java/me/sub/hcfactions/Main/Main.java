@@ -49,6 +49,7 @@ import me.sub.hcfactions.Events.Player.Mountain.MountainSelectEvent;
 import me.sub.hcfactions.Events.Player.Ore.OreMineRegisterEvent;
 import me.sub.hcfactions.Events.Player.Profile.ProfileClickEvent;
 import me.sub.hcfactions.Events.Player.Subclaim.SubclaimEvents;
+import me.sub.hcfactions.Events.Player.Tab.LoadTab;
 import me.sub.hcfactions.Events.Scoreboard.LoadScoreboard;
 import me.sub.hcfactions.Events.Scoreboard.RemoveScoreboard;
 import me.sub.hcfactions.Events.SignInteractEvent;
@@ -82,6 +83,8 @@ import java.util.UUID;
 // add in default client nametags
 // Add rank reviving system
 // Add in /f stuck
+// Add in /f setlocation and locational commands for all other things
+// ADD IN END MOVEMENT SUPOPORT
 
 
 public class Main extends JavaPlugin {
@@ -230,7 +233,6 @@ public class Main extends JavaPlugin {
         files();
         events();
         commands();
-        loadTab();
         generateMountains();
         regenerateDTR();
         Timer.trackTimers();
@@ -244,9 +246,6 @@ public class Main extends JavaPlugin {
 
     }
 
-    private void loadTab() {
-
-    }
 
     private void regenerateDTR(){
         new BukkitRunnable() {
@@ -439,6 +438,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new ArcherTagEvent(), this);
         pm.registerEvents(new CrossWorldBorderEvent(), this);
         pm.registerEvents(new SubclaimEvents(), this);
+        pm.registerEvents(new LoadTab(), this);
     }
 
     private void files() {
