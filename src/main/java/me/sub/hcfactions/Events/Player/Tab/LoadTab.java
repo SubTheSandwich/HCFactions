@@ -6,7 +6,6 @@ import io.github.thatkawaiisam.ziggurat.ZigguratCommons;
 import io.github.thatkawaiisam.ziggurat.utils.BufferedTabObject;
 import io.github.thatkawaiisam.ziggurat.utils.TabColumn;
 import me.sub.hcfactions.Files.Faction.Faction;
-import me.sub.hcfactions.Files.Koth.Koth;
 import me.sub.hcfactions.Files.Players.Players;
 import me.sub.hcfactions.Files.Tab.Tab;
 import me.sub.hcfactions.Main.Main;
@@ -15,8 +14,6 @@ import me.sub.hcfactions.Utils.Cuboid.Cuboid;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -96,6 +93,8 @@ public class LoadTab implements Listener {
             } else {
                 return Main.getInstance().getConfig().getString("claim.warzone.name");
             }
+        } else if (loc.getWorld().getEnvironment().equals(World.Environment.THE_END)) {
+            return Main.getInstance().getConfig().getString("claim.wilderness.name");
         }
 
         return null;

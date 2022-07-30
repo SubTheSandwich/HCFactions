@@ -81,7 +81,6 @@ import java.util.HashMap;
 import java.util.UUID;
 
 // add in default client nametags
-// Add rank reviving system
 // Add in /f stuck
 // ADD IN END MOVEMENT SUPOPORT
 // Add in regening in /f who
@@ -439,6 +438,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new CrossWorldBorderEvent(), this);
         pm.registerEvents(new SubclaimEvents(), this);
         pm.registerEvents(new LoadTab(), this);
+        pm.registerEvents(new FactionEndMultimoveEvent(), this);
     }
 
     private void files() {

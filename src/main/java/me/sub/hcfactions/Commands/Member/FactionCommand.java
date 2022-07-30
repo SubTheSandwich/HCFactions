@@ -652,21 +652,23 @@ public class FactionCommand implements CommandExecutor {
                                     boolean valid = true;
                                     Faction faction = new Faction(getFactionAtLocation(location));
                                     String number = getClaimNumber(location);
-                                    Location locationOne = new Location(Bukkit.getWorld(faction.get().getString("claims." + number + ".world")), faction.get().getInt("claims." + number + ".sideOne.x"), faction.get().getInt("claims." + number + ".sideOne.y"), faction.get().getInt("claims." + number + ".sideOne.z"));
-                                    Location locationTwo = new Location(Bukkit.getWorld(faction.get().getString("claims." + number + ".world")), faction.get().getInt("claims." + number + ".sideTwo.x"), faction.get().getInt("claims." + number + ".sideTwo.y"), faction.get().getInt("claims." + number + ".sideTwo.z"));
-                                    Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                                    if (cuboids.size() > 0) {
-                                        for (Cuboid c : cuboids) {
-                                            if (c.getCenter().getX() == cuboid.getCenter().getX() && c.getCenter().getZ() == cuboid.getCenter().getZ()) {
-                                                valid = false;
+                                    if (Bukkit.getWorld(faction.get().getString("claims." + number + ".world")).getEnvironment().equals(p.getWorld().getEnvironment())) {
+                                        Location locationOne = new Location(Bukkit.getWorld(faction.get().getString("claims." + number + ".world")), faction.get().getInt("claims." + number + ".sideOne.x"), faction.get().getInt("claims." + number + ".sideOne.y"), faction.get().getInt("claims." + number + ".sideOne.z"));
+                                        Location locationTwo = new Location(Bukkit.getWorld(faction.get().getString("claims." + number + ".world")), faction.get().getInt("claims." + number + ".sideTwo.x"), faction.get().getInt("claims." + number + ".sideTwo.y"), faction.get().getInt("claims." + number + ".sideTwo.z"));
+                                        Cuboid cuboid = new Cuboid(locationOne, locationTwo);
+                                        if (cuboids.size() > 0) {
+                                            for (Cuboid c : cuboids) {
+                                                if (c.getCenter().getX() == cuboid.getCenter().getX() && c.getCenter().getZ() == cuboid.getCenter().getZ()) {
+                                                    valid = false;
+                                                }
                                             }
                                         }
+                                        if (valid) {
+                                            cuboids.add(cuboid);
+                                        }
                                     }
-                                    if (valid) {
-                                        cuboids.add(cuboid);
-                                    }
-                                }
                                }
+                            }
                         }
 
                         p.sendMessage(C.chat(Locale.get().getString("command.faction.map.shown")));
@@ -2322,10 +2324,8 @@ public class FactionCommand implements CommandExecutor {
                         Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideTwo.x"), file.getDouble("claims." + s + ".sideTwo.y"), file.getDouble("claims." + s + ".sideTwo.z"));
                         Block block = p.getLocation().getBlock().getRelative(BlockFace.DOWN);
                         Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                        for (Block b : cuboid.getBlocks()) {
-                            if (block.getX() == b.getX() && block.getZ() == b.getZ()) {
-                                return file.getString("uuid");
-                            }
+                        if (cuboid.contains(p.getLocation())) {
+                            return file.getString("uuid");
                         }
                     }
                 }
@@ -2345,10 +2345,8 @@ public class FactionCommand implements CommandExecutor {
                         Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideOne.x"), file.getDouble("claims." + s + ".sideOne.y"), file.getDouble("claims." + s + ".sideOne.z"));
                         Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideTwo.x"), file.getDouble("claims." + s + ".sideTwo.y"), file.getDouble("claims." + s + ".sideTwo.z"));
                         Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                        for (Block b : cuboid.getBlocks()) {
-                            if (location.getBlock().getRelative(BlockFace.DOWN).getX() == b.getX() && location.getBlock().getRelative(BlockFace.DOWN).getZ() == b.getZ()) {
-                                return s;
-                            }
+                        if (cuboid.contains(location)) {
+                            return s;
                         }
                     }
                 }
@@ -2368,10 +2366,8 @@ public class FactionCommand implements CommandExecutor {
                         Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideOne.x"), file.getDouble("claims." + s + ".sideOne.y"), file.getDouble("claims." + s + ".sideOne.z"));
                         Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideTwo.x"), file.getDouble("claims." + s + ".sideTwo.y"), file.getDouble("claims." + s + ".sideTwo.z"));
                         Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                        for (Block b : cuboid.getBlocks()) {
-                            if (location.getBlock().getRelative(BlockFace.DOWN).getX() == b.getX() && location.getBlock().getRelative(BlockFace.DOWN).getZ() == b.getZ()) {
-                                return file.getString("uuid");
-                            }
+                        if (cuboid.contains(location)) {
+                            return file.getString("uuid");
                         }
                     }
                 }
