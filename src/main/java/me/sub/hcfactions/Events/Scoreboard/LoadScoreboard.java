@@ -3,29 +3,21 @@ package me.sub.hcfactions.Events.Scoreboard;
 import me.sub.hcfactions.Files.Conquest.Conquest;
 import me.sub.hcfactions.Files.Faction.Faction;
 import me.sub.hcfactions.Files.Locale.Locale;
-import me.sub.hcfactions.Files.Lunar.Lunar;
 import me.sub.hcfactions.Files.Players.Players;
 import me.sub.hcfactions.Main.Main;
 import me.sub.hcfactions.Utils.Class.Classes;
 import me.sub.hcfactions.Utils.Color.C;
 import me.sub.hcfactions.Utils.Cooldowns.Cooldown;
-import me.sub.hcfactions.Utils.Cuboid.Cuboid;
 import me.sub.hcfactions.Utils.Scoreboard.ScoreHelper;
 import me.sub.hcfactions.Utils.Timer.Timer;
 import me.sub.hcfactions.Utils.Timer.Timers;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -78,8 +70,10 @@ public class LoadScoreboard implements Listener {
         ScoreHelper helper = ScoreHelper.createScore(p);
 
         new BukkitRunnable() {
+            Players players;
             @Override
             public void run() {
+                players = new Players(id.toString());
                 if (p.isOnline()) {
                     ArrayList<String> lines = new ArrayList<>();
                     for (String s : Main.getInstance().getConfig().getStringList("scoreboard.lines")) {
@@ -607,81 +601,5 @@ public class LoadScoreboard implements Listener {
                 }
             }
         }.runTaskTimer(Main.getInstance(), 0, 1);
-    }
-
-    private static String getFactionInClaim(Location loc) {
-        File[] factions = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder().getPath() + "/data/factions").listFiles();
-        if (factions != null) {
-            for (File f : factions) {
-                YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
-                if (file.isConfigurationSection("claims.0")) {
-                    for (String s : file.getConfigurationSection("claims").getKeys(false)) {
-                        Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideOne.x"), file.getDouble("claims." + s + ".sideOne.y"), file.getDouble("claims." + s + "sideOne.z"));
-                        Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideTwo.x"), file.getDouble("claims." + s + ".sideTwo.y"), file.getDouble("claims." + s + ".sideTwo.z"));
-                        Block block = loc.getBlock().getRelative(BlockFace.DOWN);
-                        Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                        for (Block b : cuboid.getBlocks()) {
-                            if (block.getX() == b.getX() && block.getZ() == b.getZ()) {
-                                return file.getString("uuid");
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if (loc.getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
-            if (loc.getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || loc.getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                return Main.getInstance().getConfig().getString("claim.wilderness.name");
-            } else if (loc.getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || loc.getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                return Main.getInstance().getConfig().getString("claim.wilderness.name");
-            } else {
-                return Main.getInstance().getConfig().getString("claim.warzone.name");
-            }
-        } else if (loc.getWorld().getEnvironment().equals(World.Environment.NETHER)) {
-            if (loc.getX() > Main.getInstance().getConfig().getInt("worlds.nether.warzone") || loc.getZ() > Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
-                return Main.getInstance().getConfig().getString("claim.wilderness.name");
-            } else if (loc.getX() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone") || loc.getZ() < -Main.getInstance().getConfig().getInt("worlds.nether.warzone")) {
-                return Main.getInstance().getConfig().getString("claim.wilderness.name");
-            } else {
-                return Main.getInstance().getConfig().getString("claim.warzone.name");
-            }
-        } else {
-
-        }
-
-        return "None";
-    }
-
-    public static String getCardinalDirection(Player player) {
-        double rot = (player.getLocation().getYaw() - 90) % 360;
-        if (rot < 0) {
-            rot += 360.0;
-        }
-        return getDirection(rot);
-    }
-
-    private static String getDirection(double rot) {
-        if (0 <= rot && rot < 22.5) {
-            return "N";
-        } else if (22.5 <= rot && rot < 67.5) {
-            return "NE";
-        } else if (67.5 <= rot && rot < 112.5) {
-            return "E";
-        } else if (112.5 <= rot && rot < 157.5) {
-            return "SE";
-        } else if (157.5 <= rot && rot < 202.5) {
-            return "S";
-        } else if (202.5 <= rot && rot < 247.5) {
-            return "SW";
-        } else if (247.5 <= rot && rot < 292.5) {
-            return "W";
-        } else if (292.5 <= rot && rot < 337.5) {
-            return "NW";
-        } else if (337.5 <= rot && rot < 360.0) {
-            return "N";
-        } else {
-            return null;
-        }
     }
 }

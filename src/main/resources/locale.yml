@@ -57,6 +57,8 @@ chat:
       faction: '&6[%color%%name%&6] %prefix%%display%%suffix%&7: &f%message%'
       no-faction: '&6[%color%*&6] %prefix%%display%%suffix%&7: &f%message%'
 events:
+  settings:
+    changed: "&eYou have %status% &eyour %type%."
   subclaim:
     cant-open: "&cYou cannot open &l%player%&r&c's subclaim."
     invalid: "&cThe creation of your subclaim has been cancelled due to the format being invalid."

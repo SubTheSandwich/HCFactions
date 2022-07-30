@@ -28,6 +28,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -319,19 +320,33 @@ public class FactionCommand implements CommandExecutor {
 
                             if (msg.contains("%dtr%")) {
                                 double dtr = f.get().getDouble("dtr");
-                                if (dtr <= 0) {
-                                    msg = msg.replace("%dtr%", "&c" + String.valueOf(f.get().getDouble("dtr")));
-                                } else if (dtr <= 1) {
-                                    msg = msg.replace("%dtr%", "&e" + String.valueOf(f.get().getDouble("dtr")));
+                                String format = "%dtr%%symbol%";
+                                if (f.get().getBoolean("regening")) {
+                                    format = format.replace("%symbol%", "&a&l\u25B2");
+                                } else if (!f.get().getString("startregen").equalsIgnoreCase("")) {
+                                    format = format.replace("%symbol%", "&c&l\u25AA");
                                 } else {
-                                    msg = msg.replace("%dtr%", "&a" + String.valueOf(f.get().getDouble("dtr")));
+                                    format = format.replace("%symbol%", "&a&l\u25C4");
                                 }
+                                if (dtr <= 0) {
+                                    format = format.replace("%dtr%", "&c" + f.get().getDouble("dtr"));
+                                } else if (dtr <= 1) {
+                                    format = format.replace("%dtr%", "&e" + f.get().getDouble("dtr"));
+                                } else {
+                                    format = format.replace("%dtr%", "&a" + f.get().getDouble("dtr"));
+                                }
+                                msg = msg.replace("%dtr%", format);
                             }
 
                             if (msg.contains("%regen%")) {
                                 if (f.get().getBoolean("regening")) {
-                                    // for now
                                     continue;
+                                } else if (!f.get().getString("startregen").equals("")) {
+                                    long time = f.get().getLong("startregen") - System.currentTimeMillis();
+                                    String format = "m 'minutes and 's 'seconds'";
+                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+                                    String timee = simpleDateFormat.format(time);
+                                    msg = msg.replace("%regen%", timee);
                                 } else {
                                     continue;
                                 }
@@ -1505,19 +1520,33 @@ public class FactionCommand implements CommandExecutor {
 
                                 if (msg.contains("%dtr%")) {
                                     double dtr = f.get().getDouble("dtr");
-                                    if (dtr <= 0) {
-                                        msg = msg.replace("%dtr%", "&c" + String.valueOf(f.get().getDouble("dtr")));
-                                    } else if (dtr <= 1) {
-                                        msg = msg.replace("%dtr%", "&e" + String.valueOf(f.get().getDouble("dtr")));
+                                    String format = "%dtr%%symbol%";
+                                    if (f.get().getBoolean("regening")) {
+                                        format = format.replace("%symbol%", "&a&l\u25B2");
+                                    } else if (!f.get().getString("startregen").equalsIgnoreCase("")) {
+                                        format = format.replace("%symbol%", "&c&l\u25AA");
                                     } else {
-                                        msg = msg.replace("%dtr%", "&a" + String.valueOf(f.get().getDouble("dtr")));
+                                        format = format.replace("%symbol%", "&a&l\u25C4");
                                     }
+                                    if (dtr <= 0) {
+                                        format = format.replace("%dtr%", "&c" + f.get().getDouble("dtr"));
+                                    } else if (dtr <= 1) {
+                                        format = format.replace("%dtr%", "&e" + f.get().getDouble("dtr"));
+                                    } else {
+                                        format = format.replace("%dtr%", "&a" + f.get().getDouble("dtr"));
+                                    }
+                                    msg = msg.replace("%dtr%", format);
                                 }
 
                                 if (msg.contains("%regen%")) {
                                     if (f.get().getBoolean("regening")) {
-                                        // for now
                                         continue;
+                                    } else if (!f.get().getString("startregen").equals("")) {
+                                        long time = f.get().getLong("startregen") - System.currentTimeMillis();
+                                        String format = "m 'minutes and 's 'seconds'";
+                                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+                                        String timee = simpleDateFormat.format(time);
+                                        msg = msg.replace("%regen%", timee);
                                     } else {
                                         continue;
                                     }
@@ -1728,19 +1757,33 @@ public class FactionCommand implements CommandExecutor {
 
                                         if (msg.contains("%dtr%")) {
                                             double dtr = f.get().getDouble("dtr");
-                                            if (dtr <= 0) {
-                                                msg = msg.replace("%dtr%", "&c" + String.valueOf(f.get().getDouble("dtr")));
-                                            } else if (dtr <= 1) {
-                                                msg = msg.replace("%dtr%", "&e" + String.valueOf(f.get().getDouble("dtr")));
+                                            String format = "%dtr%%symbol%";
+                                            if (f.get().getBoolean("regening")) {
+                                                format = format.replace("%symbol%", "&a&l\u25B2");
+                                            } else if (!f.get().getString("startregen").equalsIgnoreCase("")) {
+                                                format = format.replace("%symbol%", "&c&l\u25AA");
                                             } else {
-                                                msg = msg.replace("%dtr%", "&a" + String.valueOf(f.get().getDouble("dtr")));
+                                                format = format.replace("%symbol%", "&a&l\u25C4");
                                             }
+                                            if (dtr <= 0) {
+                                                format = format.replace("%dtr%", "&c" + f.get().getDouble("dtr"));
+                                            } else if (dtr <= 1) {
+                                                format = format.replace("%dtr%", "&e" + f.get().getDouble("dtr"));
+                                            } else {
+                                                format = format.replace("%dtr%", "&a" + f.get().getDouble("dtr"));
+                                            }
+                                            msg = msg.replace("%dtr%", format);
                                         }
 
                                         if (msg.contains("%regen%")) {
                                             if (f.get().getBoolean("regening")) {
-                                                // for now
                                                 continue;
+                                            } else if (!f.get().getString("startregen").equals("")) {
+                                                long time = f.get().getLong("startregen") - System.currentTimeMillis();
+                                                String format = "m 'minutes and 's 'seconds'";
+                                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+                                                String timee = simpleDateFormat.format(time);
+                                                msg = msg.replace("%regen%", timee);
                                             } else {
                                                 continue;
                                             }

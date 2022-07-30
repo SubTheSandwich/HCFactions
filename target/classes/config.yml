@@ -31,6 +31,37 @@ settings:
   name:
     min: 3
     max: 15
+  settings:
+    enabled: "&aEnabled"
+    disabled: "&cDisabled"
+    lower-enabled: "&aenabled"
+    lower-disabled: "&cdisabled"
+    inventory-name: "&bSettings"
+    items:
+      death-messages:
+        name: "&eDeath Messages &7(%status%&7)"
+        item: "DIAMOND_SWORD"
+        byte: 0
+        slot: 10
+      scoreboard:
+        name: "&eScoreboard &7(%status%&7)"
+        item: "REDSTONE"
+        byte: 0
+        slot: 12
+      foundDiamonds:
+        name: "&eFound Diamonds &7(%status%&7)"
+        item: "DIAMOND"
+        byte: 0
+        slot: 14
+      publicChat:
+        name: "&ePublic Chat &7(%status%&7)"
+        item: "PAPER"
+        byte: 0
+        slot: 16
+      other:
+        name: "&7"
+        item: "STAINED_GLASS_PANE"
+        byte: 0
   mapkit:
     inventory-name: "&bMap Kit"
   online-staff:

@@ -48,6 +48,7 @@ import me.sub.hcfactions.Events.Player.Lunar.SetupSpawnWaypoint;
 import me.sub.hcfactions.Events.Player.Mountain.MountainSelectEvent;
 import me.sub.hcfactions.Events.Player.Ore.OreMineRegisterEvent;
 import me.sub.hcfactions.Events.Player.Profile.ProfileClickEvent;
+import me.sub.hcfactions.Events.Player.Settings.SettingsClickEvent;
 import me.sub.hcfactions.Events.Player.Subclaim.SubclaimEvents;
 import me.sub.hcfactions.Events.Player.Tab.LoadTab;
 import me.sub.hcfactions.Events.Scoreboard.LoadScoreboard;
@@ -82,8 +83,7 @@ import java.util.UUID;
 
 // add in default client nametags
 // Add in /f stuck
-// ADD IN END MOVEMENT SUPOPORT
-// Add in regening in /f who
+// Add settings
 
 
 public class Main extends JavaPlugin {
@@ -259,7 +259,7 @@ public class Main extends JavaPlugin {
                                     Main.getInstance().regen.put(faction.get().getString("uuid"), 1);
                                 } else {
                                     int time = Main.getInstance().regen.get(faction.get().getString("uuid")) + 1;
-                                    int delay = Main.getInstance().getConfig().getInt("dtr.regen.delay") * 60 * 20;
+                                    int delay = Main.getInstance().getConfig().getInt("dtr.regen.delay") * 20;
                                     if (time >= delay) {
                                         Main.getInstance().regen.put(faction.get().getString("uuid"), 0);
                                         double dtr = faction.get().getDouble("dtr");
@@ -379,6 +379,7 @@ public class Main extends JavaPlugin {
         getCommand("heal").setExecutor(new HealCommand());
         getCommand("regen").setExecutor(new RegenCommand());
         getCommand("eotw").setExecutor(new EOTWCommand());
+        getCommand("settings").setExecutor(new SettingsCommand());
     }
 
     private void events() {
@@ -439,6 +440,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new SubclaimEvents(), this);
         pm.registerEvents(new LoadTab(), this);
         pm.registerEvents(new FactionEndMultimoveEvent(), this);
+        pm.registerEvents(new SettingsClickEvent(), this);
     }
 
     private void files() {
