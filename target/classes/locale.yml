@@ -56,7 +56,12 @@ chat:
         ally: "&9"
       faction: '&6[%color%%name%&6] %prefix%%display%%suffix%&7: &f%message%'
       no-faction: '&6[%color%*&6] %prefix%%display%%suffix%&7: &f%message%'
+    faction:
+      no-faction: "&cYou do not have a faction."
+      format: "&2(Team) %name%: &e%message%"
 events:
+  settings:
+    changed: "&eYou have %status% &eyour %type%."
   subclaim:
     cant-open: "&cYou cannot open &l%player%&r&c's subclaim."
     invalid: "&cThe creation of your subclaim has been cancelled due to the format being invalid."
@@ -175,6 +180,11 @@ deathmessage:
   void: '&c%dead%&4[%dead_kills%] &efell into the void'
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
+  factionchat:
+    no-faction: "&cYou do not have a faction."
+    toggled: "&eYou have set your chat to faction chat."
+  globalchat:
+    toggled: "&eYou have set your chat to public chat."
   eotw:
     usage: "&cUsage: /eotw <start;stop;commence>"
     start: "&cEOTW will commence in 10 minutes."
@@ -441,6 +451,10 @@ command:
     sent: '&aSent %amount% to %recipient%'
     received: '&aReceived %amount% from %sender%'
   faction:
+    chat:
+      invalid: "&cThe specified chat type is invalid."
+      no-faction: "&cYou do not have a faction."
+      set: "&eYou have set your chat type to &b%type%&e."
     setlocation:
       invalid: "&cThe specified faction is invalid."
       not-right: "&cYou cannot set the location of a player's faction."

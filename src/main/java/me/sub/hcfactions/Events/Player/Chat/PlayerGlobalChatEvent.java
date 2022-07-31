@@ -23,14 +23,13 @@ public class PlayerGlobalChatEvent implements Listener {
     public void onChat(AsyncPlayerChatEvent e) {
         e.setCancelled(true);
         Player p = e.getPlayer();
+        Players players = new Players(p.getUniqueId().toString());
         String before = C.chat(e.getMessage());
         String message = C.strip(before);
         if (message.startsWith("!")) {
             if (!Main.getInstance().disabledChat) {
                 if (Main.getInstance().chatSlow == 0) {
-                    String format;
                     message = message.replace("!", "");
-                    Players players = new Players(p.getUniqueId().toString());
                     Faction f = new Faction(players.get().getString("faction"));
                     for (Player d : Bukkit.getOnlinePlayers()) {
                         Players old = new Players(d.getUniqueId().toString());
@@ -54,7 +53,6 @@ public class PlayerGlobalChatEvent implements Listener {
                     if (!p.hasPermission("hcfactions.chat.bypass") || p.hasPermission("hcfactions.staff")) {
                         if (!Main.getInstance().chatSlowPlayer.containsKey(p.getUniqueId())) {
                             message = message.replace("!", "");
-                            Players players = new Players(p.getUniqueId().toString());
                             Faction f = new Faction(players.get().getString("faction"));
                             for (Player d : Bukkit.getOnlinePlayers()) {
                                 Players old = new Players(d.getUniqueId().toString());
@@ -77,7 +75,6 @@ public class PlayerGlobalChatEvent implements Listener {
                         }
                     } else {
                         message = message.replace("!", "");
-                        Players players = new Players(p.getUniqueId().toString());
                         Faction f = new Faction(players.get().getString("faction"));
                         for (Player d : Bukkit.getOnlinePlayers()) {
                             Players old = new Players(d.getUniqueId().toString());
@@ -98,7 +95,6 @@ public class PlayerGlobalChatEvent implements Listener {
             } else {
                 if (p.hasPermission("hcfactions.chat.bypass") || p.hasPermission("hcfactions.staff")) {
                     message = message.replace("!", "");
-                    Players players = new Players(p.getUniqueId().toString());
                     Faction f = new Faction(players.get().getString("faction"));
                     for (Player d : Bukkit.getOnlinePlayers()) {
                         Players old = new Players(d.getUniqueId().toString());
@@ -119,7 +115,14 @@ public class PlayerGlobalChatEvent implements Listener {
                 }
             }
         } else if (message.startsWith("@")) {
-
+            message = message.replace("@", "");
+            if (players.hasFaction()) {
+                for (Player d : players.getFaction().getAllOnlinePlayers()) {
+                    d.sendMessage(C.chat(Locale.get().getString("chat.format.faction.format").replace("%name%", p.getName()).replace("%message%", message)));
+                }
+            } else {
+                p.sendMessage(C.chat(Locale.get().getString("chat.format.faction.no-faction")));
+            }
         } else {
             if (Main.getInstance().staffChat.contains(p)) {
                 for (Player d : Bukkit.getOnlinePlayers()) {
@@ -128,14 +131,17 @@ public class PlayerGlobalChatEvent implements Listener {
                     }
                 }
             } else if (Main.getInstance().factionChat.contains(p)) {
-
-            } else if (Main.getInstance().allyChat.contains(p)) {
-
+                if (players.hasFaction()) {
+                    for (Player d : players.getFaction().getAllOnlinePlayers()) {
+                        d.sendMessage(C.chat(Locale.get().getString("chat.format.faction.format").replace("%name%", p.getName()).replace("%message%", message)));
+                    }
+                } else {
+                    p.sendMessage(C.chat(Locale.get().getString("chat.format.faction.no-faction")));
+                }
             } else {
                 if (!Main.getInstance().disabledChat) {
                     if (Main.getInstance().chatSlow == 0) {
                         message = message.replace("!", "");
-                        Players players = new Players(p.getUniqueId().toString());
                         Faction f = new Faction(players.get().getString("faction"));
                         for (Player d : Bukkit.getOnlinePlayers()) {
                             Players old = new Players(d.getUniqueId().toString());
@@ -158,7 +164,6 @@ public class PlayerGlobalChatEvent implements Listener {
                     } else {
                         if (!Main.getInstance().chatSlowPlayer.containsKey(p.getUniqueId())) {
                             message = message.replace("!", "");
-                            Players players = new Players(p.getUniqueId().toString());
                             Faction f = new Faction(players.get().getString("faction"));
                             for (Player d : Bukkit.getOnlinePlayers()) {
                                 Players old = new Players(d.getUniqueId().toString());
@@ -189,7 +194,6 @@ public class PlayerGlobalChatEvent implements Listener {
                 } else {
                     if (p.hasPermission("hcfactions.chat.bypass") || p.hasPermission("hcfactions.staff")) {
                         message = message.replace("!", "");
-                        Players players = new Players(p.getUniqueId().toString());
                         Faction f = new Faction(players.get().getString("faction"));
                         for (Player d : Bukkit.getOnlinePlayers()) {
                             Players old = new Players(d.getUniqueId().toString());

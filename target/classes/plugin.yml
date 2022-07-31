@@ -7,6 +7,14 @@ depend:
   - Vault
   - ProtocolLib
 commands:
+  globalchat:
+    description: Global chat
+    aliases: [gc]
+  factionchat:
+    description: Faction chat
+    aliases: [fc, tc, teamchat]
+  help:
+    description: Help
   settings:
     description: Settings
   eotw:

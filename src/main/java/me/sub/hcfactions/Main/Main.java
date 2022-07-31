@@ -82,8 +82,10 @@ import java.util.HashMap;
 import java.util.UUID;
 
 // add in default client nametags
+// Add in other types of chat
 // Add in /f stuck
-// Add settings
+// Add in /f top
+// Add in /f forcejoin, /f unclaimfor, /f forcedisband, /f forceleader and stuff like that
 
 
 public class Main extends JavaPlugin {
@@ -380,6 +382,9 @@ public class Main extends JavaPlugin {
         getCommand("regen").setExecutor(new RegenCommand());
         getCommand("eotw").setExecutor(new EOTWCommand());
         getCommand("settings").setExecutor(new SettingsCommand());
+        getCommand("help").setExecutor(new HelpCommand());
+        getCommand("factionchat").setExecutor(new FactionChatCommand());
+        getCommand("globalchat").setExecutor(new GlobalChatCommand());
     }
 
     private void events() {

@@ -1,3 +1,30 @@
+help:
+  main:
+    - "&7&m----------------------------------------------------"
+    - "%primary%&l%servername% &7- %secondary%Help"
+    - "&7&m----------------------------------------------------"
+    - "&9Map Information:"
+    - "&eCurrent Map (#%map%): &7Started on %mapstartdate%"
+    - "&eOverworld Border: &7%border%"
+    - "&eWarzone Until: &7%warzone%"
+    - "&eEnchantment Limits: &7Sharpness 1, Protection 2, Power 4"
+    - "&eDeathban: &72 hours"
+    - " "
+    - "&9Helpful Commands:"
+    - "&e/report <player> <reason> &7- Report players with this."
+    - "&e/request <message> &7- Request assistance."
+    - " "
+    - "&9Chat Commands:"
+    - "&eGlobal Chat: &7Prefix your message with '&d!&7' or type &7'&d/gc&7' to set."
+    - "&eFaction Chat: &7Prefix your message with '&d@&7' or type &7'&d/tc&7' to set."
+    - " "
+    - "&9Other Information:"
+    - "&eOfficial Teamspeak: &d%teamspeak%"
+    - "&eOfficial Discord: &d%discord%/"
+    - "&eWebsite: &d%website%/"
+    - "&eRules: &d%website%/rules"
+    - "&eStore: &d%store%/"
+    - "&7&m----------------------------------------------------"
 faction:
   max-listed-teams: 10
   list:

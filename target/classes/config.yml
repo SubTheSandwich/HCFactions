@@ -7,6 +7,8 @@ server:
   teamspeak: ts.hcfactions.com
   store: https://store.hcfactions.com
   discord: https://discord.gg/hcfactions
+  map-number: 1
+  start-date: "July 30th, 2022"
   color:
     primary: "&6"
     secondary: "&e"

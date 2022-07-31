@@ -821,6 +821,21 @@ public class FactionCommand implements CommandExecutor {
                     } else {
                         p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));
                     }
+                } else if (args[0].equalsIgnoreCase("chat") || args[0].equalsIgnoreCase("c")) {
+                    if (args[1].equalsIgnoreCase("faction") || args[1].equalsIgnoreCase("f") || (args[1].equalsIgnoreCase("team") || args[1].equalsIgnoreCase("t"))) {
+                        if (new Players(p.getUniqueId().toString()).hasFaction()) {
+                            Main.getInstance().factionChat.remove(p);
+                            Main.getInstance().factionChat.add(p);
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.chat.set").replace("%type%", "faction")));
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.chat.no-faction")));
+                        }
+                    } else if (args[1].equalsIgnoreCase("public") || args[1].equalsIgnoreCase("global") || args[1].equalsIgnoreCase("p") ||  args[1].equalsIgnoreCase("g")) {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.chat.set").replace("%type%", "public")));
+                        Main.getInstance().factionChat.remove(p);
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.chat.invalid")));
+                    }
                 } else if (args[0].equalsIgnoreCase("setlocation")) {
                     if (p.hasPermission("hcfactions.command.faction.setlocation") || p.hasPermission("hcfactions.admin")) {
                         if (getFactionByName(args[1]) != null) {
