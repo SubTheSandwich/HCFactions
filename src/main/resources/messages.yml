@@ -27,6 +27,10 @@ help:
     - "&7&m----------------------------------------------------"
 faction:
   max-listed-teams: 10
+  top:
+    - "&7&m----------------------------------------------------"
+    - "%top-format%"
+    - "&7&m----------------------------------------------------"
   list:
     - "&7&m----------------------------------------------------"
     - "&9Team List &7(Page %page%/%max%)"
@@ -35,6 +39,7 @@ faction:
     - "&7To view other pages, use &e/%alias% list <page#>"
     - "&7&m----------------------------------------------------"
   team-format: "&7%team-number%. &e%team-name% &a(%online-members%/%members%)"
+  top-format: "&7%team-number%. &c%team-name% &e- &7%team-points%"
   help:
     main:
       - "&7&m----------------------------------------------------"

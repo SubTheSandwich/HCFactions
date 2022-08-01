@@ -451,6 +451,8 @@ command:
     sent: '&aSent %amount% to %recipient%'
     received: '&aReceived %amount% from %sender%'
   faction:
+    top:
+      no-factions: "&cThere are no factions to be listed."
     chat:
       invalid: "&cThe specified chat type is invalid."
       no-faction: "&cYou do not have a faction."

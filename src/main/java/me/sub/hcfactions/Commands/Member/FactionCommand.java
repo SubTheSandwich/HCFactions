@@ -71,7 +71,49 @@ public class FactionCommand implements CommandExecutor {
                         p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));
                     }
                 } else if (args[0].equalsIgnoreCase("top")) {
+                    File[] factions = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder().getPath() + "/data/factions").listFiles();
+                    HashMap<String, Integer> listedFactions = new HashMap<>();
+                    if (factions != null) {
+                        for (File f : factions) {
+                            YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
+                            if (file.getString("type").equals("PLAYER")) {
+                                listedFactions.put(file.getString("uuid"), file.getInt("points"));
+                            }
+                        }
+                    }
+                    if (listedFactions.size() != 0) {
+                        Map<String, Integer> sortedMap = listedFactions.entrySet().stream()
+                                .sorted(Comparator.comparingInt(e -> -e.getValue()))
+                                .collect(Collectors.toMap(
+                                        Map.Entry::getKey,
+                                        Map.Entry::getValue,
+                                        (a, b) -> { throw new AssertionError(); },
+                                        LinkedHashMap::new
+                                ));
+                        ArrayList<String> format = new ArrayList<>();
+                        if (sortedMap.size() >= Messages.get().getInt("faction.max-listed-teams")) {
+                            for (int i = 0; i < Messages.get().getInt("faction.max-listed-teams"); i++) {
+                                Faction faction = new Faction(new ArrayList<>(sortedMap.keySet()).get(i));
+                                format.add(C.chat(Messages.get().getString("faction.top-format").replace("%team-number%", String.valueOf(i + 1)).replace("%team-name%", faction.get().getString("name")).replace("%team-points%", String.valueOf(faction.get().getString("points")))));
+                            }
+                        } else {
+                            for (int i = 0; i < sortedMap.size(); i++) {
+                                Faction faction = new Faction(new ArrayList<>(sortedMap.keySet()).get(i));
+                                format.add(C.chat(Messages.get().getString("faction.top-format").replace("%team-number%", String.valueOf(i + 1)).replace("%team-name%", faction.get().getString("name")).replace("%team-points%", String.valueOf(faction.get().getString("points")))));
+                            }
+                        }
 
+                        String message = String.join("\n", format);
+
+                        for (String str : Messages.get().getStringList("faction.top")) {
+                            if (str.contains("%top-format%")) {
+                                str = str.replace("%top-format%", message);
+                            }
+                            p.sendMessage(C.chat(str));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.top.no-factions")));
+                    }
                 } else if (args[0].equalsIgnoreCase("list")) {
                     for (Player d : Bukkit.getOnlinePlayers()) {
                         Players players = new Players(d.getUniqueId().toString());
