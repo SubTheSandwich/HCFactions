@@ -181,14 +181,23 @@ deathmessage:
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
   lunar:
-    usage: "&cUsage: /%alias% <running;getall;emote> <player> <id>"
+    usage: "&cUsage: /%alias% <running;getall;emote;sendtitle;sendsubtitle> <player> <data>"
+    sendtitle-usage: "&cUsage: /%alias% sendtitle <player;all> <displayTimeMS> <fadeInTimeMS> <fadeOutTimeMS> <message>"
+    sendsubtitle-usage: "&cUsage: /%alias% sendsubtitle <player;all> <displayTimeMS> <fadeInTimeMS> <fadeOutTimeMS> <message>"
+    senttitle: "&eYou have send a title to &a%player% to display for &b%display% &emilliseconds, appear in &b%fade-in% &emilliseconds, disappear in &b%fade-out% &emilliseconds, and with the message of &d%message%&e."
+    senttitle-all: "&eYou have send a title to &aall Lunar Client players &eto display for &b%display% &emilliseconds, appear in &b%fade-in% &emilliseconds, disappear in &b%fade-out% &emilliseconds, and with the message of &d%message%&e."
+    sentsubtitle: "&eYou have send a sub-title to &a%player% to display for &b%display% &emilliseconds, appear in &b%fade-in% &emilliseconds, disappear in &b%fade-out% &emilliseconds, and with the message of &d%message%&e."
+    sentsubtitle-all: "&eYou have send a sub-title to &aall Lunar Client players &eto display for &b%display% &emilliseconds, appear in &b%fade-in% &emilliseconds, disappear in &b%fade-out% &emilliseconds, and with the message of &d%message%&e."
     not-player: "&cThe specified player can't be found."
+    not-valid: "&cThe specified length is invalid."
     is: "&b%player% &eis running Lunar Client."
     isnt: "&b%player% &eis not running Lunar Client."
     list: "&eList of all players running Lunar Client: &b%players%"
     none: "&cNone of the online players are running Lunar Client."
     invalid-id: "&cThe specified emote ID is invalid."
     cant: "&cYou cannot send an emote to %player% as they are not running Lunar Client."
+    cant-title: "&cYou cannot send a title to %player% as they are not running Lunar Client."
+    cant-subtitle: "&cYou cannot send a subtitle to %player% as they are not running Lunar Client."
     emoted: "&eYou have sent an emote with the ID of &b%id% &eto &d%player%&e."
   factionchat:
     no-faction: "&cYou do not have a faction."
