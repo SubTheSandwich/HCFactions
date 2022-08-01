@@ -180,6 +180,16 @@ deathmessage:
   void: '&c%dead%&4[%dead_kills%] &efell into the void'
   wither: '&c%dead%&4[%dead_kills%] &ehas withered away'
 command:
+  lunar:
+    usage: "&cUsage: /%alias% <running;getall;emote> <player> <id>"
+    not-player: "&cThe specified player can't be found."
+    is: "&b%player% &eis running Lunar Client."
+    isnt: "&b%player% &eis not running Lunar Client."
+    list: "&eList of all players running Lunar Client: &b%players%"
+    none: "&cNone of the online players are running Lunar Client."
+    invalid-id: "&cThe specified emote ID is invalid."
+    cant: "&cYou cannot send an emote to %player% as they are not running Lunar Client."
+    emoted: "&eYou have sent an emote with the ID of &b%id% &eto &d%player%&e."
   factionchat:
     no-faction: "&cYou do not have a faction."
     toggled: "&eYou have set your chat to faction chat."

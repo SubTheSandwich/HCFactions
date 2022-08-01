@@ -87,9 +87,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 // add in default client nametags
-// Add in other types of chat
 // Add in /f stuck
-// Add in /f top
 // Add in /f forcejoin, /f unclaimfor, /f forcedisband, /f forceleader and stuff like that
 
 
@@ -1070,6 +1068,7 @@ public class Main extends JavaPlugin {
         getCommand("help").setExecutor(new HelpCommand());
         getCommand("factionchat").setExecutor(new FactionChatCommand());
         getCommand("globalchat").setExecutor(new GlobalChatCommand());
+        getCommand("lunar").setExecutor(new LunarCommand());
     }
 
     private void events() {

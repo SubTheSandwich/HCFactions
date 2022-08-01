@@ -1,5 +1,6 @@
 package me.sub.hcfactions.Events.Scoreboard;
 
+import com.lunarclient.bukkitapi.nethandler.client.*;
 import me.sub.hcfactions.Files.Conquest.Conquest;
 import me.sub.hcfactions.Files.Faction.Faction;
 import me.sub.hcfactions.Files.Locale.Locale;
