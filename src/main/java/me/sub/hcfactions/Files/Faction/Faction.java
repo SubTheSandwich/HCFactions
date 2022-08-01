@@ -95,14 +95,17 @@ public class Faction {
 
         for (String s : customFile.getStringList("coleaders")) {
             OfflinePlayer d = Bukkit.getOfflinePlayer(UUID.fromString(s));
+            online.add(d);
         }
 
         for (String s : customFile.getStringList("captains")) {
             OfflinePlayer d = Bukkit.getOfflinePlayer(UUID.fromString(s));
+            online.add(d);
         }
 
         for (String s : customFile.getStringList("members")) {
             OfflinePlayer d = Bukkit.getOfflinePlayer(UUID.fromString(s));
+            online.add(d);
         }
 
         return online;

@@ -70,14 +70,16 @@ public class FactionCommand implements CommandExecutor {
                     } else {
                         p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));
                     }
+                } else if (args[0].equalsIgnoreCase("top")) {
+
                 } else if (args[0].equalsIgnoreCase("list")) {
                     for (Player d : Bukkit.getOnlinePlayers()) {
                         Players players = new Players(d.getUniqueId().toString());
                         if (players.hasFaction()) {
-                            Main.getInstance().onlineFactions.put(players.getFaction(), players.getFaction().getAllOnlinePlayers().size());
+                            Main.getInstance().onlineFactions.put(players.getFaction().get().getString("uuid"), players.getFaction().getAllOnlinePlayers().size());
                         }
                     }
-                    Map<Faction, Integer> sortedMap = Main.getInstance().onlineFactions.entrySet().stream()
+                    Map<String, Integer> sortedMap = Main.getInstance().onlineFactions.entrySet().stream()
                             .sorted(Comparator.comparingInt(e -> -e.getValue()))
                             .collect(Collectors.toMap(
                                     Map.Entry::getKey,
@@ -92,11 +94,13 @@ public class FactionCommand implements CommandExecutor {
                     if (sortedMap.size() != 0) {
                         if (sortedMap.size() >= Messages.get().getInt("faction.max-listed-teams")) {
                             for (int i = 0; i < Messages.get().getInt("faction.max-listed-teams"); i++) {
-                                format.add(C.chat(Messages.get().getString("faction.team-format").replace("%team-number%", String.valueOf(i + 1)).replace("%team-name%", new ArrayList<>(sortedMap.keySet()).get(i).get().getString("name")).replace("%online-members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllOnlinePlayers().size())).replace("%members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllMembers().size()))));
+                                Faction faction = new Faction(new ArrayList<>(sortedMap.keySet()).get(i));
+                                format.add(C.chat(Messages.get().getString("faction.team-format").replace("%team-number%", String.valueOf(i + 1)).replace("%team-name%", faction.get().getString("name")).replace("%online-members%", String.valueOf(faction.getAllOnlinePlayers().size())).replace("%members%", String.valueOf(faction.getAllMembers().size()))));
                             }
                         } else {
                             for (int i = 0; i < sortedMap.size(); i++) {
-                                format.add(C.chat(Messages.get().getString("faction.team-format").replace("%team-number%", String.valueOf(i + 1)).replace("%team-name%", new ArrayList<>(sortedMap.keySet()).get(i).get().getString("name")).replace("%online-members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllOnlinePlayers().size())).replace("%members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllMembers().size()))));
+                                Faction faction = new Faction(new ArrayList<>(sortedMap.keySet()).get(i));
+                                format.add(C.chat(Messages.get().getString("faction.team-format").replace("%team-number%", String.valueOf(i + 1)).replace("%team-name%", faction.get().getString("name")).replace("%online-members%", String.valueOf(faction.getAllOnlinePlayers().size())).replace("%members%", String.valueOf(faction.getAllMembers().size()))));
                             }
                         }
                         int value = sortedMap.size();
@@ -899,10 +903,10 @@ public class FactionCommand implements CommandExecutor {
                             for (Player d : Bukkit.getOnlinePlayers()) {
                                 Players players = new Players(d.getUniqueId().toString());
                                 if (players.hasFaction()) {
-                                    Main.getInstance().onlineFactions.put(players.getFaction(), players.getFaction().getAllOnlinePlayers().size());
+                                    Main.getInstance().onlineFactions.put(players.getFaction().get().getString("uuid"), players.getFaction().getAllOnlinePlayers().size());
                                 }
                             }
-                            Map<Faction, Integer> sortedMap = Main.getInstance().onlineFactions.entrySet().stream()
+                            Map<String, Integer> sortedMap = Main.getInstance().onlineFactions.entrySet().stream()
                                     .sorted(Comparator.comparingInt(e -> -e.getValue()))
                                     .collect(Collectors.toMap(
                                             Map.Entry::getKey,
@@ -929,11 +933,13 @@ public class FactionCommand implements CommandExecutor {
                                     int size = sortedMap.size() - ((pageNumber - 1) * 10);
                                     if (size >= Messages.get().getInt("faction.max-listed-teams")) {
                                         for (int i = ((pageNumber - 1) * 10); i < Messages.get().getInt("faction.max-listed-teams"); i++) {
-                                            format.add(C.chat(Messages.get().getString("faction.team-format").replace("%team-number%", String.valueOf(i + 1)).replace("%team-name%", new ArrayList<>(sortedMap.keySet()).get(i).get().getString("name")).replace("%online-members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllOnlinePlayers().size())).replace("%members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllMembers().size()))));
+                                            Faction faction = new Faction(new ArrayList<>(sortedMap.keySet()).get(i));
+                                            format.add(C.chat(Messages.get().getString("faction.team-format").replace("%team-number%", String.valueOf(i + 1)).replace("%team-name%", faction.get().getString("name")).replace("%online-members%", String.valueOf(faction.getAllOnlinePlayers().size())).replace("%members%", String.valueOf(faction.getAllMembers().size()))));
                                         }
                                     } else {
                                         for (int i = ((pageNumber - 1) * 10); i < size; i++) {
-                                            format.add(C.chat(Messages.get().getString("faction.team-format").replace("%team-number%", String.valueOf(i + 1)).replace("%team-name%", new ArrayList<>(sortedMap.keySet()).get(i).get().getString("name")).replace("%online-members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllOnlinePlayers().size())).replace("%members%", String.valueOf(new ArrayList<>(sortedMap.keySet()).get(i).getAllMembers().size()))));
+                                            Faction faction = new Faction(new ArrayList<>(sortedMap.keySet()).get(i));
+                                            format.add(C.chat(Messages.get().getString("faction.team-format").replace("%team-number%", String.valueOf(i + 1)).replace("%team-name%", faction.get().getString("name")).replace("%online-members%", String.valueOf(faction.getAllOnlinePlayers().size())).replace("%members%", String.valueOf(faction.getAllMembers().size()))));
                                         }
                                     }
                                     String message = String.join("\n", format);
