@@ -270,7 +270,7 @@ listeners:
   place-in-combat: true
   disable-enderchest: true
 claim:
-  buffer: 1
+  buffer: 1 # Set buffer to 0 to remove
   deathban: "&cDeathban"
   not-deathban: "&aNon-Deathban"
   wilderness:

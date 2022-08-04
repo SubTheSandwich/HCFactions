@@ -17,7 +17,6 @@ import me.sub.hcfactions.Utils.Faction.FactionInviteHandler;
 import me.sub.hcfactions.Utils.Timer.Timer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -221,30 +220,24 @@ public class FactionCommand implements CommandExecutor {
                                 Player player = Bukkit.getPlayer(UUID.fromString(play));
                                 if (player != null) {
                                     onlinePlayers = onlinePlayers + 1;
-                                    totalPlayers = totalPlayers + 1;
-                                } else {
-                                    totalPlayers = totalPlayers + 1;
                                 }
+                                totalPlayers = totalPlayers + 1;
                             }
 
                             for (String play : f.get().getStringList("captains")) {
                                 Player player = Bukkit.getPlayer(UUID.fromString(play));
                                 if (player != null) {
                                     onlinePlayers = onlinePlayers + 1;
-                                    totalPlayers = totalPlayers + 1;
-                                } else {
-                                    totalPlayers = totalPlayers + 1;
                                 }
+                                totalPlayers = totalPlayers + 1;
                             }
 
                             for (String play : f.get().getStringList("members")) {
                                 Player player = Bukkit.getPlayer(UUID.fromString(play));
                                 if (player != null) {
                                     onlinePlayers = onlinePlayers + 1;
-                                    totalPlayers = totalPlayers + 1;
-                                } else {
-                                    totalPlayers = totalPlayers + 1;
                                 }
+                                totalPlayers = totalPlayers + 1;
                             }
 
                             if (msg.contains("%online%")) {
@@ -259,7 +252,7 @@ public class FactionCommand implements CommandExecutor {
                                 if (f.get().isConfigurationSection("home")) {
                                     int x = f.get().getInt("home.x");
                                     int z = f.get().getInt("home.z");
-                                    msg = msg.replace("%home%", String.valueOf(x) + ", " + String.valueOf(z));
+                                    msg = msg.replace("%home%", x + ", " + z);
                                 } else {
                                     msg = msg.replace("%home%", "None");
                                 }
@@ -612,7 +605,7 @@ public class FactionCommand implements CommandExecutor {
                                 if (!Main.getInstance().pvpTimer.containsKey(p.getUniqueId())) {
                                     if (p.getLocation().getX() > 0 || p.getLocation().getZ() > 0) {
                                         if (p.getLocation().getX() > Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() > Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                                            if (!players.getFaction().get().isConfigurationSection("claims.0")) {
+                                            if (!players.getFaction().get().isConfigurationSection("claims")) {
                                                 if (!Main.getInstance().claiming.contains(p.getUniqueId())) {
                                                     Main.getInstance().claiming.add(p.getUniqueId());
                                                     Claim.giveItem(p);
@@ -627,7 +620,7 @@ public class FactionCommand implements CommandExecutor {
                                         }
                                     } else {
                                         if (p.getLocation().getX() < -Main.getInstance().getConfig().getInt("worlds.default.warzone") || p.getLocation().getZ() < -Main.getInstance().getConfig().getInt("worlds.default.warzone")) {
-                                            if (!players.getFaction().get().isConfigurationSection("claims.0")) {
+                                            if (!players.getFaction().get().isConfigurationSection("claims")) {
                                                 if (!Main.getInstance().claiming.contains(p.getUniqueId())) {
                                                     Main.getInstance().claiming.add(p.getUniqueId());
                                                     Claim.giveItem(p);
@@ -680,13 +673,12 @@ public class FactionCommand implements CommandExecutor {
                     Players players = new Players(p.getUniqueId().toString());
                     if (players.hasFaction()) {
                         if (players.getFaction().get().getString("leader").equalsIgnoreCase(p.getUniqueId().toString()) || players.getFaction().get().getStringList("coleaders").contains(p.getUniqueId().toString())) {
-                            if (players.getFaction().get().isConfigurationSection("claims.0")) {
+                            if (players.getFaction().get().isConfigurationSection("claims")) {
                                 if (players.getFaction().get().getDouble("dtr") > 0) {
                                     Faction faction = players.getFaction();
-                                    for (String str : players.getFaction().get().getConfigurationSection("claims").getKeys(false)) {
-                                        faction.get().set("claims." + str, null);
-                                        faction.save();
-                                    }
+                                    faction.get().set("home", null);
+                                    faction.get().set("claims", null);
+                                    faction.save();
                                     p.sendMessage(C.chat(Locale.get().getString("command.faction.unclaim.player")));
                                     for (Player d : players.getFaction().getAllOnlinePlayers()) {
                                         d.sendMessage(C.chat(Locale.get().getString("command.faction.unclaim.broadcast").replace("%player%", p.getName())));
@@ -844,7 +836,7 @@ public class FactionCommand implements CommandExecutor {
                 }
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("claimfor")) {
-                    if (p.hasPermission("hcfactions.admin")) {
+                    if (p.hasPermission("hcfactions.admin") || p.hasPermission("hcfactions.command.faction.claimfor")) {
                         String factionName = args[1];
                         String id = "";
                         boolean valid = false;
@@ -863,6 +855,121 @@ public class FactionCommand implements CommandExecutor {
                             Claim.giveItem(p);
                         } else {
                             p.sendMessage(C.chat(Locale.get().getString("command.faction.claimfor.invalid")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));
+                    }
+                } else if (args[0].equalsIgnoreCase("forcejoin")) {
+                    if (p.hasPermission("hcfactions.command.faction.forcejoin") || p.hasPermission("hcfactions.admin")) {
+                        if (getFactionByName(args[1]) != null) {
+                            Faction faction = getFactionByName(args[1]);
+                            if (faction.get().getString("type").equals("PLAYER")) {
+                                Players players = new Players(p.getUniqueId().toString());
+                                if (!players.hasFaction()) {
+                                    players.get().set("faction", faction.get().getString("uuid"));
+                                    players.save();
+                                    ArrayList<String> members = new ArrayList<>(faction.get().getStringList("members"));
+                                    members.add(p.getUniqueId().toString());
+                                    faction.get().set("members", members);
+                                    faction.save();
+                                    for (Player player : faction.getAllOnlinePlayers()) {
+                                        player.sendMessage(C.chat(Locale.get().getString("command.faction.forcejoin.force").replace("%player%", p.getName())));
+                                    }
+                                } else {
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.forcejoin.cant-join")));
+                                }
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.forcejoin.invalid-faction")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.forcejoin.not-faction")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));
+                    }
+                } else if (args[0].equalsIgnoreCase("unclaimfor")) {
+                    if (p.hasPermission("hcfactions.command.faction.unclaimfor") || p.hasPermission("hcfactions.admin")) {
+                        if (getFactionByName(args[1]) != null) {
+                            Faction faction = getFactionByName(args[1]);
+                            if (faction.get().isConfigurationSection("claims")) {
+                                if (new Faction(getFactionAtLocation(p.getLocation())).get().getString("uuid").equals(faction.get().getString("uuid"))) {
+                                    int times = 0;
+                                    File[] factions = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder().getPath() + "/data/factions").listFiles();
+                                    if (factions != null) {
+                                        for (File f : factions) {
+                                            YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
+                                            if (file.isConfigurationSection("claims") && file.getString("uuid").equals(faction.get().getString("uuid"))) {
+                                                for (String ignored : file.getConfigurationSection("claims").getKeys(false)) {
+                                                    times = times + 1;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (times != 1) {
+                                        faction.get().set("claims." + getClaimNumber(p.getLocation()), null);
+                                        faction.save();
+                                    } else {
+                                        faction.get().set("claims", null);
+                                        faction.save();
+                                    }
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.unclaimfor.unclaimed").replace("%faction%", faction.get().getString("name"))));
+                                } else {
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.unclaimfor.not-in")));
+                                }
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.unclaimfor.no-claim")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.unclaimfor.not-faction")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));
+                    }
+                } else if (args[0].equalsIgnoreCase("forceleader")) {
+                    if (p.hasPermission("hcfactions.command.faction.forceleader") || p.hasPermission("hcfactions.admin")) {
+                        OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
+                        Players players = new Players(player.getUniqueId().toString());
+                        if (players.exists()) {
+                            if (players.hasFaction()) {
+                                Faction faction = players.getFaction();
+                                if (!player.getUniqueId().toString().equals(faction.get().getString("leader"))) {
+                                    String old = faction.get().getString("leader");
+                                    faction.get().set("leader", player.getUniqueId().toString());
+                                    ArrayList<String> coleaders = new ArrayList<>(faction.get().getStringList("coleaders"));
+                                    coleaders.add(old);
+                                    faction.get().set("coleaders", coleaders);
+                                    faction.save();
+                                    for (Player d : faction.getAllOnlinePlayers()) {
+                                        d.sendMessage(C.chat(Locale.get().getString("command.faction.forceleader.force").replace("%player%", player.getName())));
+                                    }
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.forceleader.force").replace("%player%", player.getName())));
+                                } else {
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.forceleader.already")));
+                                }
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.forceleader.no-faction")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.forceleader.doesnt-exist")));
+                        }
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));
+                    }
+                } else if (args[0].equalsIgnoreCase("forcedisband")) {
+                    if (p.hasPermission("hcfactions.command.faction.forcedisband") || p.hasPermission("hcfactions.admin")) {
+                        if (getFactionByName(args[1]) != null) {
+                            Faction faction = getFactionByName(args[1]);
+                            if (faction.get().getString("type").equals("PLAYER")) {
+                                for (OfflinePlayer player : faction.getAllMembers()) {
+                                    Players players = new Players(player.getUniqueId().toString());
+                                    players.get().set("faction", "");
+                                    players.save();
+                                }
+                            }
+                            Bukkit.broadcastMessage(C.chat(Locale.get().getString("command.faction.forcedisband.forcedisband").replace("%player%", p.getName()).replace("%faction%", faction.get().getString("name"))));
+                            faction.delete();
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.forcedisband.not-faction")));
                         }
                     } else {
                         p.sendMessage(C.chat(Locale.get().getString("primary.no-permission")));
@@ -2013,6 +2120,68 @@ public class FactionCommand implements CommandExecutor {
                             p.sendMessage(C.chat(Locale.get().getString("command.faction.deposit.invalid-amount")));
                         }
                     }
+                } else if (args[0].equalsIgnoreCase("withdraw") || args[0].equalsIgnoreCase("w")) {
+                    Players players = new Players(p.getUniqueId().toString());
+                    Economy economy = new Economy(p.getUniqueId().toString());
+                    try {
+                        double value = Double.parseDouble(args[1]);
+                        if (isValidNumber(value)) {
+                            if (players.hasFaction()) {
+                                Faction faction = players.getFaction();
+                                if (faction.get().getString("leader").equals(p.getUniqueId().toString()) || faction.get().getStringList("coleaders").contains(p.getUniqueId().toString()) || faction.get().getStringList("captains").contains(p.getUniqueId().toString())) {
+                                    double balance = faction.get().getDouble("balance");
+                                    if (balance - value >= 0) {
+                                        faction.get().set("balance", balance - value);
+                                        faction.save();
+                                        economy.depositBalance(value);
+                                        p.sendMessage(C.chat(Locale.get().getString("command.faction.withdraw.success").replace("%amount%", String.valueOf(value))));
+                                        for (Player player : faction.getAllOnlinePlayers()) {
+                                            p.sendMessage(C.chat(Locale.get().getString("command.faction.withdraw.withdrew").replace("%amount%", String.valueOf(value)).replace("%name%", p.getName())));
+                                        }
+                                    } else {
+                                        p.sendMessage(C.chat(Locale.get().getString("command.faction.withdraw.cant")));
+                                    }
+                                } else {
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.withdraw.invalid-role")));
+                                }
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.withdraw.no-faction")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.withdraw.invalid-amount")));
+                        }
+                    } catch (NumberFormatException nfe) {
+                        if (args[1].equalsIgnoreCase("all")) {
+                            double value = players.get().getDouble("balance");
+                            if (value >= 0) {
+                                if (players.hasFaction()) {
+                                    Faction faction = players.getFaction();
+                                    if (faction.get().getString("leader").equals(p.getUniqueId().toString()) || faction.get().getStringList("coleaders").contains(p.getUniqueId().toString()) || faction.get().getStringList("captains").contains(p.getUniqueId().toString())) {
+                                        double balance = faction.get().getDouble("balance");
+                                        if (balance - value >= 0) {
+                                            faction.get().set("balance", 0);
+                                            faction.save();
+                                            economy.depositBalance(balance);
+                                            p.sendMessage(C.chat(Locale.get().getString("command.faction.withdraw.success").replace("%amount%", String.valueOf(balance))));
+                                            for (Player player : faction.getAllOnlinePlayers()) {
+                                                p.sendMessage(C.chat(Locale.get().getString("command.faction.withdraw.withdrew").replace("%amount%", String.valueOf(balance)).replace("%name%", p.getName())));
+                                            }
+                                        } else {
+                                            p.sendMessage(C.chat(Locale.get().getString("command.faction.withdraw.cant")));
+                                        }
+                                    } else {
+                                        p.sendMessage(C.chat(Locale.get().getString("command.faction.withdraw.invalid-role")));
+                                    }
+                                } else {
+                                    p.sendMessage(C.chat(Locale.get().getString("command.faction.withdraw.no-faction")));
+                                }
+                            } else {
+                                p.sendMessage(C.chat(Locale.get().getString("command.faction.withdraw.invalid-amount")));
+                            }
+                        } else {
+                            p.sendMessage(C.chat(Locale.get().getString("command.faction.withdraw.invalid-amount")));
+                        }
+                    }
                 } else if (args[0].equalsIgnoreCase("announcement")) {
                     Players players = new Players(p.getUniqueId().toString());
                     if (players.hasFaction()) {
@@ -2424,11 +2593,10 @@ public class FactionCommand implements CommandExecutor {
         if (factions != null) {
             for (File f : factions) {
                 YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
-                if (file.isConfigurationSection("claims.0")) {
+                if (file.isConfigurationSection("claims")) {
                     for (String s : file.getConfigurationSection("claims").getKeys(false)) {
                         Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideOne.x"), file.getDouble("claims." + s + ".sideOne.y"), file.getDouble("claims." + s + ".sideOne.z"));
                         Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideTwo.x"), file.getDouble("claims." + s + ".sideTwo.y"), file.getDouble("claims." + s + ".sideTwo.z"));
-                        Block block = p.getLocation().getBlock().getRelative(BlockFace.DOWN);
                         Cuboid cuboid = new Cuboid(locationOne, locationTwo);
                         if (cuboid.contains(p.getLocation())) {
                             return file.getString("uuid");
@@ -2446,7 +2614,7 @@ public class FactionCommand implements CommandExecutor {
         if (factions != null) {
             for (File f : factions) {
                 YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
-                if (file.isConfigurationSection("claims.0")) {
+                if (file.isConfigurationSection("claims")) {
                     for (String s : file.getConfigurationSection("claims").getKeys(false)) {
                         Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideOne.x"), file.getDouble("claims." + s + ".sideOne.y"), file.getDouble("claims." + s + ".sideOne.z"));
                         Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideTwo.x"), file.getDouble("claims." + s + ".sideTwo.y"), file.getDouble("claims." + s + ".sideTwo.z"));
@@ -2467,7 +2635,7 @@ public class FactionCommand implements CommandExecutor {
         if (factions != null) {
             for (File f : factions) {
                 YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
-                if (file.isConfigurationSection("claims.0")) {
+                if (file.isConfigurationSection("claims")) {
                     for (String s : file.getConfigurationSection("claims").getKeys(false)) {
                         Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideOne.x"), file.getDouble("claims." + s + ".sideOne.y"), file.getDouble("claims." + s + ".sideOne.z"));
                         Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideTwo.x"), file.getDouble("claims." + s + ".sideTwo.y"), file.getDouble("claims." + s + ".sideTwo.z"));

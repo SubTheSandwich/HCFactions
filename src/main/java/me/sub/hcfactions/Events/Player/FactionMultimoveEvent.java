@@ -159,7 +159,7 @@ public class FactionMultimoveEvent implements Listener {
                         if (factions != null) {
                             for (File f : factions) {
                                 YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
-                                if (file.isConfigurationSection("claims.0")) {
+                                if (file.isConfigurationSection("claims")) {
                                     for (String fileNumber : file.getConfigurationSection("claims").getKeys(false)) {
                                         if (Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")).getEnvironment().equals(World.Environment.NORMAL)) {
                                             Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")), file.getDouble("claims." + fileNumber + ".sideOne.x"), file.getDouble("claims." + fileNumber + ".sideOne.y"), file.getDouble("claims." + fileNumber + ".sideOne.z"));
@@ -893,7 +893,7 @@ public class FactionMultimoveEvent implements Listener {
                         if (factions != null) {
                             for (File f : factions) {
                                 YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
-                                if (file.isConfigurationSection("claims.0")) {
+                                if (file.isConfigurationSection("claims")) {
                                     for (String fileNumber : file.getConfigurationSection("claims").getKeys(false)) {
                                         if (Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")).getEnvironment().equals(World.Environment.NORMAL)) {
                                             Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")), file.getDouble("claims." + fileNumber + ".sideOne.x"), file.getDouble("claims." + fileNumber + ".sideOne.y"), file.getDouble("claims." + fileNumber + ".sideOne.z"));
@@ -1627,7 +1627,7 @@ public class FactionMultimoveEvent implements Listener {
                         if (factions != null) {
                             for (File f : factions) {
                                 YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
-                                if (file.isConfigurationSection("claims.0")) {
+                                if (file.isConfigurationSection("claims")) {
                                     for (String fileNumber : file.getConfigurationSection("claims").getKeys(false)) {
                                         if (Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")).getEnvironment().equals(World.Environment.NORMAL)) {
                                             Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")), file.getDouble("claims." + fileNumber + ".sideOne.x"), file.getDouble("claims." + fileNumber + ".sideOne.y"), file.getDouble("claims." + fileNumber + ".sideOne.z"));
@@ -2361,7 +2361,7 @@ public class FactionMultimoveEvent implements Listener {
                         if (factions != null) {
                             for (File f : factions) {
                                 YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
-                                if (file.isConfigurationSection("claims.0")) {
+                                if (file.isConfigurationSection("claims")) {
                                     for (String fileNumber : file.getConfigurationSection("claims").getKeys(false)) {
                                         if (Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")).getEnvironment().equals(World.Environment.NORMAL)) {
                                             Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")), file.getDouble("claims." + fileNumber + ".sideOne.x"), file.getDouble("claims." + fileNumber + ".sideOne.y"), file.getDouble("claims." + fileNumber + ".sideOne.z"));

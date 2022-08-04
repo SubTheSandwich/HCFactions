@@ -1,9 +1,6 @@
 package me.sub.hcfactions.Utils.Economy;
 
 import me.sub.hcfactions.Files.Players.Players;
-
-import java.math.BigDecimal;
-
 public class Economy {
 
     Players players;
@@ -32,12 +29,7 @@ public class Economy {
     }
 
     public Boolean has(Double v) {
-        double balance = getBalance();
-        if (balance >= v) {
-            return true;
-        } else {
-            return false;
-        }
+        return getBalance() >= v;
     }
 
     public Boolean isValidNumber(Double v) {
@@ -45,10 +37,6 @@ public class Economy {
         String[] parts = number.split("\\.");
         String other = parts[1];
         other = other.replace(".", "");
-        if (other.length() > 2) {
-            return false;
-        } else {
-            return true;
-        }
+        return other.length() <= 2;
     }
 }

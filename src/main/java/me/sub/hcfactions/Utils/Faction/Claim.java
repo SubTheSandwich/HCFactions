@@ -28,7 +28,7 @@ public class Claim {
         if (factions != null) {
             for (File f : factions) {
                 YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
-                if (file.isConfigurationSection("claims.0")) {
+                if (file.isConfigurationSection("claims")) {
                     for (String fileNumber : file.getConfigurationSection("claims").getKeys(false)) {
                         if (Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")).getEnvironment().equals(World.Environment.NORMAL) && selectedBlock.getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
                             Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")), file.getDouble("claims." + fileNumber + ".sideOne.x"), file.getDouble("claims." + fileNumber + ".sideOne.y"), file.getDouble("claims." + fileNumber + ".sideOne.z"));
@@ -81,7 +81,7 @@ public class Claim {
 
     public static Boolean isExpandingClaim(Player p) {
         Faction faction = new Players(p.getUniqueId().toString()).getFaction();
-        return faction.get().isConfigurationSection("claims.0");
+        return faction.get().isConfigurationSection("claims");
     }
 
     public static Boolean isValidSelectedBlock(Location location) {
@@ -264,7 +264,7 @@ public class Claim {
 
             if (valid) {
                 Faction faction = new Faction(Main.getInstance().claimFor.get(p.getUniqueId()));
-                if (!faction.get().isConfigurationSection("claims.0")) {
+                if (!faction.get().isConfigurationSection("claims")) {
                     Location locationOne = Main.getInstance().posClaimOne.get(p.getUniqueId());
                     Location locationTwo = Main.getInstance().posClaimTwo.get(p.getUniqueId());
                     locationOne.setY(0);
@@ -460,7 +460,7 @@ public class Claim {
             locationTwo.setY(0);
             Cuboid cuboid = new Cuboid(locationOne, locationTwo);
             int size = 0;
-            for (Block b : cuboid.getBlocks()) {
+            for (Block ignored : cuboid.getBlocks()) {
                 size++;
             }
             double cost;
@@ -468,13 +468,12 @@ public class Claim {
             if (blockSize.equals("5x5")) {
                 cost = Main.getInstance().getConfig().getInt("claim.price.multiplier");
             } else {
-                int cos = Main.getInstance().getConfig().getInt("claim.price.multiplier");
                 double multiplier = Main.getInstance().getConfig().getDouble("claim.price.per-block");
-                double not = 0;
-                for (Block b : cuboid.getBlocks()) {
+                double not = Main.getInstance().getConfig().getInt("claim.price.multiplier");
+                for (Block ignored : cuboid.getBlocks()) {
                     not = not + multiplier;
                 }
-                cost = multiplier + not;
+                cost = not;
             }
             for (String s : Locale.get().getStringList("command.faction.claim.claim-create-before")) {
                 if (s.contains("%cost%")) {
@@ -502,6 +501,27 @@ public class Claim {
         }
     }
 
+    private static String getFactionAtLocation(Location location) {
+        File[] factions = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder().getPath() + "/data/factions").listFiles();
+        if (factions != null) {
+            for (File f : factions) {
+                YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
+                if (file.isConfigurationSection("claims")) {
+                    for (String s : file.getConfigurationSection("claims").getKeys(false)) {
+                        Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideOne.x"), file.getDouble("claims." + s + ".sideOne.y"), file.getDouble("claims." + s + ".sideOne.z"));
+                        Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideTwo.x"), file.getDouble("claims." + s + ".sideTwo.y"), file.getDouble("claims." + s + ".sideTwo.z"));
+                        Cuboid cuboid = new Cuboid(locationOne, locationTwo);
+                        if (cuboid.contains(location)) {
+                            return file.getString("uuid");
+                        }
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
     public static void executeClaim(Player p) {
         if (Main.getInstance().posClaimOne.containsKey(p.getUniqueId()) && Main.getInstance().posClaimTwo.containsKey(p.getUniqueId())) {
             Players players = new Players(p.getUniqueId().toString());
@@ -515,8 +535,23 @@ public class Claim {
                 }
             }
 
+            if (Main.getInstance().getConfig().getInt("claim.buffer") > 0) {
+                int buffer = Main.getInstance().getConfig().getInt("claim.buffer");
+                for (Location loc : cube.getPerimeter()) {
+                    for (int x = loc.getBlockX() - buffer; x <= loc.getBlockX() + buffer; x++) {
+                        for (int z = loc.getBlockZ() - buffer; z <= loc.getBlockZ() + buffer; z++) {
+                            Location location = new Location(loc.getWorld(), x, 5, z);
+                            if (getFactionAtLocation(location) != null) {
+                                p.sendMessage(C.chat(Locale.get().getString("events.cant-cause-buffer")));
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
             if (valid) {
-                if (!faction.get().isConfigurationSection("claims.0")) {
+                if (!faction.get().isConfigurationSection("claims")) {
                     Location locationOne = Main.getInstance().posClaimOne.get(p.getUniqueId());
                     Location locationTwo = Main.getInstance().posClaimTwo.get(p.getUniqueId());
                     locationOne.setY(0);
@@ -528,11 +563,11 @@ public class Claim {
                         cost = Main.getInstance().getConfig().getInt("claim.price.multiplier");
                     } else {
                         double multiplier = Main.getInstance().getConfig().getDouble("claim.price.per-block");
-                        double not = 0;
+                        double not = Main.getInstance().getConfig().getInt("claim.price.multiplier");
                         for (Block ignored : cuboid.getBlocks()) {
                             not = not + multiplier;
                         }
-                        cost = Main.getInstance().getConfig().getInt("claim.price.multiplier") + (multiplier * not);
+                        cost = not;
                     }
                     if (balance >= cost) {
                         if (cuboid.getSizeX() >= Main.getInstance().getConfig().getInt("claim.least-x") && cuboid.getSizeZ() >= Main.getInstance().getConfig().getInt("claim.least-z")) {
@@ -620,6 +655,7 @@ public class Claim {
             p.sendMessage(C.chat(Locale.get().getString("command.faction.claim.cannot-claim")));
         }
     }
+
 
     public static void cancelClaim(Player p) {
         if (Main.getInstance().posClaimOne.containsKey(p.getUniqueId())) {

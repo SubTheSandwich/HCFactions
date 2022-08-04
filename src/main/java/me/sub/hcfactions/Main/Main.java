@@ -88,7 +88,6 @@ import java.util.stream.Collectors;
 
 // add in default client nametags
 // Add in /f stuck
-// Add in /f forcejoin, /f unclaimfor, /f forcedisband, /f forceleader and stuff like that
 
 
 public class Main extends JavaPlugin {
@@ -1181,7 +1180,7 @@ public class Main extends JavaPlugin {
         if (factions != null) {
             for (File f : factions) {
                 YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
-                if (file.isConfigurationSection("claims.0")) {
+                if (file.isConfigurationSection("claims")) {
                     for (String s : file.getConfigurationSection("claims").getKeys(false)) {
                         Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideOne.x"), file.getDouble("claims." + s + ".sideOne.y"), file.getDouble("claims." + s + ".sideOne.z"));
                         Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideTwo.x"), file.getDouble("claims." + s + ".sideTwo.y"), file.getDouble("claims." + s + ".sideTwo.z"));

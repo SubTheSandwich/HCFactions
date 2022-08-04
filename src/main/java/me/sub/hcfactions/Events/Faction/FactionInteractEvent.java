@@ -31,7 +31,7 @@ public class FactionInteractEvent implements Listener {
         if (factions != null) {
             for (File f : factions) {
                 YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
-                if (file.isConfigurationSection("claims.0") && file.isConfigurationSection("claims.1")) {
+                if (file.isConfigurationSection("claims")) {
                     for (String fileNumber : file.getConfigurationSection("claims").getKeys(false)) {
                         if (Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")).getEnvironment().equals(World.Environment.NORMAL) && p.getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
                             Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")), file.getDouble("claims." + fileNumber + ".sideOne.x"), file.getDouble("claims." + fileNumber + ".sideOne.y"), file.getDouble("claims." + fileNumber + ".sideOne.z"));
@@ -62,35 +62,6 @@ public class FactionInteractEvent implements Listener {
                             }
                         }
                     }
-                } else if (file.isConfigurationSection("claims.0")) {
-                    if (Bukkit.getWorld(file.getString("claims.0.world")).getEnvironment().equals(World.Environment.NORMAL) && p.getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
-                        Location locationOne = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideOne.x"), file.getDouble("claims.0.sideOne.y"), file.getDouble("claims.0.sideOne.z"));
-                        Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideTwo.x"), file.getDouble("claims.0.sideTwo.y"), file.getDouble("claims.0.sideTwo.z"));
-                        Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                        for (Block b : cuboid.getBlocks()) {
-                            if (selectedBlock.getX() == b.getX() && selectedBlock.getZ() == b.getZ()) {
-                                return file.getString("uuid");
-                            }
-                        }
-                    } else if (Bukkit.getWorld(file.getString("claims.0.world")).getEnvironment().equals(World.Environment.NETHER) && p.getWorld().getEnvironment().equals(World.Environment.NETHER)) {
-                        Location locationOne = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideOne.x"), file.getDouble("claims.0.sideOne.y"), file.getDouble("claims.0.sideOne.z"));
-                        Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideTwo.x"), file.getDouble("claims.0.sideTwo.y"), file.getDouble("claims.0.sideTwo.z"));
-                        Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                        for (Block b : cuboid.getBlocks()) {
-                            if (selectedBlock.getX() == b.getX() && selectedBlock.getZ() == b.getZ()) {
-                                return file.getString("uuid");
-                            }
-                        }
-                    } else if (Bukkit.getWorld(file.getString("claims.0.world")).getEnvironment().equals(World.Environment.THE_END) && p.getWorld().getEnvironment().equals(World.Environment.THE_END)) {
-                        Location locationOne = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideOne.x"), file.getDouble("claims.0.sideOne.y"), file.getDouble("claims.0.sideOne.z"));
-                        Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideTwo.x"), file.getDouble("claims.0.sideTwo.y"), file.getDouble("claims.0.sideTwo.z"));
-                        Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                        for (Block b : cuboid.getBlocks()) {
-                            if (selectedBlock.getX() == b.getX() && selectedBlock.getZ() == b.getZ()) {
-                                return file.getString("uuid");
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -103,7 +74,7 @@ public class FactionInteractEvent implements Listener {
         if (factions != null) {
             for (File f : factions) {
                 YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
-                if (file.isConfigurationSection("claims.0") && file.isConfigurationSection("claims.1")) {
+                if (file.isConfigurationSection("claims")) {
                     for (String fileNumber : file.getConfigurationSection("claims").getKeys(false)) {
                         if (Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")).getEnvironment().equals(World.Environment.NORMAL) && p.getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
                             Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")), file.getDouble("claims." + fileNumber + ".sideOne.x"), file.getDouble("claims." + fileNumber + ".sideOne.y"), file.getDouble("claims." + fileNumber + ".sideOne.z"));
@@ -123,7 +94,7 @@ public class FactionInteractEvent implements Listener {
                                     return true;
                                 }
                             }
-                        }  else if (Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")).getEnvironment().equals(World.Environment.THE_END) && p.getWorld().getEnvironment().equals(World.Environment.THE_END)) {
+                        } else if (Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")).getEnvironment().equals(World.Environment.THE_END) && p.getWorld().getEnvironment().equals(World.Environment.THE_END)) {
                             Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")), file.getDouble("claims." + fileNumber + ".sideOne.x"), file.getDouble("claims." + fileNumber + ".sideOne.y"), file.getDouble("claims." + fileNumber + ".sideOne.z"));
                             Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims." + fileNumber + ".world")), file.getDouble("claims." + fileNumber + ".sideTwo.x"), file.getDouble("claims." + fileNumber + ".sideTwo.y"), file.getDouble("claims." + fileNumber + ".sideTwo.z"));
                             Cuboid cuboid = new Cuboid(locationOne, locationTwo);
@@ -131,35 +102,6 @@ public class FactionInteractEvent implements Listener {
                                 if (selectedBlock.getX() == b.getX() && selectedBlock.getZ() == b.getZ()) {
                                     return true;
                                 }
-                            }
-                        }
-                    }
-                } else if (file.isConfigurationSection("claims.0")) {
-                    if (Bukkit.getWorld(file.getString("claims.0.world")).getEnvironment().equals(World.Environment.NORMAL) && p.getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
-                        Location locationOne = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideOne.x"), file.getDouble("claims.0.sideOne.y"), file.getDouble("claims.0.sideOne.z"));
-                        Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideTwo.x"), file.getDouble("claims.0.sideTwo.y"), file.getDouble("claims.0.sideTwo.z"));
-                        Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                        for (Block b : cuboid.getBlocks()) {
-                            if (selectedBlock.getX() == b.getX() && selectedBlock.getZ() == b.getZ()) {
-                                return true;
-                            }
-                        }
-                    } else if (Bukkit.getWorld(file.getString("claims.0.world")).getEnvironment().equals(World.Environment.NETHER) && p.getWorld().getEnvironment().equals(World.Environment.NETHER)) {
-                        Location locationOne = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideOne.x"), file.getDouble("claims.0.sideOne.y"), file.getDouble("claims.0.sideOne.z"));
-                        Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideTwo.x"), file.getDouble("claims.0.sideTwo.y"), file.getDouble("claims.0.sideTwo.z"));
-                        Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                        for (Block b : cuboid.getBlocks()) {
-                            if (selectedBlock.getX() == b.getX() && selectedBlock.getZ() == b.getZ()) {
-                                return true;
-                            }
-                        }
-                    } else if (Bukkit.getWorld(file.getString("claims.0.world")).getEnvironment().equals(World.Environment.THE_END) && p.getWorld().getEnvironment().equals(World.Environment.THE_END)) {
-                        Location locationOne = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideOne.x"), file.getDouble("claims.0.sideOne.y"), file.getDouble("claims.0.sideOne.z"));
-                        Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideTwo.x"), file.getDouble("claims.0.sideTwo.y"), file.getDouble("claims.0.sideTwo.z"));
-                        Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                        for (Block b : cuboid.getBlocks()) {
-                            if (selectedBlock.getX() == b.getX() && selectedBlock.getZ() == b.getZ()) {
-                                return true;
                             }
                         }
                     }

@@ -75,6 +75,7 @@ events:
     used: "&eYou have used your crowbar to pick up a &d%spawner% &espawner. You have &a%charges% &eremaining."
   cant-claim: "&cYou cannot claim this location as it contains blocks from another claim."
   cant-claim-expand: "&cYou cannot expand your claim."
+  cant-cause-buffer: "&cYou cannot claim here as your selection is too close to another claim."
   sign:
     elevator:
       invalid-type: "&cThe specified type is invalid. Valid types are: UP, DOWN"
@@ -184,9 +185,9 @@ command:
     usage: "&cUsage: /%alias% <running;getall;emote;sendtitle;sendsubtitle> <player> <data>"
     sendtitle-usage: "&cUsage: /%alias% sendtitle <player;all> <displayTimeMS> <fadeInTimeMS> <fadeOutTimeMS> <message>"
     sendsubtitle-usage: "&cUsage: /%alias% sendsubtitle <player;all> <displayTimeMS> <fadeInTimeMS> <fadeOutTimeMS> <message>"
-    senttitle: "&eYou have send a title to &a%player% to display for &b%display% &emilliseconds, appear in &b%fade-in% &emilliseconds, disappear in &b%fade-out% &emilliseconds, and with the message of &d%message%&e."
+    senttitle: "&eYou have send a title to &a%player%&e to display for &b%display% &emilliseconds, appear in &b%fade-in% &emilliseconds, disappear in &b%fade-out% &emilliseconds, and with the message of &d%message%&e."
     senttitle-all: "&eYou have send a title to &aall Lunar Client players &eto display for &b%display% &emilliseconds, appear in &b%fade-in% &emilliseconds, disappear in &b%fade-out% &emilliseconds, and with the message of &d%message%&e."
-    sentsubtitle: "&eYou have send a sub-title to &a%player% to display for &b%display% &emilliseconds, appear in &b%fade-in% &emilliseconds, disappear in &b%fade-out% &emilliseconds, and with the message of &d%message%&e."
+    sentsubtitle: "&eYou have send a sub-title to &a%player%&e to display for &b%display% &emilliseconds, appear in &b%fade-in% &emilliseconds, disappear in &b%fade-out% &emilliseconds, and with the message of &d%message%&e."
     sentsubtitle-all: "&eYou have send a sub-title to &aall Lunar Client players &eto display for &b%display% &emilliseconds, appear in &b%fade-in% &emilliseconds, disappear in &b%fade-out% &emilliseconds, and with the message of &d%message%&e."
     not-player: "&cThe specified player can't be found."
     not-valid: "&cThe specified length is invalid."
@@ -470,6 +471,31 @@ command:
     sent: '&aSent %amount% to %recipient%'
     received: '&aReceived %amount% from %sender%'
   faction:
+    withdraw:
+      invalid-amount: "&cThe specified amount is invalid."
+      no-faction: "&cYou do not have a faction."
+      invalid-role: "&cYou cannot withdraw money from your faction."
+      cant: "&cYou cannot withdraw that much money from your faction."
+      success: '&eYou have removed &d$%amount% &efrom the faction balance.'
+      withdrew: '&e%name% withdrew &d$%amount% &efrom the team balance.'
+    forcedisband:
+      not-faction: "&cThe specified faction does not exist."
+      forcedisband: "&b%faction% &ehas been forcefully disbanded by &d%player%"
+    forceleader:
+      doesnt-exist: "&cThe specified player does not exist."
+      no-faction: "&cThe specified player does not have a faction."
+      already: "&cThe specified player is already leader of their faction."
+      force: "&6&l%player% has been forcefully made leader."
+    unclaimfor:
+      not-faction: "&cThe specified faction does not exist."
+      no-claim: "&cThe specified faction does not have any claims."
+      not-in: "&cYou cannot unclaim here as you are not in the faction you are trying to unclaim for's claim."
+      unclaimed: "&eYou have unclaimed for faction &d%faction%&e."
+    forcejoin:
+      not-faction: "&cThe specified faction does not exist."
+      cant-join: "&cYou cannot join a faction whilst being in one."
+      invalid-faction: "&cYou may only join player factions."
+      force: "&6&l%player% has forcefully joined your faction."
     top:
       no-factions: "&cThere are no factions to be listed."
     chat:

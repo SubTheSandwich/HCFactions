@@ -1,6 +1,6 @@
 package me.sub.hcfactions.Commands.Admin;
 
-import com.lunarclient.bukkitapi.nethandler.client.LCPacketTitle;
+import com.lunarclient.bukkitapi.nethandler.client.*;
 import com.lunarclient.bukkitapi.nethandler.shared.LCPacketEmoteBroadcast;
 import com.lunarclient.bukkitapi.title.TitleType;
 import me.sub.hcfactions.Files.Locale.Locale;
