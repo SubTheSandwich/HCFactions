@@ -59,6 +59,7 @@ import me.sub.hcfactions.Events.Scoreboard.LoadScoreboard;
 import me.sub.hcfactions.Events.Scoreboard.RemoveScoreboard;
 import me.sub.hcfactions.Events.SignInteractEvent;
 import me.sub.hcfactions.Events.Staff.StaffEvents;
+import me.sub.hcfactions.Events.StuckMovement;
 import me.sub.hcfactions.Files.Faction.Faction;
 import me.sub.hcfactions.Files.Locale.Locale;
 import me.sub.hcfactions.Files.Mountain.Mountain;
@@ -87,12 +88,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 // add in default client nametags
-// Add in /f stuck
 
 
 public class Main extends JavaPlugin {
 
     public HashMap<UUID, String> claimFor = new HashMap<>();
+
+    public HashMap<UUID, Location> stuckLocation = new HashMap<>();
+    public HashMap<UUID, Integer> stuckTimer = new HashMap<>();
 
     public HashMap<UUID, Material> randomlyGeneratedMaterial = new HashMap<>();
 
@@ -1128,6 +1131,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new SubclaimEvents(), this);
         pm.registerEvents(new FactionEndMultimoveEvent(), this);
         pm.registerEvents(new SettingsClickEvent(), this);
+        pm.registerEvents(new StuckMovement(), this);
     }
 
     private void files() {

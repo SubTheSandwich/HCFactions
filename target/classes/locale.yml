@@ -471,6 +471,13 @@ command:
     sent: '&aSent %amount% to %recipient%'
     received: '&aReceived %amount% from %sender%'
   faction:
+    stuck:
+      message: '&cStarted stuck timer, please wait 2 minutes and 30 seconds. Do not
+         move more than 5 blocks.'
+      cancelled: '&cYou moved more than 5 blocks so your stuck timer was cancelled.'
+      running: '&cYou have already started your stuck timer.'
+      starting: '&aAttempting to find a safe nearby location...'
+      success: '&aYou have been teleported to the safest location nearby.'
     withdraw:
       invalid-amount: "&cThe specified amount is invalid."
       no-faction: "&cYou do not have a faction."

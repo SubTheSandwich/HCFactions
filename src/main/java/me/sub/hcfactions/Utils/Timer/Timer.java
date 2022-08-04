@@ -1,5 +1,6 @@
 package me.sub.hcfactions.Utils.Timer;
 
+import me.sub.hcfactions.Commands.Staff.TeleportCommand;
 import me.sub.hcfactions.Files.Faction.Faction;
 import me.sub.hcfactions.Files.Locale.Locale;
 import me.sub.hcfactions.Files.Players.Players;
@@ -10,8 +11,6 @@ import me.sub.hcfactions.Utils.Cuboid.Cuboid;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -22,6 +21,41 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Timer {
+
+    public static void tickStuckTimer(UUID p) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (Main.getInstance().stuckTimer.containsKey(p) && Bukkit.getPlayer(p) != null) {
+                    int time = Main.getInstance().stuckTimer.get(p);
+                    time = time - 1;
+                    if (time > 0) {
+                        Main.getInstance().stuckTimer.put(p, time);
+                    } else {
+                        Player player = Bukkit.getPlayer(p);
+                        Main.getInstance().stuckTimer.remove(p);
+                        Main.getInstance().stuckLocation.remove(p);
+                        loop:
+                        for (int x = player.getLocation().getBlockX() - 15; x <= player.getLocation().getBlockX() + 15; x++) {
+                            for (int z = player.getLocation().getBlockZ() - 15; z <= player.getLocation().getBlockZ() + 15; z++) {
+                                Location location = new Location(player.getWorld(), x, player.getLocation().getBlockY(), z);
+                                if (getFactionInLocation(location) == null && TeleportCommand.isSafeLocation(location)) {
+                                    player.teleport(location);
+                                    break loop;
+                                }
+                            }
+                        }
+                        player.sendMessage(C.chat(Locale.get().getString("command.faction.stuck.success")));
+                        cancel();
+                    }
+                } else {
+                    Main.getInstance().stuckTimer.remove(p);
+                    Main.getInstance().stuckLocation.remove(p);
+                    cancel();
+                }
+            }
+        }.runTaskTimer(Main.getInstance(), 0, 20);
+    }
 
     public static void tickCustomTimer(String timer) {
         new BukkitRunnable() {
@@ -182,12 +216,9 @@ public class Timer {
                     if (time.doubleValue() <= 0) {
                         if (Bukkit.getPlayer(uuid) != null) {
                             Bukkit.getPlayer(uuid).sendMessage(C.chat(Locale.get().getString("archer.expired")));
-                            Main.getInstance().archerTag.remove(uuid);
-                            cancel();
-                        } else {
-                            Main.getInstance().archerTag.remove(uuid);
-                            cancel();
                         }
+                        Main.getInstance().archerTag.remove(uuid);
+                        cancel();
                     } else {
                         Main.getInstance().archerTag.put(uuid, time);
                     }
@@ -260,20 +291,38 @@ public class Timer {
         Main.getInstance().appleTimer.put(p, v);
     }
 
-    public static String getFactionInClaim(Player p) {
+    private static String getFactionInClaim(Player p) {
         File[] factions = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder().getPath() + "/data/factions").listFiles();
         if (factions != null) {
             for (File f : factions) {
                 YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
-                if (file.isConfigurationSection("claims.0") && file.isConfigurationSection("claims.1")) {
+                if (file.isConfigurationSection("claims")) {
+                    for (String s : file.getConfigurationSection("claims").getKeys(false)) {
+                        Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideOne.x"), file.getDouble("claims." + s + ".sideOne.y"), file.getDouble("claims." + s + ".sideOne.z"));
+                        Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideTwo.x"), file.getDouble("claims." + s + ".sideTwo.y"), file.getDouble("claims." + s + ".sideTwo.z"));
+                        Cuboid cuboid = new Cuboid(locationOne, locationTwo);
+                        if (cuboid.contains(p.getLocation())) {
+                            return file.getString("uuid");
+                        }
+                    }
+                }
+            }
+        }
 
-                } else if (file.isConfigurationSection("claims.0")) {
-                    Location locationOne = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideOne.x"), file.getDouble("claims.0.sideOne.y"), file.getDouble("claims.0.sideOne.z"));
-                    Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims.0.world")), file.getDouble("claims.0.sideTwo.x"), file.getDouble("claims.0.sideTwo.y"), file.getDouble("claims.0.sideTwo.z"));
-                    Block block = p.getLocation().getBlock().getRelative(BlockFace.DOWN);
-                    Cuboid cuboid = new Cuboid(locationOne, locationTwo);
-                    for (Block b : cuboid.getBlocks()) {
-                        if (block.getX() == b.getX() && block.getZ() == b.getZ()) {
+        return null;
+    }
+
+    private static String getFactionInLocation(Location p) {
+        File[] factions = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder().getPath() + "/data/factions").listFiles();
+        if (factions != null) {
+            for (File f : factions) {
+                YamlConfiguration file = YamlConfiguration.loadConfiguration(f);
+                if (file.isConfigurationSection("claims")) {
+                    for (String s : file.getConfigurationSection("claims").getKeys(false)) {
+                        Location locationOne = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideOne.x"), file.getDouble("claims." + s + ".sideOne.y"), file.getDouble("claims." + s + ".sideOne.z"));
+                        Location locationTwo = new Location(Bukkit.getWorld(file.getString("claims." + s + ".world")), file.getDouble("claims." + s + ".sideTwo.x"), file.getDouble("claims." + s + ".sideTwo.y"), file.getDouble("claims." + s + ".sideTwo.z"));
+                        Cuboid cuboid = new Cuboid(locationOne, locationTwo);
+                        if (cuboid.contains(p)) {
                             return file.getString("uuid");
                         }
                     }
@@ -410,12 +459,11 @@ public class Timer {
 
     public static void tickEnergy(Player p) {
         new BukkitRunnable() {
-            double bardEnergy = 0.0;
             @Override
             public void run() {
                 if (Classes.hasActiveClass(p) && Classes.isInBard(p)) {
                     if (!Main.getInstance().bardEnergy.containsKey(p)) {
-                        Main.getInstance().bardEnergy.put(p, bardEnergy);
+                        Main.getInstance().bardEnergy.put(p, 0.0);
                     } else {
                         if (Main.getInstance().bardEnergy.get(p) < 100.0) {
                             double energy = Main.getInstance().bardEnergy.get(p) + 1.0;

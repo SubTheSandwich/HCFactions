@@ -822,7 +822,14 @@ public class FactionCommand implements CommandExecutor {
                         p.sendMessage(C.chat(Locale.get().getString("command.faction.leave.no-faction")));
                     }
                 } else if (args[0].equalsIgnoreCase("stuck")) {
-
+                    if (!Main.getInstance().stuckLocation.containsKey(p.getUniqueId())) {
+                        Main.getInstance().stuckLocation.put(p.getUniqueId(), p.getLocation());
+                        Main.getInstance().stuckTimer.put(p.getUniqueId(), Main.getInstance().getConfig().getInt("settings.timers.stuck"));
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.stuck.message")));
+                        Timer.tickStuckTimer(p.getUniqueId());
+                    } else {
+                        p.sendMessage(C.chat(Locale.get().getString("command.faction.stuck.running")));
+                    }
                 } else if (args[0].equalsIgnoreCase("subclaim")) {
                     for (String s1 : Messages.get().getStringList("faction.help.subclaim")) {
                         if (s1.contains("%primary%")) {

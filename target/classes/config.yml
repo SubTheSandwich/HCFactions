@@ -270,7 +270,7 @@ listeners:
   place-in-combat: true
   disable-enderchest: true
 claim:
-  buffer: 1
+  buffer: 1 # Set buffer to 0 to remove
   deathban: "&cDeathban"
   not-deathban: "&aNon-Deathban"
   wilderness:
@@ -314,6 +314,7 @@ scoreboard:
     - '&a&lSOTW&7: &c%server_sotw_timer%<display=%server_has_sotw_timer%>'
     - '&c&lEOTW&7: &c%server_eotw_timer%<display=%server_has_eotw_timer%>'
     - '&4&lLogout&7: &c%player_logout_timer%<display=%player_has_logout_timer%>'
+    - '&4&lStuck&7: &c%player_stuck_timer%<display=%player_has_stuck_timer%>'
     - '&6&lArcher Tag&7: &c%player_archer-mark_timer%<display=%player_has_archer-mark_timer%>'
     - '&6&lApple&7: &c%player_apple_timer%<display=%player_has_apple_timer%>'
     - '&6&lGopple&7: &c%player_gopple_timer%<display=%player_has_gapple_timer%>'

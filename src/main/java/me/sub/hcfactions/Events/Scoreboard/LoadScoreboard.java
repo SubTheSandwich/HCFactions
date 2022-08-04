@@ -1,6 +1,5 @@
 package me.sub.hcfactions.Events.Scoreboard;
 
-import com.lunarclient.bukkitapi.nethandler.client.*;
 import me.sub.hcfactions.Files.Conquest.Conquest;
 import me.sub.hcfactions.Files.Faction.Faction;
 import me.sub.hcfactions.Files.Locale.Locale;
@@ -78,6 +77,21 @@ public class LoadScoreboard implements Listener {
                 if (p.isOnline()) {
                     ArrayList<String> lines = new ArrayList<>();
                     for (String s : Main.getInstance().getConfig().getStringList("scoreboard.lines")) {
+                        if (s.contains("<display=%player_has_stuck_timer%>")) {
+                            if (Main.getInstance().stuckTimer.containsKey(p.getUniqueId())) {
+                                s = s.replace("<display=%player_has_stuck_timer%>", "");
+                                int time = Main.getInstance().stuckTimer.get(p.getUniqueId());
+                                Calendar calender = Calendar.getInstance();
+                                calender.clear();
+                                calender.add(Calendar.SECOND, time);
+                                String format = "mm:ss";
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+                                String timee = simpleDateFormat.format(calender.getTimeInMillis());
+                                s = s.replace("%player_stuck_timer%", timee);
+                            } else {
+                                continue;
+                            }
+                        }
                         if (s.contains("%conquest-lines%")) {
                             s = s.replace("%conquest-lines%", "");
                             if (Main.getInstance().conquestTimer.keySet().size() != 0) {
