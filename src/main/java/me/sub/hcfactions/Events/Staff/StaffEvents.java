@@ -63,7 +63,7 @@ public class StaffEvents implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEntityEvent e) {
         Player p = e.getPlayer();
-        if (e.getRightClicked() instanceof Player) {
+        if (e.getRightClicked() instanceof Player && p.getItemInHand().getItemMeta() != null) {
             Player rightClicked = (Player) e.getRightClicked();
             if (Main.getInstance().staff.contains(p)) {
                 String identifier = null;
