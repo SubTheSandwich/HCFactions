@@ -20,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.*;
 
 import java.io.File;
@@ -609,6 +610,11 @@ public class FactionInteractEvent implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void onExplode(EntityExplodeEvent e) {
+        e.blockList().clear();
     }
 
     @EventHandler

@@ -87,8 +87,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-// add in default client nametags
-
 
 public class Main extends JavaPlugin {
 
@@ -213,6 +211,14 @@ public class Main extends JavaPlugin {
 
     private static Main instance;
 
+    public Main() {
+        instance = this;
+    }
+
+    public static Main getInstance() {
+        return instance;
+    }
+
     private boolean setupChat() {
         RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
         chat = rsp.getProvider();
@@ -221,14 +227,6 @@ public class Main extends JavaPlugin {
 
     public Chat getChat() {
         return chat;
-    }
-
-    public Main() {
-        instance = this;
-    }
-
-    public static Main getInstance() {
-        return instance;
     }
 
     @Override

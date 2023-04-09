@@ -2,7 +2,6 @@ package me.sub.hcfactions.Events.Enchant;
 
 import me.sub.hcfactions.Main.Main;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
@@ -11,7 +10,6 @@ public class EnchantmentLimiter implements Listener {
 
     @EventHandler
     public void onEnchant(EnchantItemEvent e) {
-        Player p = e.getEnchanter();
         for (String s : Main.getInstance().getConfig().getConfigurationSection("settings.limits.enchantments").getKeys(false)) {
             if (Enchantment.getByName(s) != null) {
                 Enchantment enchantment = Enchantment.getByName(s);

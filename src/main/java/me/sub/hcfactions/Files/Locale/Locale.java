@@ -11,8 +11,7 @@ public class Locale {
 
     public static FileConfiguration get() {
         File file = new File(Bukkit.getServer().getPluginManager().getPlugin("HCFactions").getDataFolder(), "locale.yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        return config;
+        return YamlConfiguration.loadConfiguration(file);
     }
 
     public static void save() {

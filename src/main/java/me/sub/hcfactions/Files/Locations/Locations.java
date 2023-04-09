@@ -9,8 +9,6 @@ import java.io.IOException;
 
 public class Locations {
 
-    // Make class non-static and operate off a constructor
-
     File file;
     FileConfiguration customFile;
 
